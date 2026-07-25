@@ -43,9 +43,19 @@ class Game {
 
     initEventListeners() {
         window.addEventListener('resize', () => this.resize());
-        window.addEventListener('touchstart', (e) => this.handleInput(e), { passive: false });
+
+        const isUIElement = (target) => {
+            return target.closest('button') || target.closest('.var-card') || target.closest('#start-screen') || target.closest('#game-over');
+        };
+
+        window.addEventListener('touchstart', (e) => {
+            if (!isUIElement(e.target)) {
+                this.handleInput(e);
+            }
+        }, { passive: false });
+
         window.addEventListener('mousedown', (e) => {
-            if (e.target.tagName !== 'BUTTON' && !e.target.closest('#start-screen') && !e.target.closest('#game-over')) {
+            if (!isUIElement(e.target)) {
                 this.handleInput(e);
             }
         });
