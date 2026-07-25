@@ -82,12 +82,19 @@ class Game {
         const startScreen = document.getElementById('start-screen');
         const modeSelect = document.getElementById('mode-select-view');
         const varSelect = document.getElementById('variation-select-view');
+        const uiElem = document.getElementById('ui');
 
-        // まず全てのモーダル要素を非表示
+        // まず全てのモーダル要素・UIを非表示
         if (gameOver) gameOver.style.display = 'none';
         if (modeSelect) modeSelect.style.display = 'none';
         if (varSelect) varSelect.style.display = 'none';
         if (startScreen) startScreen.style.display = 'none';
+        if (uiElem) uiElem.style.display = 'none';
+
+        // メニュー画面ではキャンバスを全消去して自機リングや敵を消す
+        if (viewName !== 'PLAYING' && this.ctx) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
 
         if (viewName === 'MODE_SELECT') {
             if (startScreen) startScreen.style.display = 'block';
@@ -97,6 +104,9 @@ class Game {
             if (varSelect) varSelect.style.display = 'block';
         } else if (viewName === 'GAME_OVER') {
             if (gameOver) gameOver.style.display = 'block';
+            if (uiElem) uiElem.style.display = 'block';
+        } else if (viewName === 'PLAYING') {
+            if (uiElem) uiElem.style.display = 'block';
         }
     }
 
