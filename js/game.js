@@ -53,8 +53,7 @@ class Game {
                 el.closest('.btn-action') ||
                 el.closest('.btn-back') ||
                 el.closest('.var-card') ||
-                el.closest('#start-screen') ||
-                el.closest('#game-over')
+                el.closest('.modal-box')
             );
         };
 
@@ -77,52 +76,38 @@ class Game {
         this.canvas.height = window.innerHeight;
     }
 
-    setScreenView(viewName) {
-        const gameOver = document.getElementById('game-over');
-        const startScreen = document.getElementById('start-screen');
-        const modeSelect = document.getElementById('mode-select-view');
-        const varSelect = document.getElementById('variation-select-view');
+    // --- 画面モーダル切替ロジック (超シンプル一元管理) ---
+    hideAllModals() {
+        const modalIds = ['modal-mode-select', 'modal-variation-select', 'modal-game-over'];
+        modalIds.forEach(id => {
+            const elem = document.getElementById(id);
+            if (elem) elem.style.display = 'none';
+        });
         const uiElem = document.getElementById('ui');
-
-        // まず全てのモーダル要素・UIを非表示
-        if (gameOver) gameOver.style.display = 'none';
-        if (modeSelect) modeSelect.style.display = 'none';
-        if (varSelect) varSelect.style.display = 'none';
-        if (startScreen) startScreen.style.display = 'none';
         if (uiElem) uiElem.style.display = 'none';
+    }
 
-        // メニュー画面ではキャンバスを全消去して自機リングや敵を消す
-        if (viewName !== 'PLAYING' && this.ctx) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        }
-
-        if (viewName === 'MODE_SELECT') {
-            if (startScreen) startScreen.style.display = 'block';
-            if (modeSelect) modeSelect.style.display = 'block';
-        } else if (viewName === 'VARIATION_SELECT') {
-            if (startScreen) startScreen.style.display = 'block';
-            if (varSelect) varSelect.style.display = 'block';
-        } else if (viewName === 'GAME_OVER') {
-            if (gameOver) gameOver.style.display = 'block';
-            if (uiElem) uiElem.style.display = 'block';
-        } else if (viewName === 'PLAYING') {
-            if (uiElem) uiElem.style.display = 'block';
+    showModal(modalId) {
+        this.hideAllModals();
+        if (modalId) {
+            const elem = document.getElementById(modalId);
+            if (elem) elem.style.display = 'block';
         }
     }
 
     async startApp() {
         await dataLoader.loadAll();
-        this.showStartScreen();
+        this.showModeSelect();
         this.updateUI();
     }
 
-    showStartScreen() {
+    showModeSelect() {
         audioEngine.init();
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
 
-        // オブジェクト・描画要素の完全リセット
+        // 描画・エンティティ完全削除
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
@@ -130,41 +115,29 @@ class Game {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
 
-        // デフォルト背景テーマの復元
-        const bgElem = document.querySelector('.bg-animated');
-        if (bgElem) {
-            bgElem.style.background = `
-                radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(5, 7, 14, 0.9) 100%),
-                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px),
-                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px)
-            `;
-        }
-        document.documentElement.style.setProperty('--bg-scroll-speed', '3s');
+        // デフォルト背景復元
+        this.resetThemeToDefault();
 
-        this.setScreenView('MODE_SELECT');
+        // モード選択モーダル表示
+        this.showModal('modal-mode-select');
     }
 
-    backToModeSelect() {
-        this.showStartScreen();
-    }
-
-    reselectVariation() {
+    async showVariationSelect(diff) {
         audioEngine.init();
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
-        const lastDiff = this.currentVariation?.difficulty || 'EASY';
-        this.openVariationMenu(lastDiff);
-    }
 
-    async openVariationMenu(diff) {
-        audioEngine.init();
-        if (!diff || typeof diff !== 'string') {
-            diff = this.currentVariation?.difficulty || 'EASY';
+        // 描画完全クリア
+        this.enemies = [];
+        this.particles = [];
+        this.shockwaves = [];
+        if (this.ctx) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
-        diff = diff.toUpperCase();
 
-        this.setScreenView('VARIATION_SELECT');
+        // 難易度指定（フォールバック付き）
+        diff = (diff || this.currentVariation?.difficulty || 'EASY').toUpperCase();
 
         const diffDef = dataLoader.difficultiesMaster[diff] || {};
         const titleElem = document.getElementById('selected-mode-title');
@@ -179,6 +152,7 @@ class Game {
         }
 
         this.renderVariationMenu(diff);
+        this.showModal('modal-variation-select');
     }
 
     renderVariationMenu(diff) {
@@ -198,7 +172,6 @@ class Game {
             const card = document.createElement('div');
             card.className = 'var-card';
             const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
-            const resolved = dataLoader.getResolvedParams(v);
             const dateStr = v.updatedAt || v.createdAt || '';
 
             card.innerHTML = `
@@ -209,24 +182,7 @@ class Game {
                     <span class="var-score">🏆 BEST: ${best}</span>
                 </div>
             `;
-
-            let handled = false;
-            const trigger = (e) => {
-                if (e && e.stopPropagation) e.stopPropagation();
-                if (handled) return;
-                handled = true;
-                setTimeout(() => { handled = false; }, 300);
-                this.startGameWithVariation(v);
-            };
-
-            card.ontouchend = (e) => {
-                if (e.cancelable) e.preventDefault();
-                trigger(e);
-            };
-            card.onclick = (e) => {
-                trigger(e);
-            };
-
+            card.onclick = () => this.startGameWithVariation(v);
             container.appendChild(card);
         });
     }
@@ -238,8 +194,26 @@ class Game {
         this.applyTheme(variation.theme);
 
         this.isGameStarted = true;
-        this.setScreenView('PLAYING');
+        this.isGameOver = false;
+
+        // 全モーダル隠してプレイ画面へ
+        this.hideAllModals();
+        const uiElem = document.getElementById('ui');
+        if (uiElem) uiElem.style.display = 'block';
+
         this.resetGame();
+    }
+
+    resetThemeToDefault() {
+        const bgElem = document.querySelector('.bg-animated');
+        if (bgElem) {
+            bgElem.style.background = `
+                radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(5, 7, 14, 0.9) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px)
+            `;
+        }
+        document.documentElement.style.setProperty('--bg-scroll-speed', '3s');
     }
 
     applyTheme(theme) {
@@ -255,14 +229,6 @@ class Game {
         this.ringColor = theme.ringColor || '#00f0ff';
         this.player.color = theme.playerColor || '#00f0ff';
         document.documentElement.style.setProperty('--bg-scroll-speed', this.params.bgScrollSpeed);
-    }
-
-    showStartScreen() {
-        this.isGameStarted = false;
-        this.stopBGM();
-        document.getElementById('game-over').style.display = 'none';
-        document.getElementById('start-screen').style.display = 'block';
-        this.renderVariationMenu();
     }
 
     resetGame() {
@@ -283,7 +249,6 @@ class Game {
         this.player.hp = this.params.maxHp;
         this.ringColor = this.currentVariation?.theme?.ringColor || '#00f0ff';
 
-        document.getElementById('game-over').style.display = 'none';
         this.startBGM();
         this.updateUI();
         requestAnimationFrame(() => this.gameLoop());
@@ -394,7 +359,7 @@ class Game {
         this.stopBGM();
         audioEngine.playGameOverSound();
 
-        // 敵・エフェクト・キャンバスの残像を完全にクリア
+        // 描画残像完全削除
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
@@ -416,7 +381,9 @@ class Game {
 
         document.getElementById('final-score').innerText = `SCORE: ${this.score} (${this.currentVariation ? this.currentVariation.name : ''})`;
         document.getElementById('high-score-notice').innerText = noticeText;
-        this.setScreenView('GAME_OVER');
+
+        // ゲームオーバーモーダル表示
+        this.showModal('modal-game-over');
     }
 
     gameLoop() {

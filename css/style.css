@@ -80,27 +80,23 @@ canvas {
     margin-top: 3px;
 }
 
-#start-screen,
-#game-over {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
+/* --- フラット独立モーダル共通CSS --- */
+.modal-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    z-index: 9999 !important;
+    z-index: 9999;
     width: 90%;
     max-width: 420px;
     max-height: 90vh;
     overflow-y: auto;
-    background: rgba(5, 7, 14, 0.95) !important;
+    background: rgba(5, 7, 14, 0.95);
     padding: 20px;
     border-radius: 15px;
     border: 1px solid rgba(0, 240, 255, 0.4);
     backdrop-filter: blur(10px);
-}
-
-#game-over {
-    display: none;
 }
 
 h1 {
@@ -110,7 +106,7 @@ h1 {
     margin-bottom: 5px;
 }
 
-#game-over h1 {
+#modal-game-over h1 {
     color: #ff0055;
     text-shadow: 0 0 15px #ff0055;
 }
