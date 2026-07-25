@@ -111,6 +111,8 @@ class Game {
         bindButton('.btn-mode-normal', () => this.openVariationMenu('NORMAL'));
         bindButton('.btn-mode-hard', () => this.openVariationMenu('HARD'));
         bindButton('#variation-select-view .btn-back', () => this.backToModeSelect());
+        bindButton('#game-over .btn-action', () => this.reselectVariation());
+        bindButton('#game-over .btn-back', () => this.showStartScreen());
     }
 
     showStartScreen() {
