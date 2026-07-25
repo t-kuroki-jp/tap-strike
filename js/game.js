@@ -59,13 +59,13 @@ class Game {
         };
 
         window.addEventListener('touchstart', (e) => {
-            if (!isUIElement(e.target)) {
+            if (this.isGameStarted && !this.isGameOver && !isUIElement(e.target)) {
                 this.handleInput(e);
             }
         }, { passive: true });
 
         window.addEventListener('mousedown', (e) => {
-            if (!isUIElement(e.target)) {
+            if (this.isGameStarted && !this.isGameOver && !isUIElement(e.target)) {
                 this.handleInput(e);
             }
         });
@@ -88,9 +88,14 @@ class Game {
         const modeNormal = document.querySelector('.btn-mode-normal');
         const modeHard = document.querySelector('.btn-mode-hard');
 
-        if (modeEasy) modeEasy.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.openVariationMenu('EASY'); };
-        if (modeNormal) modeNormal.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.openVariationMenu('NORMAL'); };
-        if (modeHard) modeHard.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.openVariationMenu('HARD'); };
+        const handleModeClick = (diff) => {
+            audioEngine.init();
+            this.openVariationMenu(diff);
+        };
+
+        if (modeEasy) modeEasy.onclick = () => handleModeClick('EASY');
+        if (modeNormal) modeNormal.onclick = () => handleModeClick('NORMAL');
+        if (modeHard) modeHard.onclick = () => handleModeClick('HARD');
     }
 
     showStartScreen() {
