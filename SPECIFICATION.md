@@ -24,8 +24,12 @@ tap-strike/
 │   ├── list.json
 │   ├── neon_standard.json
 │   ├── cyber_speed.json
-│   └── purple_trick.json
+│   ├── purple_trick.json
+│   └── sharp_suits.json  # 新規追加: シャープ・スーツ・アベニュー
 ├── bgm/                 # BGM音源 (.mp3)
+│   ├── Cyan_Square_Error.mp3
+│   ├── Magenta_Pulse.mp3
+│   └── Sharp_Suits_on_the_Avenue.mp3
 ├── enemies.json         # 敵マスタ定義
 ├── difficulties.json    # 難易度マスタ定義
 ├── SPECIFICATION.md
@@ -40,27 +44,27 @@ tap-strike/
 
 ```json
 {
-  "id": "neon_standard",
-  "name": "ネオン・スタンダード",
-  "difficulty": "EASY",
-  "description": "基本の「クリムゾン・チェイサー」のみが出現するテンポの良い初心者向けバリエーション",
-  "bgm": "bgm/Magenta_Pulse.mp3",
-  "createdAt": "2026-07-25",
-  "updatedAt": "2026-07-25",
+  "id": "sharp_suits",
+  "name": "シャープ・スーツ・アベニュー",
+  "difficulty": "NORMAL",
+  "description": "スタイリッシュなビートに乗って「チェイサー」「スピーダー」「グリッチ」が乱舞する都市型バリエーション",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
   "theme": {
-    "bgGlow": "rgba(0, 240, 255, 0.25)",
-    "gridColor": "rgba(0, 240, 255, 0.3)",
-    "ringColor": "#00f0ff",
-    "playerColor": "#00f0ff"
+    "bgGlow": "rgba(255, 170, 0, 0.25)",
+    "gridColor": "rgba(255, 200, 0, 0.3)",
+    "ringColor": "#ffaa00",
+    "playerColor": "#ffaa00"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 1.0 }
+    { "id": "CHASER", "weight": 0.5 },
+    { "id": "SPEEDER", "weight": 0.3 },
+    { "id": "GLITCH", "weight": 0.2 }
   ],
-  "spawnRate": 220
+  "spawnRate": 170
 }
 ```
-
-- **日付ソート機能**: 各難易度グループ内で `updatedAt` / `createdAt` の最新順に自動整列してカード描画されます。
 
 ---
 
