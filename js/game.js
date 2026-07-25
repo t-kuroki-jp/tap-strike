@@ -80,14 +80,21 @@ class Game {
             title.innerText = `${diffDef.name || diff} モード`;
             sec.appendChild(title);
 
+            // 日付の降順（新しい順）に並び替え
+            items.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
+
             items.forEach(v => {
                 const card = document.createElement('div');
                 card.className = 'var-card';
                 const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
                 const resolved = dataLoader.getResolvedParams(v);
+                const dateStr = v.updatedAt || v.createdAt || '';
 
                 card.innerHTML = `
-                    <div class="var-name">${v.name}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="var-name">${v.name}</span>
+                        ${dateStr ? `<span style="font-size:10px; color:#888;">📅 ${dateStr}</span>` : ''}
+                    </div>
                     <div class="var-desc">${v.description || ''}</div>
                     <div class="var-stats">
                         <span>❤️ HP: ${resolved.maxHp} | ⭕ リング径: ${resolved.targetRadius}</span>

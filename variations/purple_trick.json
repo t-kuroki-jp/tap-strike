@@ -4,6 +4,8 @@
   "difficulty": "HARD",
   "description": "「ファントム・グリッチ」を含む全種類の敵が猛攻を仕掛ける難関バリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
+  "createdAt": "2026-07-25",
+  "updatedAt": "2026-07-25",
   "theme": {
     "bgGlow": "rgba(170, 0, 255, 0.25)",
     "gridColor": "rgba(170, 0, 255, 0.3)",

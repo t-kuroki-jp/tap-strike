@@ -4,6 +4,8 @@
   "difficulty": "NORMAL",
   "description": "「クリムゾン・チェイサー」と高速の「ボルト・スピーダー」が組み合わさったスピーディーなバリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
+  "createdAt": "2026-07-25",
+  "updatedAt": "2026-07-25",
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
     "gridColor": "rgba(0, 255, 136, 0.3)",

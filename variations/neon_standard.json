@@ -4,6 +4,8 @@
   "difficulty": "EASY",
   "description": "基本の「クリムゾン・チェイサー」のみが出現するテンポの良い初心者向けバリエーション",
   "bgm": "bgm/Magenta_Pulse.mp3",
+  "createdAt": "2026-07-25",
+  "updatedAt": "2026-07-25",
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
     "gridColor": "rgba(0, 240, 255, 0.3)",
