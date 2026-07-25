@@ -79,44 +79,12 @@ class Game {
 
     async startApp() {
         await dataLoader.loadAll();
-        this.bindMenuEvents();
         this.showStartScreen();
         this.updateUI();
     }
 
-    bindMenuEvents() {
-        const bindButton = (selector, callback) => {
-            const btn = document.querySelector(selector);
-            if (!btn) return;
-
-            let handled = false;
-            const trigger = (e) => {
-                if (e && e.stopPropagation) e.stopPropagation();
-                if (handled) return;
-                handled = true;
-                setTimeout(() => { handled = false; }, 300);
-                audioEngine.init();
-                callback();
-            };
-
-            btn.ontouchend = (e) => {
-                if (e.cancelable) e.preventDefault();
-                trigger(e);
-            };
-            btn.onclick = (e) => {
-                trigger(e);
-            };
-        };
-
-        bindButton('#btn-mode-easy', () => this.openVariationMenu('EASY'));
-        bindButton('#btn-mode-normal', () => this.openVariationMenu('NORMAL'));
-        bindButton('#btn-mode-hard', () => this.openVariationMenu('HARD'));
-        bindButton('#btn-variation-back', () => this.backToModeSelect());
-        bindButton('#btn-game-over-retry', () => this.reselectVariation());
-        bindButton('#btn-game-over-to-mode', () => this.showStartScreen());
-    }
-
     showStartScreen() {
+        audioEngine.init();
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
@@ -124,10 +92,18 @@ class Game {
         document.getElementById('start-screen').style.display = 'block';
         document.getElementById('mode-select-view').style.display = 'block';
         document.getElementById('variation-select-view').style.display = 'none';
-        this.bindMenuEvents();
+    }
+
+    backToModeSelect() {
+        audioEngine.init();
+        document.getElementById('start-screen').style.display = 'block';
+        document.getElementById('game-over').style.display = 'none';
+        document.getElementById('mode-select-view').style.display = 'block';
+        document.getElementById('variation-select-view').style.display = 'none';
     }
 
     reselectVariation() {
+        audioEngine.init();
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
@@ -137,12 +113,10 @@ class Game {
         this.openVariationMenu(lastDiff);
     }
 
-    backToModeSelect() {
-        document.getElementById('mode-select-view').style.display = 'block';
-        document.getElementById('variation-select-view').style.display = 'none';
-    }
-
     async openVariationMenu(diff) {
+        audioEngine.init();
+        document.getElementById('start-screen').style.display = 'block';
+        document.getElementById('game-over').style.display = 'none';
         document.getElementById('mode-select-view').style.display = 'none';
         document.getElementById('variation-select-view').style.display = 'block';
 
@@ -392,7 +366,6 @@ class Game {
         document.getElementById('final-score').innerText = `SCORE: ${this.score} (${this.currentVariation ? this.currentVariation.name : ''})`;
         document.getElementById('high-score-notice').innerText = noticeText;
         document.getElementById('game-over').style.display = 'block';
-        this.bindMenuEvents();
     }
 
     gameLoop() {
