@@ -111,6 +111,26 @@ class Game {
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
+
+        // オブジェクト・描画要素の完全リセット
+        this.enemies = [];
+        this.particles = [];
+        this.shockwaves = [];
+        if (this.ctx) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+
+        // デフォルト背景テーマの復元
+        const bgElem = document.querySelector('.bg-animated');
+        if (bgElem) {
+            bgElem.style.background = `
+                radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(5, 7, 14, 0.9) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px)
+            `;
+        }
+        document.documentElement.style.setProperty('--bg-scroll-speed', '3s');
+
         this.setScreenView('MODE_SELECT');
     }
 
