@@ -267,7 +267,7 @@
 
         async function loadEnemiesMaster() {
             try {
-                const res = await fetch('enemies.json');
+                const res = await fetch(`enemies.json?t=${Date.now()}`);
                 enemyMaster = await res.json();
             } catch (e) {
                 console.error('Failed to load enemies.json', e);
@@ -277,13 +277,13 @@
         async function loadVariations() {
             await loadEnemiesMaster();
             try {
-                const listRes = await fetch('variations/list.json');
+                const listRes = await fetch(`variations/list.json?t=${Date.now()}`);
                 const filePaths = await listRes.json();
 
                 loadedVariations = [];
                 for (const path of filePaths) {
                     try {
-                        const varRes = await fetch(path);
+                        const varRes = await fetch(`${path}?t=${Date.now()}`);
                         const varData = await varRes.json();
                         loadedVariations.push(varData);
                     } catch (e) {
@@ -500,6 +500,7 @@
                 ringColor = theme.ringColor || '#00f0ff';
                 player.color = theme.playerColor || '#00f0ff';
             }
+            updateUI();
         }
 
         function pickWeightedEnemy(pool) {
