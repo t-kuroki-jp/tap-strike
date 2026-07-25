@@ -84,18 +84,33 @@ class Game {
     }
 
     bindMenuEvents() {
-        const modeEasy = document.querySelector('.btn-mode-easy');
-        const modeNormal = document.querySelector('.btn-mode-normal');
-        const modeHard = document.querySelector('.btn-mode-hard');
+        const bindButton = (selector, callback) => {
+            const btn = document.querySelector(selector);
+            if (!btn) return;
 
-        const handleModeClick = (diff) => {
-            audioEngine.init();
-            this.openVariationMenu(diff);
+            let handled = false;
+            const trigger = (e) => {
+                if (e && e.stopPropagation) e.stopPropagation();
+                if (handled) return;
+                handled = true;
+                setTimeout(() => { handled = false; }, 300);
+                audioEngine.init();
+                callback();
+            };
+
+            btn.ontouchend = (e) => {
+                if (e.cancelable) e.preventDefault();
+                trigger(e);
+            };
+            btn.onclick = (e) => {
+                trigger(e);
+            };
         };
 
-        if (modeEasy) modeEasy.onclick = () => handleModeClick('EASY');
-        if (modeNormal) modeNormal.onclick = () => handleModeClick('NORMAL');
-        if (modeHard) modeHard.onclick = () => handleModeClick('HARD');
+        bindButton('.btn-mode-easy', () => this.openVariationMenu('EASY'));
+        bindButton('.btn-mode-normal', () => this.openVariationMenu('NORMAL'));
+        bindButton('.btn-mode-hard', () => this.openVariationMenu('HARD'));
+        bindButton('#variation-select-view .btn-back', () => this.backToModeSelect());
     }
 
     showStartScreen() {
@@ -169,7 +184,24 @@ class Game {
                     <span class="var-score">🏆 BEST: ${best}</span>
                 </div>
             `;
-            card.onclick = () => this.startGameWithVariation(v);
+
+            let handled = false;
+            const trigger = (e) => {
+                if (e && e.stopPropagation) e.stopPropagation();
+                if (handled) return;
+                handled = true;
+                setTimeout(() => { handled = false; }, 300);
+                this.startGameWithVariation(v);
+            };
+
+            card.ontouchend = (e) => {
+                if (e.cancelable) e.preventDefault();
+                trigger(e);
+            };
+            card.onclick = (e) => {
+                trigger(e);
+            };
+
             container.appendChild(card);
         });
     }

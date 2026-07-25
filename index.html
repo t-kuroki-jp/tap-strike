@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>秒殺！1ボタンアクション Tap Strike</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=1.0.2">
 </head>
 
 <body>
@@ -24,15 +27,15 @@
             <h1>TAP STRIKE</h1>
             <p class="subtitle">プレイするモードを選択！</p>
             <div class="btn-container">
-                <button class="btn-mode btn-mode-easy" onclick="window.game.openVariationMenu('EASY')">
+                <button class="btn-mode btn-mode-easy">
                     <span>🟢 EASY モード</span>
                     <span style="font-size:12px; font-weight:normal;">❤️×3</span>
                 </button>
-                <button class="btn-mode btn-mode-normal" onclick="window.game.openVariationMenu('NORMAL')">
+                <button class="btn-mode btn-mode-normal">
                     <span>🔵 NORMAL モード</span>
                     <span style="font-size:12px; font-weight:normal;">❤️×2</span>
                 </button>
-                <button class="btn-mode btn-mode-hard" onclick="window.game.openVariationMenu('HARD')">
+                <button class="btn-mode btn-mode-hard">
                     <span>🔴 HARD モード</span>
                     <span style="font-size:12px; font-weight:normal;">❤️×1</span>
                 </button>
@@ -42,7 +45,7 @@
         <!-- STEP 2: バリエーション選択画面 -->
         <div id="variation-select-view" style="display: none;">
             <div style="text-align: left;">
-                <button class="btn-back" onclick="window.game.backToModeSelect()">⬅ モード選択に戻る</button>
+                <button class="btn-back">⬅ モード選択に戻る</button>
             </div>
             <h1 id="selected-mode-title" style="font-size: 24px;">EASY</h1>
             <p class="subtitle">バリエーションを選択してスタート！</p>
@@ -64,11 +67,11 @@
 
     <canvas id="gameCanvas"></canvas>
 
-    <!-- モジュールスクリプト -->
-    <script src="js/audio.js"></script>
-    <script src="js/loader.js"></script>
-    <script src="js/entities.js"></script>
-    <script src="js/game.js"></script>
+    <!-- モジュールスクリプト (キャッシュバスティングバージョン指定) -->
+    <script src="js/audio.js?v=1.0.2"></script>
+    <script src="js/loader.js?v=1.0.2"></script>
+    <script src="js/entities.js?v=1.0.2"></script>
+    <script src="js/game.js?v=1.0.2"></script>
 </body>
 
 </html>
