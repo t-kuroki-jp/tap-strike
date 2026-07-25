@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **ターゲットUI/UX**: ネオンサイバーデザイン、直感的かつ爽快なタイミングアクション
+- **特徴**: 1ファイル1バリエーション形式のJSONによる拡張可能なデータ駆動システム
 
 ---
 
@@ -20,76 +20,62 @@
 
 ---
 
-## 3. ゲームシステム仕様
+## 3. バリエーション管理システム (1ファイル1バリエーション仕様)
 
-### 3.1 難易度 (Difficulty)
-| 難易度 | 移動速度 | 出現頻度 | 出現エネミー種類 | 使用BGM |
-| :--- | :--- | :--- | :--- | :--- |
-| **EASY** | 遅い | 低い | NORMAL | `bgm/Magenta_Pulse.mp4` |
-| **NORMAL** | 普通 | 普通 | NORMAL, FAST | `bgm/Magenta_Pulse.mp4` |
-| **HARD** | 速い | 高い | NORMAL, FAST, FEINT | `bgm/Cyan_Square_Error.mp4` |
+`variations/` ディレクトリ内に配置された各 JSON ファイルを動的に読み込み、テーマ（カラー・背景グラデーション）、BGM、出現エネミープール、スポーン速度をゲームに動的適用します。
 
-### 3.2 エネミー種類 (Enemy Types)
-| 種類 | カラー | 形状 | 特徴 |
-| :--- | :--- | :--- | :--- |
-| **NORMAL** | `#ff0055` (ピンク) | 円形 | 標準速度で直線的に接近 |
-| **FAST** | `#ffcc00` (イエロー) | 小さい円形 | 高速で接近 |
-| **FEINT** | `#aa00ff` (パープル) | 四角形 | 判定リング手前で一瞬減速するフェイント行動 |
-
----
-
-## 4. サウンド & 演出仕様 (Audio & Visuals)
-
-### 4.1 サウンド仕様
-- **BGM**: `bgm/` フォルダ配下の音源を難易度に応じてループ再生
-- **SE (効果音)**: Web Audio API Oscillator によるリアルタイム音源生成
-  - ヒット音 (Sine波 周波数上昇)
-  - ミス音 (Sawtooth波 周波数下降)
-  - ゲームオーバー音 (Sawtooth波 重低音)
-
-### 4.2 ビジュアル演出 (Visual Effects)
-- **判定リング演出**: ビートパルス、ヒット時/ミス時のリング発光変化
-- **ショックウェーブ (Shockwave)**: タップ位置を中心に広がるリング波紋
-- **パーティクル (Particles)**: 敵撃破時に飛び散るネオン粒子エフェクト
-- **背景アニメーション**: CSS linear-gradient Grid による無限スクロール背景
-
----
-
-## 5. 推奨ファイル・モジュール構成案
-
-今後コードベースが拡大した際の整理案：
-
+### 3.1 ディレクトリ構造
 ```text
-tap-strike/
-├── index.html           # メインHTML（UI構造）
-├── css/
-│   └── style.css        # スタイル・アニメーション
-├── js/
-│   ├── main.js          # エントリーポイント
-│   ├── game.js          # ゲームループ & 状態管理
-│   ├── player.js        # 自機・判定リング
-│   ├── enemy.js         # エネミー生成 & 移動クラス
-│   ├── audio.js         # BGM・SE再生管理
-│   └── effect.js        # パーティクル・ショックウェーブ
-├── bgm/                 # 音声リソース
-├── docs/
-│   └── SPECIFICATION.md # 本仕様書
-├── README.md
-└── .gitignore
+variations/
+├── list.json              # 読み込み対象のJSONパス一覧
+├── neon_standard.json     # EASY: ネオン・スタンダード
+├── cyber_speed.json       # NORMAL: サイバー・スピード
+└── purple_trick.json      # HARD: パープル・トリック
+```
+
+### 3.2 バリエーションJSON スキーマ例
+```json
+{
+  "id": "neon_standard",
+  "name": "ネオン・スタンダード",
+  "difficulty": "EASY",
+  "description": "説明文",
+  "bgm": "bgm/Magenta_Pulse.mp4",
+  "theme": {
+    "bgGlow": "rgba(0, 240, 255, 0.25)",
+    "gridColor": "rgba(0, 240, 255, 0.3)",
+    "ringColor": "#00f0ff",
+    "playerColor": "#00f0ff"
+  },
+  "enemyPool": [
+    { "type": "NORMAL", "color": "#ff0055", "weight": 1.0, "speedRatio": 1.0, "size": 12 }
+  ],
+  "spawnRate": 220
+}
 ```
 
 ---
 
-## 6. 今後の開発ロードマップ (Roadmap)
+## 4. エネミー種類 (Enemy Types)
 
-- [ ] **Phase 1: 基本機能の拡充**
-  - [ ] LocalStorage を利用したハイスコア・最高コンボの保存機能
-  - [ ] 被弾時・コンボヒット時の画面シェイク演出追加
-- [ ] **Phase 2: モジュール分割・コードリファクタリング**
-  - [ ] `index.html` から CSS / JS を分離
-- [ ] **Phase 3: ゲーム性の拡張**
-  - [ ] 新エネミー（SHIELD敵: 2回タップが必要）の追加
-  - [ ] `PERFECT` / `GREAT` / `GOOD` のタイミング評価システム追加
-  - [ ] フィーバーモード（スコア倍率アップ期間）の実装
-- [ ] **Phase 4: SNS連携・UIブラッシュアップ**
-  - [ ] X (Twitter) スコアシェアボタンの実装
+| 種類 | 形状 | 特徴 |
+| :--- | :--- | :--- |
+| **NORMAL** | 円形 | 標準速度で直線的に接近 |
+| **FAST** | 小さい円形 | 高速で接近 |
+| **FEINT** | 四角形 | 判定リング手前で一瞬減速するフェイント行動 |
+
+---
+
+## 5. データ保存 (LocalStorage)
+
+各バリエーションごとにベストスコアを個別記録します：
+- キー名: `bestScore_${variationId}`
+- タイトル画面の各バリエーションカードおよびゲームオーバー画面で更新・表示
+
+---
+
+## 6. 新規バリエーションの追加方法
+
+1. `variations/` ディレクトリに新しい JSON ファイルを作成します（例: `variations/inferno_mode.json`）。
+2. `variations/list.json` にそのファイルパスを追加します。
+3. これだけでタイトル画面に自動的に新バリエーションカードが追加され、プレイ可能になります！

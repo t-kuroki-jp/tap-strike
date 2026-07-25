@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>秒殺！1ボタンアクション プロトタイプ</title>
+    <title>秒殺！1ボタンアクション Tap Strike</title>
     <style>
         * {
             margin: 0;
@@ -23,7 +23,7 @@
             text-align: center;
         }
 
-        /* --- 動きのある背景（くっきり主張版） --- */
+        /* --- 動きのある背景 --- */
         .bg-animated {
             position: fixed;
             top: 0;
@@ -38,6 +38,7 @@
                 repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
             animation: bgScroll 3s linear infinite;
+            transition: background 0.5s ease;
         }
 
         @keyframes bgScroll {
@@ -88,7 +89,15 @@
             transform: translate(-50%, -50%);
             text-align: center;
             z-index: 20;
-            width: 80%;
+            width: 90%;
+            max-width: 420px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: rgba(5, 7, 14, 0.85);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         #game-over {
@@ -96,10 +105,10 @@
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 30px;
             color: #00f0ff;
             text-shadow: 0 0 15px #00f0ff;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         #game-over h1 {
@@ -107,24 +116,75 @@
             text-shadow: 0 0 15px #ff0055;
         }
 
-        p {
-            font-size: 16px;
-            margin-bottom: 20px;
+        p.subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
             color: #aaa;
         }
+
+        .diff-section {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .diff-title {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .diff-EASY { background: #00ff88; color: #000; }
+        .diff-NORMAL { background: #00f0ff; color: #000; }
+        .diff-HARD { background: #ff0055; color: #fff; }
 
         .btn-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            align-items: center;
+            gap: 10px;
+        }
+
+        .var-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px 14px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .var-card:hover, .var-card:active {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: #00f0ff;
+            transform: scale(0.98);
+        }
+
+        .var-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .var-desc {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 3px;
+        }
+
+        .var-score {
+            font-size: 11px;
+            color: #ffcc00;
+            margin-top: 4px;
+            text-align: right;
         }
 
         .btn-action {
             width: 100%;
-            max-width: 240px;
             padding: 12px 20px;
-            font-size: 18px;
+            font-size: 16px;
             border: none;
             border-radius: 25px;
             font-weight: bold;
@@ -132,34 +192,17 @@
             transition: transform 0.1s;
         }
 
-        .btn-easy {
-            background: #00ff88;
-            color: #000;
-            box-shadow: 0 0 12px #00ff88;
-        }
-
         .btn-normal {
             background: #00f0ff;
             color: #000;
             box-shadow: 0 0 12px #00f0ff;
+            margin-top: 10px;
         }
 
-        .btn-hard {
-            background: #ff0055;
-            color: #fff;
-            box-shadow: 0 0 12px #ff0055;
-        }
-
-        .btn-download {
-            background: #333;
-            color: #fff;
-            font-size: 14px;
-            margin-top: 15px;
-            border: 1px solid #666;
-        }
-
-        .btn-action:active {
-            transform: scale(0.95);
+        .loading-text {
+            font-size: 16px;
+            color: #00f0ff;
+            margin: 20px 0;
         }
     </style>
 </head>
@@ -174,19 +217,17 @@
     </div>
 
     <div id="start-screen">
-        <h1>1-BUTTON ACTION</h1>
-        <p>難易度を選んでスタート！</p>
-        <div class="btn-container">
-            <button class="btn-action btn-easy" onclick="startGame('EASY')">EASY（かんたん）</button>
-            <button class="btn-action btn-normal" onclick="startGame('NORMAL')">NORMAL（ふつう）</button>
-            <button class="btn-action btn-hard" onclick="startGame('HARD')">HARD（むずかしい）</button>
-            <button class="btn-action btn-download" onclick="downloadSelf()">📥 index.htmlを保存</button>
+        <h1>TAP STRIKE</h1>
+        <p class="subtitle">バリエーションを選択してスタート！</p>
+        <div id="variation-list" class="btn-container">
+            <div class="loading-text">バリエーション読込中...</div>
         </div>
     </div>
 
     <div id="game-over">
         <h1>GAME OVER</h1>
-        <p id="final-score">SCORE: 0</p>
+        <p id="final-score" style="font-size: 18px; color: #fff; margin-bottom: 10px;">SCORE: 0</p>
+        <p id="high-score-notice" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px;"></p>
         <button class="btn-action btn-normal" onclick="showStartScreen()">TITLE BACK</button>
     </div>
 
@@ -203,18 +244,68 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // --- ダウンロード機能 ---
-        function downloadSelf() {
-            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'index.html';
-            a.click();
-            URL.revokeObjectURL(a.href);
+        // --- バリエーション動的読込システム ---
+        let loadedVariations = [];
+        let currentVariation = null;
+
+        async function loadVariations() {
+            try {
+                const listRes = await fetch('variations/list.json');
+                const filePaths = await listRes.json();
+
+                loadedVariations = [];
+                for (const path of filePaths) {
+                    try {
+                        const varRes = await fetch(path);
+                        const varData = await varRes.json();
+                        loadedVariations.push(varData);
+                    } catch (e) {
+                        console.error(`Failed to load variation at ${path}`, e);
+                    }
+                }
+                renderVariationMenu();
+            } catch (e) {
+                console.error('Failed to load variations list', e);
+                document.getElementById('variation-list').innerHTML = '<div class="loading-text" style="color:#ff0055">バリエーションの読込に失敗しました</div>';
+            }
         }
 
-        // --- 音声＆フルBGM再生システム ---
+        function renderVariationMenu() {
+            const container = document.getElementById('variation-list');
+            container.innerHTML = '';
+
+            const diffs = ['EASY', 'NORMAL', 'HARD'];
+            diffs.forEach(diff => {
+                const items = loadedVariations.filter(v => v.difficulty === diff);
+                if (items.length === 0) return;
+
+                const sec = document.createElement('div');
+                sec.className = 'diff-section';
+
+                const title = document.createElement('div');
+                title.className = `diff-title diff-${diff}`;
+                title.innerText = `${diff} モード`;
+                sec.appendChild(title);
+
+                items.forEach(v => {
+                    const card = document.createElement('div');
+                    card.className = 'var-card';
+                    const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
+
+                    card.innerHTML = `
+                        <div class="var-name">${v.name}</div>
+                        <div class="var-desc">${v.description || ''}</div>
+                        <div class="var-score">🏆 BEST: ${best}</div>
+                    `;
+                    card.onclick = () => startGameWithVariation(v);
+                    sec.appendChild(card);
+                });
+
+                container.appendChild(sec);
+            });
+        }
+
+        // --- 音声システム ---
         let audioCtx = null;
         let bgmInterval = null;
         let bgmStep = 0;
@@ -278,21 +369,15 @@
         function startBGM() {
             stopBGM();
 
-            // 難易度に応じてBGMファイルを割り当て
-            let selectedBgm = 'bgm/Magenta_Pulse.mp4';
-            if (currentDifficulty === 'HARD') {
-                selectedBgm = 'bgm/Cyan_Square_Error.mp4';
+            if (currentVariation && currentVariation.bgm) {
+                currentBgmAudio = new Audio(currentVariation.bgm);
+                currentBgmAudio.loop = true;
+                currentBgmAudio.volume = 0.4;
+                currentBgmAudio.play().catch(e => console.log('BGM Play error:', e));
             }
 
-            currentBgmAudio = new Audio(selectedBgm);
-            currentBgmAudio.loop = true;
-            currentBgmAudio.volume = 0.4;
-            currentBgmAudio.play().catch(e => console.log('BGM Play error:', e));
-
             bgmStep = 0;
-            let bpmTempo = 187;
-            if (currentDifficulty === 'EASY') bpmTempo = 220;
-            if (currentDifficulty === 'HARD') bpmTempo = 150;
+            const spawnInterval = currentVariation ? (currentVariation.spawnRate || 187) : 187;
 
             bgmInterval = setInterval(() => {
                 if (isGameOver || !isGameStarted) return;
@@ -304,7 +389,7 @@
                 }
 
                 bgmStep++;
-            }, bpmTempo);
+            }, spawnInterval);
         }
 
         function stopBGM() {
@@ -324,7 +409,6 @@
         let combo = 0;
         let isGameOver = false;
         let isGameStarted = false;
-        let currentDifficulty = 'NORMAL';
         let enemies = [];
         let particles = [];
         let shockwaves = [];
@@ -342,7 +426,19 @@
             y: 0,
             radius: 20,
             targetRadius: 60,
+            color: '#00f0ff'
         };
+
+        function pickWeightedEnemy(pool) {
+            if (!pool || pool.length === 0) return { type: 'NORMAL', color: '#ff0055', speedRatio: 1.0, size: 12 };
+            let totalWeight = pool.reduce((sum, item) => sum + (item.weight || 1), 0);
+            let rand = Math.random() * totalWeight;
+            for (let item of pool) {
+                if (rand < (item.weight || 1)) return item;
+                rand -= (item.weight || 1);
+            }
+            return pool[0];
+        }
 
         class Enemy {
             constructor() {
@@ -351,43 +447,13 @@
                 this.x = canvas.width / 2 + Math.cos(angle) * distance;
                 this.y = canvas.height / 2 + Math.sin(angle) * distance;
 
-                const rand = Math.random();
+                const pool = currentVariation ? currentVariation.enemyPool : [{ type: 'NORMAL', color: '#ff0055', weight: 1.0, speedRatio: 1.0, size: 12 }];
+                const picked = pickWeightedEnemy(pool);
 
-                if (currentDifficulty === 'EASY') {
-                    this.type = 'NORMAL';
-                    this.color = '#ff0055';
-                    this.speed = (1.5 + Math.random() * 0.3) * gameSpeed;
-                    this.size = 12;
-                } else if (currentDifficulty === 'NORMAL') {
-                    if (rand < 0.75) {
-                        this.type = 'NORMAL';
-                        this.color = '#ff0055';
-                        this.speed = (2.0 + Math.random() * 0.4) * gameSpeed;
-                        this.size = 12;
-                    } else {
-                        this.type = 'FAST';
-                        this.color = '#ffcc00';
-                        this.speed = (3.2 + Math.random() * 0.4) * gameSpeed;
-                        this.size = 9;
-                    }
-                } else {
-                    if (rand < 0.5) {
-                        this.type = 'NORMAL';
-                        this.color = '#ff0055';
-                        this.speed = (2.5 + Math.random() * 0.5) * gameSpeed;
-                        this.size = 12;
-                    } else if (rand < 0.8) {
-                        this.type = 'FAST';
-                        this.color = '#ffcc00';
-                        this.speed = (4.0 + Math.random() * 0.5) * gameSpeed;
-                        this.size = 9;
-                    } else {
-                        this.type = 'FEINT';
-                        this.color = '#aa00ff';
-                        this.speed = (3.0 + Math.random() * 0.5) * gameSpeed;
-                        this.size = 13;
-                    }
-                }
+                this.type = picked.type;
+                this.color = picked.color || '#ff0055';
+                this.speed = (2.0 * (picked.speedRatio || 1.0)) * gameSpeed;
+                this.size = picked.size || 12;
             }
 
             update() {
@@ -481,9 +547,24 @@
             }
         }
 
-        function startGame(diff) {
+        function applyTheme(theme) {
+            if (!theme) return;
+            const bgElem = document.querySelector('.bg-animated');
+            if (bgElem) {
+                bgElem.style.background = `
+                    radial-gradient(circle, ${theme.bgGlow || 'rgba(0, 240, 255, 0.25)'} 0%, rgba(5, 7, 14, 0.9) 100%),
+                    repeating-linear-gradient(0deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px),
+                    repeating-linear-gradient(90deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px)
+                `;
+            }
+            ringColor = theme.ringColor || '#00f0ff';
+            player.color = theme.playerColor || '#00f0ff';
+        }
+
+        function startGameWithVariation(variation) {
             initAudio();
-            currentDifficulty = diff;
+            currentVariation = variation;
+            applyTheme(variation.theme);
             isGameStarted = true;
             document.getElementById('start-screen').style.display = 'none';
             resetGame();
@@ -491,8 +572,10 @@
 
         function showStartScreen() {
             isGameStarted = false;
+            stopBGM();
             document.getElementById('game-over').style.display = 'none';
             document.getElementById('start-screen').style.display = 'block';
+            renderVariationMenu();
         }
 
         function handleInput(e) {
@@ -537,8 +620,8 @@
             if (hit) {
                 playHitSound();
                 ringPulse = 15;
-                ringColor = '#00f0ff';
-                shockwaves.push(new Shockwave(touchX, touchY, '#00f0ff'));
+                ringColor = currentVariation && currentVariation.theme ? currentVariation.theme.ringColor : '#00f0ff';
+                shockwaves.push(new Shockwave(touchX, touchY, ringColor));
             } else {
                 playMissSound();
                 combo = 0;
@@ -566,7 +649,21 @@
             isGameOver = true;
             stopBGM();
             playGameOverSound();
-            document.getElementById('final-score').innerText = `FINAL SCORE: ${score} (${currentDifficulty})`;
+
+            let noticeText = '';
+            if (currentVariation) {
+                const storageKey = `bestScore_${currentVariation.id}`;
+                const prevBest = parseInt(localStorage.getItem(storageKey) || '0', 10);
+                if (score > prevBest) {
+                    localStorage.setItem(storageKey, score.toString());
+                    noticeText = '🎉 NEW RECORD!';
+                } else {
+                    noticeText = `BEST SCORE: ${prevBest}`;
+                }
+            }
+
+            document.getElementById('final-score').innerText = `SCORE: ${score} (${currentVariation ? currentVariation.name : ''})`;
+            document.getElementById('high-score-notice').innerText = noticeText;
             document.getElementById('game-over').style.display = 'block';
         }
 
@@ -578,7 +675,7 @@
             particles = [];
             shockwaves = [];
             ringPulse = 0;
-            ringColor = '#00f0ff';
+            ringColor = currentVariation && currentVariation.theme ? currentVariation.theme.ringColor : '#00f0ff';
             missPenaltyTimer = 0;
             lastTapTime = 0;
             isGameOver = false;
@@ -602,7 +699,7 @@
                 missPenaltyTimer--;
                 ringColor = '#ff0055';
             } else if (ringPulse === 0) {
-                ringColor = '#00f0ff';
+                ringColor = currentVariation && currentVariation.theme ? currentVariation.theme.ringColor : '#00f0ff';
             }
 
             if (ringPulse > 0) {
@@ -612,8 +709,8 @@
 
             // 自機
             ctx.save();
-            ctx.fillStyle = missPenaltyTimer > 0 ? '#ff0055' : '#00f0ff';
-            ctx.shadowColor = missPenaltyTimer > 0 ? '#ff0055' : '#00f0ff';
+            ctx.fillStyle = missPenaltyTimer > 0 ? '#ff0055' : player.color;
+            ctx.shadowColor = missPenaltyTimer > 0 ? '#ff0055' : player.color;
             ctx.shadowBlur = 15;
             ctx.beginPath();
             ctx.arc(centerX, centerY, player.radius, 0, Math.PI * 2);
@@ -662,11 +759,13 @@
 
         window.addEventListener('touchstart', handleInput, { passive: false });
         window.addEventListener('mousedown', (e) => {
-            if (e.target.tagName !== 'BUTTON') {
+            if (e.target.tagName !== 'BUTTON' && !e.target.closest('#start-screen') && !e.target.closest('#game-over')) {
                 handleInput(e);
             }
         });
 
+        // 初期化
+        loadVariations();
         updateUI();
     </script>
 </body>
