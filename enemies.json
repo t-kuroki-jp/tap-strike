@@ -1,0 +1,29 @@
+{
+  "CHASER": {
+    "name": "クリムゾン・チェイサー",
+    "description": "標準的なスピードでまっすぐ接近してくる基本型エネミー",
+    "color": "#ff0055",
+    "shape": "circle",
+    "speedRatio": 1.0,
+    "size": 12,
+    "behavior": "straight"
+  },
+  "SPEEDER": {
+    "name": "ボルト・スピーダー",
+    "description": "高スピードで突入してくる小型の高速型エネミー",
+    "color": "#ffcc00",
+    "shape": "circle",
+    "speedRatio": 1.5,
+    "size": 9,
+    "behavior": "straight"
+  },
+  "GLITCH": {
+    "name": "ファントム・グリッチ",
+    "description": "リング直前で一瞬減速しタイミングを外してくる幻影エネミー",
+    "color": "#aa00ff",
+    "shape": "square",
+    "speedRatio": 1.2,
+    "size": 13,
+    "behavior": "feint"
+  }
+}

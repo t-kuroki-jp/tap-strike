@@ -244,11 +244,22 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // --- バリエーション動的読込システム ---
+        // --- バリエーション＆敵マスタ動的読込システム ---
         let loadedVariations = [];
         let currentVariation = null;
+        let enemyMaster = {};
+
+        async function loadEnemiesMaster() {
+            try {
+                const res = await fetch('enemies.json');
+                enemyMaster = await res.json();
+            } catch (e) {
+                console.error('Failed to load enemies.json', e);
+            }
+        }
 
         async function loadVariations() {
+            await loadEnemiesMaster();
             try {
                 const listRes = await fetch('variations/list.json');
                 const filePaths = await listRes.json();
@@ -430,7 +441,7 @@
         };
 
         function pickWeightedEnemy(pool) {
-            if (!pool || pool.length === 0) return { type: 'NORMAL', color: '#ff0055', speedRatio: 1.0, size: 12 };
+            if (!pool || pool.length === 0) return { id: 'CHASER', weight: 1.0 };
             let totalWeight = pool.reduce((sum, item) => sum + (item.weight || 1), 0);
             let rand = Math.random() * totalWeight;
             for (let item of pool) {
@@ -447,13 +458,19 @@
                 this.x = canvas.width / 2 + Math.cos(angle) * distance;
                 this.y = canvas.height / 2 + Math.sin(angle) * distance;
 
-                const pool = currentVariation ? currentVariation.enemyPool : [{ type: 'NORMAL', color: '#ff0055', weight: 1.0, speedRatio: 1.0, size: 12 }];
-                const picked = pickWeightedEnemy(pool);
+                const pool = currentVariation ? currentVariation.enemyPool : [{ id: 'CHASER', weight: 1.0 }];
+                const pickedItem = pickWeightedEnemy(pool);
+                const masterData = enemyMaster[pickedItem.id] || {
+                    name: 'クリムゾン・チェイサー', color: '#ff0055', shape: 'circle', speedRatio: 1.0, size: 12, behavior: 'straight'
+                };
 
-                this.type = picked.type;
-                this.color = picked.color || '#ff0055';
-                this.speed = (2.0 * (picked.speedRatio || 1.0)) * gameSpeed;
-                this.size = picked.size || 12;
+                this.id = pickedItem.id;
+                this.name = masterData.name;
+                this.color = masterData.color || '#ff0055';
+                this.shape = masterData.shape || 'circle';
+                this.behavior = masterData.behavior || 'straight';
+                this.speed = (2.0 * (masterData.speedRatio || 1.0)) * gameSpeed;
+                this.size = masterData.size || 12;
             }
 
             update() {
@@ -464,7 +481,7 @@
                 const dist = Math.hypot(dx, dy);
 
                 let currentSpeed = this.speed;
-                if (this.type === 'FEINT' && dist < player.targetRadius + 60 && dist > player.targetRadius + 15) {
+                if (this.behavior === 'feint' && dist < player.targetRadius + 60 && dist > player.targetRadius + 15) {
                     currentSpeed *= 0.3;
                 }
 
@@ -480,7 +497,7 @@
                 ctx.shadowColor = this.color;
                 ctx.shadowBlur = 10;
                 ctx.beginPath();
-                if (this.type === 'FEINT') {
+                if (this.shape === 'square') {
                     ctx.rect(this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
                 } else {
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);

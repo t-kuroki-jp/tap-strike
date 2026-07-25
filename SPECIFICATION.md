@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 1ファイル1バリエーション形式のJSONによる拡張可能なデータ駆動システム
+- **特徴**: 1ファイル1バリエーションJSON & 敵マスタ外部化 (`enemies.json`) によるデータ駆動アーキテクチャ
 
 ---
 
@@ -15,54 +15,71 @@
 3. タイミングよくヒットすると敵を撃破し、スコアとコンボが加算されます。
 4. 敵が自機（中心点）に到達するとゲームオーバーになります。
 
-### 操作方法
-- **タップ / マウスクリック**: タイミング判定・敵の撃破
-
 ---
 
-## 3. バリエーション管理システム (1ファイル1バリエーション仕様)
+## 3. 敵マスタ定義 (`enemies.json`)
 
-`variations/` ディレクトリ内に配置された各 JSON ファイルを動的に読み込み、テーマ（カラー・背景グラデーション）、BGM、出現エネミープール、スポーン速度をゲームに動的適用します。
+すべての敵の種類・名前・カラー・形状・移動動作（behavior）は `enemies.json` で統一管理されます。
 
-### 3.1 ディレクトリ構造
-```text
-variations/
-├── list.json              # 読み込み対象のJSONパス一覧
-├── neon_standard.json     # EASY: ネオン・スタンダード
-├── cyber_speed.json       # NORMAL: サイバー・スピード
-└── purple_trick.json      # HARD: パープル・トリック
-```
-
-### 3.2 バリエーションJSON スキーマ例
 ```json
 {
-  "id": "neon_standard",
-  "name": "ネオン・スタンダード",
-  "difficulty": "EASY",
-  "description": "説明文",
-  "bgm": "bgm/Magenta_Pulse.mp4",
-  "theme": {
-    "bgGlow": "rgba(0, 240, 255, 0.25)",
-    "gridColor": "rgba(0, 240, 255, 0.3)",
-    "ringColor": "#00f0ff",
-    "playerColor": "#00f0ff"
+  "CHASER": {
+    "name": "クリムゾン・チェイサー",
+    "description": "標準的なスピードでまっすぐ接近してくる基本型エネミー",
+    "color": "#ff0055",
+    "shape": "circle",
+    "speedRatio": 1.0,
+    "size": 12,
+    "behavior": "straight"
   },
-  "enemyPool": [
-    { "type": "NORMAL", "color": "#ff0055", "weight": 1.0, "speedRatio": 1.0, "size": 12 }
-  ],
-  "spawnRate": 220
+  "SPEEDER": {
+    "name": "ボルト・スピーダー",
+    "description": "高スピードで突入してくる小型の高速型エネミー",
+    "color": "#ffcc00",
+    "shape": "circle",
+    "speedRatio": 1.5,
+    "size": 9,
+    "behavior": "straight"
+  },
+  "GLITCH": {
+    "name": "ファントム・グリッチ",
+    "description": "リング直前で一瞬減速しタイミングを外してくる幻影エネミー",
+    "color": "#aa00ff",
+    "shape": "square",
+    "speedRatio": 1.2,
+    "size": 13,
+    "behavior": "feint"
+  }
 }
 ```
 
 ---
 
-## 4. エネミー種類 (Enemy Types)
+## 4. バリエーション管理システム (1ファイル1バリエーション仕様)
 
-| 種類 | 形状 | 特徴 |
-| :--- | :--- | :--- |
-| **NORMAL** | 円形 | 標準速度で直線的に接近 |
-| **FAST** | 小さい円形 | 高速で接近 |
-| **FEINT** | 四角形 | 判定リング手前で一瞬減速するフェイント行動 |
+`variations/` ディレクトリ内に配置された各 JSON ファイルを動的に読み込み、テーマ（カラー・背景グラデーション）、BGM、出現エネミープール（`id`と`weight`）、スポーン速度をゲームに動的適用します。
+
+### バリエーションJSON 例
+```json
+{
+  "id": "cyber_speed",
+  "name": "サイバー・スピード",
+  "difficulty": "NORMAL",
+  "description": "「クリムゾン・チェイサー」と高速の「ボルト・スピーダー」が組み合わさったスピーディーなバリエーション",
+  "bgm": "bgm/Cyan_Square_Error.mp3",
+  "theme": {
+    "bgGlow": "rgba(0, 255, 136, 0.25)",
+    "gridColor": "rgba(0, 255, 136, 0.3)",
+    "ringColor": "#00ff88",
+    "playerColor": "#00ff88"
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 0.7 },
+    { "id": "SPEEDER", "weight": 0.3 }
+  ],
+  "spawnRate": 187
+}
+```
 
 ---
 
@@ -70,12 +87,10 @@ variations/
 
 各バリエーションごとにベストスコアを個別記録します：
 - キー名: `bestScore_${variationId}`
-- タイトル画面の各バリエーションカードおよびゲームオーバー画面で更新・表示
 
 ---
 
-## 6. 新規バリエーションの追加方法
+## 6. 新しい敵やバリエーションの追加手順
 
-1. `variations/` ディレクトリに新しい JSON ファイルを作成します（例: `variations/inferno_mode.json`）。
-2. `variations/list.json` にそのファイルパスを追加します。
-3. これだけでタイトル画面に自動的に新バリエーションカードが追加され、プレイ可能になります！
+1. **新しい敵を追加したい場合**: `enemies.json` に新しい敵のID（例: `"SHIELD"`）とパラメータ（名前・色・形状・スピード・動作）を追加。
+2. **新しいバリエーションを追加したい場合**: `variations/` に新規JSONを作成し、出現させたい敵IDと重み（`weight`）を指定後、`variations/list.json` にパスを追加。

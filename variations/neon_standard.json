@@ -2,7 +2,7 @@
   "id": "neon_standard",
   "name": "ネオン・スタンダード",
   "difficulty": "EASY",
-  "description": "基本のNORMAL敵（赤）のみが出現するテンポの良い初心者向けバリエーション",
+  "description": "基本の「クリムゾン・チェイサー」のみが出現するテンポの良い初心者向けバリエーション",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
@@ -11,7 +11,7 @@
     "playerColor": "#00f0ff"
   },
   "enemyPool": [
-    { "type": "NORMAL", "color": "#ff0055", "weight": 1.0, "speedRatio": 1.0, "size": 12 }
+    { "id": "CHASER", "weight": 1.0 }
   ],
   "spawnRate": 220
 }

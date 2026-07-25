@@ -2,7 +2,7 @@
   "id": "purple_trick",
   "name": "パープル・トリック",
   "difficulty": "HARD",
-  "description": "FEINT敵（紫・手前で減速）を含む全種類の敵が猛攻を仕掛ける難関バリエーション",
+  "description": "「ファントム・グリッチ」を含む全種類の敵が猛攻を仕掛ける難関バリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
   "theme": {
     "bgGlow": "rgba(170, 0, 255, 0.25)",
@@ -11,9 +11,9 @@
     "playerColor": "#aa00ff"
   },
   "enemyPool": [
-    { "type": "NORMAL", "color": "#ff0055", "weight": 0.4, "speedRatio": 1.3, "size": 12 },
-    { "type": "FAST", "color": "#ffcc00", "weight": 0.3, "speedRatio": 1.5, "size": 9 },
-    { "type": "FEINT", "color": "#aa00ff", "weight": 0.3, "speedRatio": 1.2, "size": 13 }
+    { "id": "CHASER", "weight": 0.4 },
+    { "id": "SPEEDER", "weight": 0.3 },
+    { "id": "GLITCH", "weight": 0.3 }
   ],
   "spawnRate": 150
 }

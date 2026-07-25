@@ -2,7 +2,7 @@
   "id": "cyber_speed",
   "name": "サイバー・スピード",
   "difficulty": "NORMAL",
-  "description": "NORMAL敵（赤）とFAST敵（黄・高速）が組み合わさったスピーディーなバリエーション",
+  "description": "「クリムゾン・チェイサー」と高速の「ボルト・スピーダー」が組み合わさったスピーディーなバリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
@@ -11,8 +11,8 @@
     "playerColor": "#00ff88"
   },
   "enemyPool": [
-    { "type": "NORMAL", "color": "#ff0055", "weight": 0.7, "speedRatio": 1.2, "size": 12 },
-    { "type": "FAST", "color": "#ffcc00", "weight": 0.3, "speedRatio": 1.4, "size": 9 }
+    { "id": "CHASER", "weight": 0.7 },
+    { "id": "SPEEDER", "weight": 0.3 }
   ],
   "spawnRate": 187
 }
