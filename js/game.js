@@ -77,6 +77,29 @@ class Game {
         this.canvas.height = window.innerHeight;
     }
 
+    setScreenView(viewName) {
+        const gameOver = document.getElementById('game-over');
+        const startScreen = document.getElementById('start-screen');
+        const modeSelect = document.getElementById('mode-select-view');
+        const varSelect = document.getElementById('variation-select-view');
+
+        // すべての表示状態を確実に初期化
+        if (gameOver) gameOver.style.display = 'none';
+        if (startScreen) startScreen.style.display = 'none';
+        if (modeSelect) modeSelect.style.display = 'none';
+        if (varSelect) varSelect.style.display = 'none';
+
+        if (viewName === 'MODE_SELECT') {
+            if (startScreen) startScreen.style.display = 'block';
+            if (modeSelect) modeSelect.style.display = 'block';
+        } else if (viewName === 'VARIATION_SELECT') {
+            if (startScreen) startScreen.style.display = 'block';
+            if (varSelect) varSelect.style.display = 'block';
+        } else if (viewName === 'GAME_OVER') {
+            if (gameOver) gameOver.style.display = 'block';
+        }
+    }
+
     async startApp() {
         await dataLoader.loadAll();
         this.showStartScreen();
@@ -88,16 +111,7 @@ class Game {
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
-
-        const gameOver = document.getElementById('game-over');
-        const startScreen = document.getElementById('start-screen');
-        const modeSelect = document.getElementById('mode-select-view');
-        const varSelect = document.getElementById('variation-select-view');
-
-        if (gameOver) gameOver.style.setProperty('display', 'none', 'important');
-        if (startScreen) startScreen.style.setProperty('display', 'block', 'important');
-        if (modeSelect) modeSelect.style.setProperty('display', 'block', 'important');
-        if (varSelect) varSelect.style.setProperty('display', 'none', 'important');
+        this.setScreenView('MODE_SELECT');
     }
 
     backToModeSelect() {
@@ -109,18 +123,18 @@ class Game {
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
-        document.getElementById('game-over').style.display = 'none';
-        document.getElementById('start-screen').style.display = 'block';
         const lastDiff = this.currentVariation?.difficulty || 'EASY';
         this.openVariationMenu(lastDiff);
     }
 
     async openVariationMenu(diff) {
         audioEngine.init();
-        document.getElementById('start-screen').style.display = 'block';
-        document.getElementById('game-over').style.display = 'none';
-        document.getElementById('mode-select-view').style.display = 'none';
-        document.getElementById('variation-select-view').style.display = 'block';
+        if (!diff || typeof diff !== 'string') {
+            diff = this.currentVariation?.difficulty || 'EASY';
+        }
+        diff = diff.toUpperCase();
+
+        this.setScreenView('VARIATION_SELECT');
 
         const diffDef = dataLoader.difficultiesMaster[diff] || {};
         const titleElem = document.getElementById('selected-mode-title');
@@ -194,7 +208,7 @@ class Game {
         this.applyTheme(variation.theme);
 
         this.isGameStarted = true;
-        document.getElementById('start-screen').style.display = 'none';
+        this.setScreenView('PLAYING');
         this.resetGame();
     }
 
@@ -364,7 +378,7 @@ class Game {
 
         document.getElementById('final-score').innerText = `SCORE: ${this.score} (${this.currentVariation ? this.currentVariation.name : ''})`;
         document.getElementById('high-score-notice').innerText = noticeText;
-        document.getElementById('game-over').style.display = 'block';
+        this.setScreenView('GAME_OVER');
     }
 
     gameLoop() {
