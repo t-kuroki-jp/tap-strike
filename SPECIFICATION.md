@@ -4,93 +4,69 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 1ファイル1バリエーションJSON & 敵マスタ外部化 (`enemies.json`) によるデータ駆動アーキテクチャ
+- **特徴**: 完全パラメータ駆動（Data-Driven）による無限ゲームバリエーション設計
 
 ---
 
-## 2. ゲームルール & 操作方法
-### 基本ルール
-1. 画面中央の自機に向かって、360度全方位から敵（エネミー）が接近してきます。
-2. 自機の周囲に表示されている「判定リング」に敵が重なるタイミングで画面を**タップ**または**クリック**します。
-3. タイミングよくヒットすると敵を撃破し、スコアとコンボが加算されます。
-4. 敵が自機（中心点）に到達するとゲームオーバーになります。
+## 2. バリエーション設定パラメータ仕様 (`variations/*.json`)
+
+1つのJSONファイルに以下の全パラメータを定義することで、ソースコードを変更せずに無限の異なるゲーム性・ルールを生み出すことができます。
+
+```json
+{
+  "id": "neon_standard",
+  "name": "ネオン・スタンダード",
+  "difficulty": "EASY",
+  "description": "大きな判定リングとHP 3つの初心者安心バリエーション！基本敵のみ出現。",
+  "bgm": "bgm/Magenta_Pulse.mp3",
+  "gameplay": {
+    "targetRadius": 70,       // 判定リングのサイズ (px)
+    "hitWindow": 30,          // 判定の甘さ (px)
+    "tapCooldown": 120,       // タップ連打クールダウン (ms)
+    "speedIncrement": 0.005,  // 敵撃破ごとの加速率
+    "baseScore": 100          // 基本スコア
+  },
+  "player": {
+    "maxHp": 3,               // プレイヤーの最大HP (ライフ数)
+    "missPenaltyDuration": 12 // ミス時の操作不能フレーム数
+  },
+  "visuals": {
+    "particleCount": 20,      // 撃破時パーティクル量
+    "bgScrollSpeed": "4s"     // 背景グリッドの流れるスピード
+  },
+  "theme": {
+    "bgGlow": "rgba(0, 240, 255, 0.25)",
+    "gridColor": "rgba(0, 240, 255, 0.3)",
+    "ringColor": "#00f0ff",
+    "playerColor": "#00f0ff"
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 1.0 }
+  ],
+  "spawnRate": 220
+}
+```
 
 ---
 
 ## 3. 敵マスタ定義 (`enemies.json`)
 
-すべての敵の種類・名前・カラー・形状・移動動作（behavior）は `enemies.json` で統一管理されます。
-
-```json
-{
-  "CHASER": {
-    "name": "クリムゾン・チェイサー",
-    "description": "標準的なスピードでまっすぐ接近してくる基本型エネミー",
-    "color": "#ff0055",
-    "shape": "circle",
-    "speedRatio": 1.0,
-    "size": 12,
-    "behavior": "straight"
-  },
-  "SPEEDER": {
-    "name": "ボルト・スピーダー",
-    "description": "高スピードで突入してくる小型の高速型エネミー",
-    "color": "#ffcc00",
-    "shape": "circle",
-    "speedRatio": 1.5,
-    "size": 9,
-    "behavior": "straight"
-  },
-  "GLITCH": {
-    "name": "ファントム・グリッチ",
-    "description": "リング直前で一瞬減速しタイミングを外してくる幻影エネミー",
-    "color": "#aa00ff",
-    "shape": "square",
-    "speedRatio": 1.2,
-    "size": 13,
-    "behavior": "feint"
-  }
-}
-```
+`enemies.json` で定義された敵タイプを `id` で指定します：
+- **`CHASER`**: クリムゾン・チェイサー（基本直線型）
+- **`SPEEDER`**: ボルト・スピーダー（高速突入型）
+- **`GLITCH`**: ファントム・グリッチ（リング手前減速フェイント型）
 
 ---
 
-## 4. バリエーション管理システム (1ファイル1バリエーション仕様)
+## 4. データ保存 (LocalStorage)
 
-`variations/` ディレクトリ内に配置された各 JSON ファイルを動的に読み込み、テーマ（カラー・背景グラデーション）、BGM、出現エネミープール（`id`と`weight`）、スポーン速度をゲームに動的適用します。
-
-### バリエーションJSON 例
-```json
-{
-  "id": "cyber_speed",
-  "name": "サイバー・スピード",
-  "difficulty": "NORMAL",
-  "description": "「クリムゾン・チェイサー」と高速の「ボルト・スピーダー」が組み合わさったスピーディーなバリエーション",
-  "bgm": "bgm/Cyan_Square_Error.mp3",
-  "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
-  },
-  "enemyPool": [
-    { "id": "CHASER", "weight": 0.7 },
-    { "id": "SPEEDER", "weight": 0.3 }
-  ],
-  "spawnRate": 187
-}
-```
-
----
-
-## 5. データ保存 (LocalStorage)
-
-各バリエーションごとにベストスコアを個別記録します：
+各バリエーションごとにハイスコアを個別に管理・保存：
 - キー名: `bestScore_${variationId}`
 
 ---
 
-## 6. 新しい敵やバリエーションの追加手順
+## 5. 無限バリエーション作成手順
 
-1. **新しい敵を追加したい場合**: `enemies.json` に新しい敵のID（例: `"SHIELD"`）とパラメータ（名前・色・形状・スピード・動作）を追加。
-2. **新しいバリエーションを追加したい場合**: `variations/` に新規JSONを作成し、出現させたい敵IDと重み（`weight`）を指定後、`variations/list.json` にパスを追加。
+1. `variations/` に新しい JSON ファイルを作成します。
+2. `gameplay`, `player`, `visuals`, `theme`, `enemyPool` の値を自由に変更してオリジナルゲームを作成します。
+3. `variations/list.json` にそのパスを追加します。

@@ -2,8 +2,23 @@
   "id": "neon_standard",
   "name": "ネオン・スタンダード",
   "difficulty": "EASY",
-  "description": "基本の「クリムゾン・チェイサー」のみが出現するテンポの良い初心者向けバリエーション",
+  "description": "大きな判定リングとHP 3つの初心者安心バリエーション！基本敵のみ出現。",
   "bgm": "bgm/Magenta_Pulse.mp3",
+  "gameplay": {
+    "targetRadius": 70,
+    "hitWindow": 30,
+    "tapCooldown": 120,
+    "speedIncrement": 0.005,
+    "baseScore": 100
+  },
+  "player": {
+    "maxHp": 3,
+    "missPenaltyDuration": 12
+  },
+  "visuals": {
+    "particleCount": 20,
+    "bgScrollSpeed": "4s"
+  },
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
     "gridColor": "rgba(0, 240, 255, 0.3)",

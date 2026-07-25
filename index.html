@@ -37,7 +37,7 @@
                 repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px),
                 repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
-            animation: bgScroll 3s linear infinite;
+            animation: bgScroll var(--bg-scroll-speed, 3s) linear infinite;
             transition: background 0.5s ease;
         }
 
@@ -75,10 +75,18 @@
             text-shadow: 0 0 10px #00f0ff;
         }
 
-        .combo-board {
+        .hp-board {
             font-size: 18px;
+            color: #ff0055;
+            margin-top: 4px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px #ff0055;
+        }
+
+        .combo-board {
+            font-size: 16px;
             color: #ff007f;
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
         #start-screen,
@@ -93,7 +101,7 @@
             max-width: 420px;
             max-height: 90vh;
             overflow-y: auto;
-            background: rgba(5, 7, 14, 0.85);
+            background: rgba(5, 7, 14, 0.88);
             padding: 20px;
             border-radius: 15px;
             border: 1px solid rgba(0, 240, 255, 0.3);
@@ -174,10 +182,17 @@
             margin-top: 3px;
         }
 
+        .var-stats {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
         .var-score {
             font-size: 11px;
             color: #ffcc00;
-            margin-top: 4px;
             text-align: right;
         }
 
@@ -213,6 +228,7 @@
 
     <div id="ui">
         <div class="score-board" id="score">SCORE: 0</div>
+        <div class="hp-board" id="hp">❤️❤️❤️</div>
         <div class="combo-board" id="combo">COMBO: 0</div>
     </div>
 
@@ -226,7 +242,7 @@
 
     <div id="game-over">
         <h1>GAME OVER</h1>
-        <p id="final-score" style="font-size: 18px; color: #fff; margin-bottom: 10px;">SCORE: 0</p>
+        <p id="final-score" style="font-size: 18px; color: #fff; margin-bottom: 8px;">SCORE: 0</p>
         <p id="high-score-notice" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px;"></p>
         <button class="btn-action btn-normal" onclick="showStartScreen()">TITLE BACK</button>
     </div>
@@ -302,11 +318,15 @@
                     const card = document.createElement('div');
                     card.className = 'var-card';
                     const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
+                    const hpCount = v.player && v.player.maxHp ? v.player.maxHp : 1;
 
                     card.innerHTML = `
                         <div class="var-name">${v.name}</div>
                         <div class="var-desc">${v.description || ''}</div>
-                        <div class="var-score">🏆 BEST: ${best}</div>
+                        <div class="var-stats">
+                            <span>❤️ HP: ${hpCount} | ⭕ リング径: ${v.gameplay?.targetRadius || 60}</span>
+                            <span class="var-score">🏆 BEST: ${best}</span>
+                        </div>
                     `;
                     card.onclick = () => startGameWithVariation(v);
                     sec.appendChild(card);
@@ -415,7 +435,7 @@
             }
         }
 
-        // --- ゲーム状態変数 ---
+        // --- ゲーム状態・パラメータ変数 ---
         let score = 0;
         let combo = 0;
         let isGameOver = false;
@@ -429,16 +449,58 @@
         let ringColor = '#00f0ff';
 
         let lastTapTime = 0;
-        const TAP_COOLDOWN = 180;
+        let tapCooldown = 180;
         let missPenaltyTimer = 0;
+        let hitWindow = 25;
+        let speedIncrement = 0.008;
+        let baseScore = 100;
+        let particleCount = 12;
 
         const player = {
             x: 0,
             y: 0,
             radius: 20,
             targetRadius: 60,
+            hp: 1,
+            maxHp: 1,
             color: '#00f0ff'
         };
+
+        function applyVariationParams(variation) {
+            if (!variation) return;
+
+            // Gameplay
+            player.targetRadius = variation.gameplay?.targetRadius || 60;
+            hitWindow = variation.gameplay?.hitWindow || 25;
+            tapCooldown = variation.gameplay?.tapCooldown || 180;
+            speedIncrement = variation.gameplay?.speedIncrement || 0.008;
+            baseScore = variation.gameplay?.baseScore || 100;
+
+            // Player
+            player.maxHp = variation.player?.maxHp || 1;
+            player.hp = player.maxHp;
+            missPenaltyDuration = variation.player?.missPenaltyDuration || 18;
+
+            // Visuals
+            particleCount = variation.visuals?.particleCount || 12;
+            const scrollSpeed = variation.visuals?.bgScrollSpeed || '3s';
+            document.documentElement.style.setProperty('--bg-scroll-speed', scrollSpeed);
+
+            // Theme
+            const theme = variation.theme;
+            if (theme) {
+                const bgElem = document.querySelector('.bg-animated');
+                if (bgElem) {
+                    bgElem.style.background = `
+                        radial-gradient(circle, ${theme.bgGlow || 'rgba(0, 240, 255, 0.25)'} 0%, rgba(5, 7, 14, 0.9) 100%),
+                        repeating-linear-gradient(0deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px),
+                        repeating-linear-gradient(90deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px)
+                    `;
+                }
+                ringColor = theme.ringColor || '#00f0ff';
+                player.color = theme.playerColor || '#00f0ff';
+            }
+        }
 
         function pickWeightedEnemy(pool) {
             if (!pool || pool.length === 0) return { id: 'CHASER', weight: 1.0 };
@@ -564,24 +626,10 @@
             }
         }
 
-        function applyTheme(theme) {
-            if (!theme) return;
-            const bgElem = document.querySelector('.bg-animated');
-            if (bgElem) {
-                bgElem.style.background = `
-                    radial-gradient(circle, ${theme.bgGlow || 'rgba(0, 240, 255, 0.25)'} 0%, rgba(5, 7, 14, 0.9) 100%),
-                    repeating-linear-gradient(0deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px),
-                    repeating-linear-gradient(90deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px)
-                `;
-            }
-            ringColor = theme.ringColor || '#00f0ff';
-            player.color = theme.playerColor || '#00f0ff';
-        }
-
         function startGameWithVariation(variation) {
             initAudio();
             currentVariation = variation;
-            applyTheme(variation.theme);
+            applyVariationParams(variation);
             isGameStarted = true;
             document.getElementById('start-screen').style.display = 'none';
             resetGame();
@@ -600,7 +648,7 @@
             if (e && e.preventDefault) e.preventDefault();
 
             const now = Date.now();
-            if (now - lastTapTime < TAP_COOLDOWN || missPenaltyTimer > 0) return;
+            if (now - lastTapTime < tapCooldown || missPenaltyTimer > 0) return;
             lastTapTime = now;
 
             const rect = canvas.getBoundingClientRect();
@@ -623,13 +671,13 @@
                 const enemy = enemies[i];
                 const dist = Math.hypot(centerX - enemy.x, centerY - enemy.y);
 
-                if (Math.abs(dist - player.targetRadius) < 25) {
+                if (Math.abs(dist - player.targetRadius) < hitWindow) {
                     hit = true;
                     createParticles(enemy.x, enemy.y, enemy.color);
                     enemies.splice(i, 1);
                     combo++;
-                    score += 100 * combo;
-                    gameSpeed += 0.008;
+                    score += baseScore * combo;
+                    gameSpeed += speedIncrement;
                     break;
                 }
             }
@@ -652,7 +700,7 @@
         }
 
         function createParticles(x, y, color) {
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle(x, y, color));
             }
         }
@@ -660,6 +708,8 @@
         function updateUI() {
             document.getElementById('score').innerText = `SCORE: ${score}`;
             document.getElementById('combo').innerText = `COMBO: ${combo}x`;
+            const hpStr = '❤️'.repeat(Math.max(0, player.hp));
+            document.getElementById('hp').innerText = hpStr || '💀';
         }
 
         function gameOver() {
@@ -696,6 +746,9 @@
             missPenaltyTimer = 0;
             lastTapTime = 0;
             isGameOver = false;
+            if (currentVariation) {
+                applyVariationParams(currentVariation);
+            }
             document.getElementById('game-over').style.display = 'none';
             startBGM();
             updateUI();
@@ -751,8 +804,16 @@
                 enemy.draw();
 
                 if (dist <= player.radius) {
-                    gameOver();
-                    return;
+                    createParticles(enemy.x, enemy.y, '#ff0055');
+                    enemies.splice(i, 1);
+                    player.hp--;
+                    updateUI();
+                    playMissSound();
+
+                    if (player.hp <= 0) {
+                        gameOver();
+                        return;
+                    }
                 }
             }
 

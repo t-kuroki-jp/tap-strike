@@ -2,8 +2,23 @@
   "id": "cyber_speed",
   "name": "サイバー・スピード",
   "difficulty": "NORMAL",
-  "description": "「クリムゾン・チェイサー」と高速の「ボルト・スピーダー」が組み合わさったスピーディーなバリエーション",
+  "description": "HP 2つ。スピーディーな展開と適度な難易度のバランス型バリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
+  "gameplay": {
+    "targetRadius": 60,
+    "hitWindow": 25,
+    "tapCooldown": 150,
+    "speedIncrement": 0.008,
+    "baseScore": 150
+  },
+  "player": {
+    "maxHp": 2,
+    "missPenaltyDuration": 15
+  },
+  "visuals": {
+    "particleCount": 16,
+    "bgScrollSpeed": "2.5s"
+  },
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
     "gridColor": "rgba(0, 255, 136, 0.3)",

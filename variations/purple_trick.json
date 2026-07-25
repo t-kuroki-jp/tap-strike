@@ -2,8 +2,23 @@
   "id": "purple_trick",
   "name": "パープル・トリック",
   "difficulty": "HARD",
-  "description": "「ファントム・グリッチ」を含む全種類の敵が猛攻を仕掛ける難関バリエーション",
+  "description": "HP 1（一撃即死）＆極狭リング！フェイント敵が猛攻を仕掛けるエキスパート向けバリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
+  "gameplay": {
+    "targetRadius": 50,
+    "hitWindow": 20,
+    "tapCooldown": 180,
+    "speedIncrement": 0.012,
+    "baseScore": 200
+  },
+  "player": {
+    "maxHp": 1,
+    "missPenaltyDuration": 20
+  },
+  "visuals": {
+    "particleCount": 24,
+    "bgScrollSpeed": "1.8s"
+  },
   "theme": {
     "bgGlow": "rgba(170, 0, 255, 0.25)",
     "gridColor": "rgba(170, 0, 255, 0.3)",
