@@ -142,6 +142,10 @@ p.subtitle {
     align-items: center;
 }
 
+.btn-mode * {
+    pointer-events: none;
+}
+
 .btn-mode:active {
     transform: scale(0.97);
 }
@@ -175,6 +179,10 @@ p.subtitle {
     text-align: left;
     cursor: pointer;
     transition: all 0.2s;
+}
+
+.var-card * {
+    pointer-events: none;
 }
 
 .var-card:hover, .var-card:active {

@@ -45,15 +45,24 @@ class Game {
         window.addEventListener('resize', () => this.resize());
 
         const isUIElement = (target) => {
-            if (!target || !target.closest) return false;
-            return target.closest('button') || target.closest('.var-card') || target.closest('#start-screen') || target.closest('#game-over');
+            if (!target) return false;
+            const el = target.closest ? target : target.parentElement;
+            if (!el || !el.closest) return false;
+            return !!(
+                el.closest('.btn-mode') ||
+                el.closest('.btn-action') ||
+                el.closest('.btn-back') ||
+                el.closest('.var-card') ||
+                el.closest('#start-screen') ||
+                el.closest('#game-over')
+            );
         };
 
         window.addEventListener('touchstart', (e) => {
             if (!isUIElement(e.target)) {
                 this.handleInput(e);
             }
-        }, { passive: false });
+        }, { passive: true });
 
         window.addEventListener('mousedown', (e) => {
             if (!isUIElement(e.target)) {
@@ -69,8 +78,19 @@ class Game {
 
     async startApp() {
         await dataLoader.loadAll();
+        this.bindMenuEvents();
         this.showStartScreen();
         this.updateUI();
+    }
+
+    bindMenuEvents() {
+        const modeEasy = document.querySelector('.btn-mode-easy');
+        const modeNormal = document.querySelector('.btn-mode-normal');
+        const modeHard = document.querySelector('.btn-mode-hard');
+
+        if (modeEasy) modeEasy.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.openVariationMenu('EASY'); };
+        if (modeNormal) modeNormal.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.openVariationMenu('NORMAL'); };
+        if (modeHard) modeHard.onclick = (e) => { e.preventDefault(); e.stopPropagation(); this.openVariationMenu('HARD'); };
     }
 
     showStartScreen() {
@@ -81,6 +101,7 @@ class Game {
         document.getElementById('start-screen').style.display = 'block';
         document.getElementById('mode-select-view').style.display = 'block';
         document.getElementById('variation-select-view').style.display = 'none';
+        this.bindMenuEvents();
     }
 
     reselectVariation() {
