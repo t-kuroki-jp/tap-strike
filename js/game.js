@@ -83,11 +83,11 @@ class Game {
         const modeSelect = document.getElementById('mode-select-view');
         const varSelect = document.getElementById('variation-select-view');
 
-        // すべての表示状態を確実に初期化
+        // まず全てのモーダル要素を非表示
         if (gameOver) gameOver.style.display = 'none';
-        if (startScreen) startScreen.style.display = 'none';
         if (modeSelect) modeSelect.style.display = 'none';
         if (varSelect) varSelect.style.display = 'none';
+        if (startScreen) startScreen.style.display = 'none';
 
         if (viewName === 'MODE_SELECT') {
             if (startScreen) startScreen.style.display = 'block';
@@ -383,6 +383,14 @@ class Game {
         this.isGameOver = true;
         this.stopBGM();
         audioEngine.playGameOverSound();
+
+        // 敵・エフェクト・キャンバスの残像を完全にクリア
+        this.enemies = [];
+        this.particles = [];
+        this.shockwaves = [];
+        if (this.ctx) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
 
         let noticeText = '';
         if (this.currentVariation) {
