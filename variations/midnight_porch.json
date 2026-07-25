@@ -13,7 +13,8 @@
     "playerColor": "#00ffcc"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 1.0 }
+    { "id": "CHASER", "weight": 0.7 },
+    { "id": "HEAL", "weight": 0.3 }
   ],
   "spawnRate": 220
 }

@@ -1,20 +1,20 @@
 {
   "id": "cyber_speed",
-  "name": "サイバー・スピード",
-  "difficulty": "NORMAL",
-  "description": "「クリムゾン・チェイサー」と高速の「ボルト・スピーダー」が組み合わさったスピーディーなバリエーション",
-  "bgm": "bgm/Cyan_Square_Error.mp3",
+  "name": "ボルト・オーバードライブ",
+  "difficulty": "HARD",
+  "description": "超高速エネミーと重装甲シールド敵が息つく間もなく襲いかかる激ムズハードバリエーション",
+  "bgm": "bgm/Magenta_Pulse.mp3",
   "createdAt": "2026-07-25",
-  "updatedAt": "2026-07-25",
   "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
+    "bgGlow": "rgba(255, 0, 85, 0.25)",
+    "gridColor": "rgba(255, 0, 85, 0.3)",
+    "ringColor": "#ff0055",
+    "playerColor": "#ff0055"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 0.7 },
-    { "id": "SPEEDER", "weight": 0.3 }
+    { "id": "SPEEDER", "weight": 0.5 },
+    { "id": "SHIELD", "weight": 0.3 },
+    { "id": "CHASER", "weight": 0.2 }
   ],
-  "spawnRate": 187
+  "spawnRate": 150
 }

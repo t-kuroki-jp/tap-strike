@@ -25,5 +25,33 @@
     "speedRatio": 1.2,
     "size": 13,
     "behavior": "feint"
+  },
+  "HEAL": {
+    "name": "ライフ・ポッド",
+    "description": "撃破するとHPが1回復するボーナスエネミー。スルーしてもノーダメージ",
+    "color": "#00ff88",
+    "shape": "diamond",
+    "speedRatio": 0.9,
+    "size": 11,
+    "behavior": "heal"
+  },
+  "SHIELD": {
+    "name": "シールド・クラッシャー",
+    "description": "耐久力2。判定リング内で2回タップして撃破する重装甲型エネミー",
+    "color": "#0099ff",
+    "shape": "hexagon",
+    "speedRatio": 0.8,
+    "size": 15,
+    "hp": 2,
+    "behavior": "shield"
+  },
+  "CURVE": {
+    "name": "スパイラル・スピナー",
+    "description": "螺旋状にウネウネと軌道を変えながら接近してくるトリッキー型エネミー",
+    "color": "#ff6600",
+    "shape": "triangle",
+    "speedRatio": 1.1,
+    "size": 12,
+    "behavior": "curve"
   }
 }

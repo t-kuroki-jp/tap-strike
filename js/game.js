@@ -315,10 +315,22 @@ class Game {
             if (Math.abs(dist - this.player.targetRadius) < this.params.hitWindow) {
                 hit = true;
                 this.createParticles(enemy.x, enemy.y, enemy.color);
-                this.enemies.splice(i, 1);
-                this.combo++;
-                this.score += this.params.baseScore * this.combo;
-                this.gameSpeed += this.params.speedIncrement;
+
+                enemy.hp--;
+                if (enemy.hp <= 0) {
+                    this.enemies.splice(i, 1);
+                    this.combo++;
+                    this.score += this.params.baseScore * this.combo;
+                    this.gameSpeed += this.params.speedIncrement;
+
+                    if (enemy.behavior === 'heal') {
+                        this.player.hp = Math.min(this.player.maxHp, this.player.hp + 1);
+                        this.createParticles(centerX, centerY, '#00ff88');
+                    }
+                } else {
+                    this.combo++;
+                    this.score += this.params.baseScore;
+                }
                 break;
             }
         }
@@ -435,15 +447,18 @@ class Game {
             enemy.draw(this.ctx);
 
             if (dist <= this.player.radius) {
-                this.createParticles(enemy.x, enemy.y, '#ff0055');
+                this.createParticles(enemy.x, enemy.y, enemy.color);
                 this.enemies.splice(i, 1);
-                this.player.hp--;
-                this.updateUI();
-                audioEngine.playMissSound();
 
-                if (this.player.hp <= 0) {
-                    this.gameOver();
-                    return;
+                if (enemy.behavior !== 'heal') {
+                    this.player.hp--;
+                    this.updateUI();
+                    audioEngine.playMissSound();
+
+                    if (this.player.hp <= 0) {
+                        this.gameOver();
+                        return;
+                    }
                 }
             }
         }

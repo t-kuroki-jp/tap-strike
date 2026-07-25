@@ -1,11 +1,10 @@
 {
   "id": "purple_trick",
-  "name": "パープル・トリック",
-  "difficulty": "HARD",
-  "description": "「ファントム・グリッチ」を含む全種類の敵が猛攻を仕掛ける難関バリエーション",
+  "name": "パープル・トリック・ナイト",
+  "difficulty": "NORMAL",
+  "description": "フェイント減速とウネウネ螺旋移動で揺さぶりをかけてくる技巧派バリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
   "createdAt": "2026-07-25",
-  "updatedAt": "2026-07-25",
   "theme": {
     "bgGlow": "rgba(170, 0, 255, 0.25)",
     "gridColor": "rgba(170, 0, 255, 0.3)",
@@ -13,9 +12,9 @@
     "playerColor": "#aa00ff"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 0.4 },
-    { "id": "SPEEDER", "weight": 0.3 },
-    { "id": "GLITCH", "weight": 0.3 }
+    { "id": "GLITCH", "weight": 0.4 },
+    { "id": "CURVE", "weight": 0.4 },
+    { "id": "HEAL", "weight": 0.2 }
   ],
-  "spawnRate": 150
+  "spawnRate": 170
 }

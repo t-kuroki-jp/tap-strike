@@ -23,6 +23,9 @@ class Enemy {
         this.behavior = masterData.behavior || 'straight';
         this.speed = (2.0 * (masterData.speedRatio || 1.0)) * gameSpeed;
         this.size = masterData.size || 12;
+
+        this.hp = masterData.hp || 1;
+        this.maxHp = this.hp;
     }
 
     pickWeightedEnemy(pool) {
@@ -39,8 +42,8 @@ class Enemy {
     update(playerTargetRadius) {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
-        const dx = centerX - this.x;
-        const dy = centerY - this.y;
+        let dx = centerX - this.x;
+        let dy = centerY - this.y;
         const dist = Math.hypot(dx, dy);
 
         let currentSpeed = this.speed;
@@ -48,8 +51,16 @@ class Enemy {
             currentSpeed *= 0.3;
         }
 
-        this.x += (dx / dist) * currentSpeed;
-        this.y += (dy / dist) * currentSpeed;
+        if (this.behavior === 'curve') {
+            const perpX = -dy / dist;
+            const perpY = dx / dist;
+            const wave = Math.sin(dist * 0.08) * 2.5;
+            this.x += (dx / dist) * currentSpeed + perpX * wave;
+            this.y += (dy / dist) * currentSpeed + perpY * wave;
+        } else {
+            this.x += (dx / dist) * currentSpeed;
+            this.y += (dy / dist) * currentSpeed;
+        }
 
         return dist;
     }
@@ -57,15 +68,58 @@ class Enemy {
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = this.color;
+        ctx.strokeStyle = this.color;
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 10;
         ctx.beginPath();
+
         if (this.shape === 'square') {
             ctx.rect(this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
+            ctx.fill();
+        } else if (this.shape === 'diamond') {
+            ctx.moveTo(this.x, this.y - this.size * 1.3);
+            ctx.lineTo(this.x + this.size, this.y);
+            ctx.lineTo(this.x, this.y + this.size * 1.3);
+            ctx.lineTo(this.x - this.size, this.y);
+            ctx.closePath();
+            ctx.fill();
+
+            // 内側の十字デザイン
+            ctx.strokeStyle = '#05070e';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(this.x - 4, this.y); ctx.lineTo(this.x + 4, this.y);
+            ctx.moveTo(this.x, this.y - 4); ctx.lineTo(this.x, this.y + 4);
+            ctx.stroke();
+        } else if (this.shape === 'hexagon') {
+            for (let i = 0; i < 6; i++) {
+                const a = (Math.PI / 3) * i;
+                const px = this.x + Math.cos(a) * this.size;
+                const py = this.y + Math.sin(a) * this.size;
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            if (this.hp > 1) {
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#00ffff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size + 5, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        } else if (this.shape === 'triangle') {
+            ctx.moveTo(this.x, this.y - this.size * 1.3);
+            ctx.lineTo(this.x + this.size, this.y + this.size);
+            ctx.lineTo(this.x - this.size, this.y + this.size);
+            ctx.closePath();
+            ctx.fill();
         } else {
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
         }
-        ctx.fill();
+
         ctx.restore();
     }
 }

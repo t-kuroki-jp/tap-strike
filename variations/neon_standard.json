@@ -1,11 +1,10 @@
 {
   "id": "neon_standard",
   "name": "ネオン・スタンダード",
-  "difficulty": "EASY",
-  "description": "基本の「クリムゾン・チェイサー」のみが出現するテンポの良い初心者向けバリエーション",
-  "bgm": "bgm/Magenta_Pulse.mp3",
+  "difficulty": "NORMAL",
+  "description": "サイバーパンクな世界観で楽しむ Tap Strike の標準バリエーション",
+  "bgm": "bgm/Cyan_Square_Error.mp3",
   "createdAt": "2026-07-25",
-  "updatedAt": "2026-07-25",
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
     "gridColor": "rgba(0, 240, 255, 0.3)",
@@ -13,7 +12,9 @@
     "playerColor": "#00f0ff"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 1.0 }
+    { "id": "CHASER", "weight": 0.6 },
+    { "id": "CURVE", "weight": 0.25 },
+    { "id": "HEAL", "weight": 0.15 }
   ],
-  "spawnRate": 220
+  "spawnRate": 187
 }
