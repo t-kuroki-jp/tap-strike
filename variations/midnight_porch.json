@@ -1,0 +1,19 @@
+{
+  "id": "midnight_porch",
+  "name": "ミッドナイト・ポーチ・ライト",
+  "difficulty": "EASY",
+  "description": "夜の静けさとチルなビートに乗って、ゆったりリラックス気分で遊べるEASYバリエーション",
+  "bgm": "bgm/Midnight_Porch_Light.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(0, 200, 255, 0.2)",
+    "gridColor": "rgba(0, 200, 255, 0.25)",
+    "ringColor": "#00c8ff",
+    "playerColor": "#00ffcc"
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 1.0 }
+  ],
+  "spawnRate": 220
+}
