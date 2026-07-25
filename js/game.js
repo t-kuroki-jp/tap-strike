@@ -45,6 +45,7 @@ class Game {
         window.addEventListener('resize', () => this.resize());
 
         const isUIElement = (target) => {
+            if (!target || !target.closest) return false;
             return target.closest('button') || target.closest('.var-card') || target.closest('#start-screen') || target.closest('#game-over');
         };
 
@@ -74,6 +75,7 @@ class Game {
 
     showStartScreen() {
         this.isGameStarted = false;
+        this.isGameOver = false;
         this.stopBGM();
         document.getElementById('game-over').style.display = 'none';
         document.getElementById('start-screen').style.display = 'block';
@@ -83,6 +85,7 @@ class Game {
 
     reselectVariation() {
         this.isGameStarted = false;
+        this.isGameOver = false;
         this.stopBGM();
         document.getElementById('game-over').style.display = 'none';
         document.getElementById('start-screen').style.display = 'block';
@@ -408,4 +411,5 @@ class Game {
 
 // インスタンス化
 const game = new Game();
+window.game = game;
 window.onload = () => game.startApp();
