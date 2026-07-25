@@ -139,7 +139,7 @@ class Game {
         document.getElementById('variation-select-view').style.display = 'none';
     }
 
-    openVariationMenu(diff) {
+    async openVariationMenu(diff) {
         document.getElementById('mode-select-view').style.display = 'none';
         document.getElementById('variation-select-view').style.display = 'block';
 
@@ -148,6 +148,11 @@ class Game {
         if (titleElem) {
             titleElem.innerText = `${diffDef.name || diff} モード`;
             titleElem.className = `diff-title diff-${diff}`;
+        }
+
+        if (!dataLoader.isLoaded || dataLoader.variations.length === 0) {
+            document.getElementById('variation-list').innerHTML = '<div class="loading-text">バリエーション読込中...</div>';
+            await dataLoader.loadAll();
         }
 
         this.renderVariationMenu(diff);

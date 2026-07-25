@@ -6,12 +6,24 @@ class DataLoader {
         this.enemiesMaster = {};
         this.difficultiesMaster = {};
         this.variations = [];
+        this.isLoaded = false;
+        this.loadingPromise = null;
     }
 
     async loadAll() {
-        await this.loadEnemies();
-        await this.loadDifficulties();
-        await this.loadVariations();
+        if (this.isLoaded) return;
+        if (this.loadingPromise) return this.loadingPromise;
+
+        this.loadingPromise = (async () => {
+            await Promise.all([
+                this.loadEnemies(),
+                this.loadDifficulties(),
+                this.loadVariations()
+            ]);
+            this.isLoaded = true;
+        })();
+
+        return this.loadingPromise;
     }
 
     async loadEnemies() {
@@ -37,16 +49,18 @@ class DataLoader {
             const listRes = await fetch(`variations.json?t=${Date.now()}`);
             const filePaths = await listRes.json();
 
-            this.variations = [];
-            for (const path of filePaths) {
+            const variationPromises = filePaths.map(async (path) => {
                 try {
                     const varRes = await fetch(`${path}?t=${Date.now()}`);
-                    const varData = await varRes.json();
-                    this.variations.push(varData);
+                    return await varRes.json();
                 } catch (e) {
                     console.error(`Failed to load variation at ${path}`, e);
+                    return null;
                 }
-            }
+            });
+
+            const results = await Promise.all(variationPromises);
+            this.variations = results.filter(v => v !== null);
         } catch (e) {
             console.error('Failed to load variations list', e);
         }
