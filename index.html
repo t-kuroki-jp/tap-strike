@@ -214,11 +214,12 @@
             URL.revokeObjectURL(a.href);
         }
 
-        // --- 音声＆フルBGM合成システム ---
+        // --- 音声＆フルBGM再生システム ---
         let audioCtx = null;
         let bgmInterval = null;
         let bgmStep = 0;
         let beatPulse = 0;
+        let currentBgmAudio = null;
 
         function initAudio() {
             if (!audioCtx) {
@@ -275,44 +276,26 @@
         }
 
         function startBGM() {
-            if (bgmInterval) clearInterval(bgmInterval);
+            stopBGM();
+
+            // 難易度に応じてBGMファイルを割り当て
+            let selectedBgm = 'bgm/Magenta_Pulse.mp4';
+            if (currentDifficulty === 'HARD') {
+                selectedBgm = 'bgm/Cyan_Square_Error.mp4';
+            }
+
+            currentBgmAudio = new Audio(selectedBgm);
+            currentBgmAudio.loop = true;
+            currentBgmAudio.volume = 0.4;
+            currentBgmAudio.play().catch(e => console.log('BGM Play error:', e));
+
             bgmStep = 0;
-
-            const bassNotes = [110, 110, 130, 110, 146, 130, 110, 98];
-            const leadNotes = [440, 0, 523, 587, 659, 0, 587, 523, 440, 523, 659, 783, 659, 587, 523, 440];
-
             let bpmTempo = 187;
             if (currentDifficulty === 'EASY') bpmTempo = 220;
             if (currentDifficulty === 'HARD') bpmTempo = 150;
 
             bgmInterval = setInterval(() => {
-                if (isGameOver || !isGameStarted || !audioCtx) return;
-
-                const bassFreq = bassNotes[bgmStep % bassNotes.length];
-                const bOsc = audioCtx.createOscillator();
-                const bGain = audioCtx.createGain();
-                bOsc.type = 'sawtooth';
-                bOsc.frequency.setValueAtTime(bassFreq, audioCtx.currentTime);
-                bGain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                bGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-                bOsc.connect(bGain);
-                bGain.connect(audioCtx.destination);
-                bOsc.start();
-                bOsc.stop(audioCtx.currentTime + 0.15);
-
-                const leadFreq = leadNotes[bgmStep % leadNotes.length];
-                if (leadFreq > 0) {
-                    const lOsc = audioCtx.createOscillator();
-                    const lGain = audioCtx.createGain();
-                    lOsc.type = 'square';
-                    lOsc.frequency.setValueAtTime(leadFreq, audioCtx.currentTime);
-                    lGain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                    lGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-                    lOsc.connect(lGain);
-                    lGain.connect(audioCtx.destination);
-                    lOsc.start();
-                    lOsc.stop(audioCtx.currentTime + 0.12);
-                }
+                if (isGameOver || !isGameStarted) return;
 
                 beatPulse = 5;
 
@@ -328,6 +311,11 @@
             if (bgmInterval) {
                 clearInterval(bgmInterval);
                 bgmInterval = null;
+            }
+            if (currentBgmAudio) {
+                currentBgmAudio.pause();
+                currentBgmAudio.currentTime = 0;
+                currentBgmAudio = null;
             }
         }
 
