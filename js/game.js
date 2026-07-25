@@ -77,7 +77,17 @@ class Game {
         this.stopBGM();
         document.getElementById('game-over').style.display = 'none';
         document.getElementById('start-screen').style.display = 'block';
-        this.backToModeSelect();
+        document.getElementById('mode-select-view').style.display = 'block';
+        document.getElementById('variation-select-view').style.display = 'none';
+    }
+
+    reselectVariation() {
+        this.isGameStarted = false;
+        this.stopBGM();
+        document.getElementById('game-over').style.display = 'none';
+        document.getElementById('start-screen').style.display = 'block';
+        const lastDiff = this.currentVariation?.difficulty || 'EASY';
+        this.openVariationMenu(lastDiff);
     }
 
     backToModeSelect() {

@@ -56,7 +56,10 @@
         <h1>GAME OVER</h1>
         <p id="final-score" style="font-size: 18px; color: #fff; margin-bottom: 8px;">SCORE: 0</p>
         <p id="high-score-notice" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px;"></p>
-        <button class="btn-action btn-normal" onclick="game.showStartScreen()">TITLE BACK</button>
+        <div class="btn-container">
+            <button class="btn-action btn-normal" onclick="game.reselectVariation()">↺ もう一度遊ぶ / バリエーション選択</button>
+            <button class="btn-back" style="margin-top:5px;" onclick="game.showStartScreen()">モード選択に戻る</button>
+        </div>
     </div>
 
     <canvas id="gameCanvas"></canvas>
