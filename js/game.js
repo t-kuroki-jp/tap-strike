@@ -60,9 +60,10 @@ class Game {
 
         window.addEventListener('touchstart', (e) => {
             if (this.isGameStarted && !this.isGameOver && !isUIElement(e.target)) {
+                if (e.cancelable) e.preventDefault();
                 this.handleInput(e);
             }
-        }, { passive: true });
+        }, { passive: false });
 
         window.addEventListener('mousedown', (e) => {
             if (this.isGameStarted && !this.isGameOver && !isUIElement(e.target)) {
@@ -303,7 +304,7 @@ class Game {
 
     handleInput(e) {
         if (!this.isGameStarted || this.isGameOver) return;
-        if (e && e.preventDefault) e.preventDefault();
+        if (e && e.cancelable && e.preventDefault) e.preventDefault();
 
         const now = Date.now();
         if (now - this.lastTapTime < this.params.tapCooldown || this.missPenaltyTimer > 0) return;
