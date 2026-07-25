@@ -4,75 +4,53 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 難易度マスタ × バリエーション設計の2層データ駆動アーキテクチャ
+- **特徴**: 完全モジュール化（CSS/JS分離）× 2層パラメータデータ駆動アーキテクチャ
 
 ---
 
-## 2. 難易度マスタ仕様 (`difficulties.json`)
+## 2. ディレクトリ & モジュール構造
 
-難易度（EASY / NORMAL / HARD）ごとのデフォルトのゲームルール・パラメータを共通管理します。
-
-```json
-{
-  "EASY": {
-    "name": "かんたん",
-    "player": { "maxHp": 3, "missPenaltyDuration": 12 },
-    "gameplay": { "targetRadius": 70, "hitWindow": 30, "tapCooldown": 120, "speedIncrement": 0.005, "baseScore": 100 },
-    "visuals": { "particleCount": 20, "bgScrollSpeed": "4s" }
-  },
-  "NORMAL": {
-    "name": "ふつう",
-    "player": { "maxHp": 2, "missPenaltyDuration": 15 },
-    "gameplay": { "targetRadius": 60, "hitWindow": 25, "tapCooldown": 150, "speedIncrement": 0.008, "baseScore": 150 },
-    "visuals": { "particleCount": 16, "bgScrollSpeed": "2.5s" }
-  },
-  "HARD": {
-    "name": "むずかしい",
-    "player": { "maxHp": 1, "missPenaltyDuration": 20 },
-    "gameplay": { "targetRadius": 50, "hitWindow": 20, "tapCooldown": 180, "speedIncrement": 0.012, "baseScore": 200 },
-    "visuals": { "particleCount": 24, "bgScrollSpeed": "1.8s" }
-  }
-}
+```text
+tap-strike/
+├── index.html           # エントリーポイント (約40行のクリーンなHTML)
+├── css/
+│   └── style.css        # 全スタイリング・ネオンアニメーション
+├── js/
+│   ├── audio.js         # Web Audio API / BGM再生管理 (AudioEngine)
+│   ├── loader.js        # 各種JSONフェッチ・パラメータ合成 (DataLoader)
+│   ├── entities.js      # Enemy / Particle / Shockwave クラス定義
+│   └── game.js          # メインゲームエンジン・状態管理・描画ループ (Game)
+├── variations/          # バリエーションJSON群
+│   ├── list.json
+│   ├── neon_standard.json
+│   ├── cyber_speed.json
+│   └── purple_trick.json
+├── bgm/                 # BGM音源 (.mp3)
+├── enemies.json         # 敵マスタ定義
+├── difficulties.json    # 難易度マスタ定義
+├── SPECIFICATION.md
+└── README.md
 ```
 
 ---
 
-## 3. バリエーション設定仕様 (`variations/*.json`)
+## 3. 難易度マスタ仕様 (`difficulties.json`)
 
-バリエーションファイルは「テーマ色・BGM・敵の出現構成」などの個性・世界観の設定に専念します。
-※必要に応じて `gameplay`, `player`, `visuals` 内の数値を個別に指定することで、難易度デフォルト値を上書き（Override）可能です。
-
-```json
-{
-  "id": "neon_standard",
-  "name": "ネオン・スタンダード",
-  "difficulty": "EASY",
-  "description": "基本の「クリムゾン・チェイサー」のみが出現するテンポの良い初心者向けバリエーション",
-  "bgm": "bgm/Magenta_Pulse.mp3",
-  "theme": {
-    "bgGlow": "rgba(0, 240, 255, 0.25)",
-    "gridColor": "rgba(0, 240, 255, 0.3)",
-    "ringColor": "#00f0ff",
-    "playerColor": "#00f0ff"
-  },
-  "enemyPool": [
-    { "id": "CHASER", "weight": 1.0 }
-  ],
-  "spawnRate": 220
-}
-```
+難易度（EASY / NORMAL / HARD）ごとのデフォルト設定を一括管理：
+- `EASY`: HP 3 / リング径 70 / クールダウン 120ms
+- `NORMAL`: HP 2 / リング径 60 / クールダウン 150ms
+- `HARD`: HP 1 / リング径 50 / クールダウン 180ms
 
 ---
 
-## 4. 敵マスタ定義 (`enemies.json`)
+## 4. バリエーション設定仕様 (`variations/*.json`)
 
-- **`CHASER`**: クリムゾン・チェイサー（基本直線型）
-- **`SPEEDER`**: ボルト・スピーダー（高速突入型）
-- **`GLITCH`**: ファントム・グリッチ（リング手前減速フェイント型）
+テーマ色、BGM、出現エネミープールに特化。必要に応じて `gameplay`, `player`, `visuals` の個別値をオーバーライド可能。
 
 ---
 
-## 5. データ保存 (LocalStorage)
+## 5. 敵マスタ定義 (`enemies.json`)
 
-各バリエーションごとにハイスコアを個別に管理・保存：
-- キー名: `bestScore_${variationId}`
+- **`CHASER`**: クリムゾン・チェイサー（基本型）
+- **`SPEEDER`**: ボルト・スピーダー（高速型）
+- **`GLITCH`**: ファントム・グリッチ（減速フェイント型）
