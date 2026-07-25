@@ -3,7 +3,7 @@
   "name": "ネオン・スタンダード",
   "difficulty": "EASY",
   "description": "基本のNORMAL敵（赤）のみが出現するテンポの良い初心者向けバリエーション",
-  "bgm": "bgm/Magenta_Pulse.mp4",
+  "bgm": "bgm/Magenta_Pulse.mp3",
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
     "gridColor": "rgba(0, 240, 255, 0.3)",

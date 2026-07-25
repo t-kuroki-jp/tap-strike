@@ -3,7 +3,7 @@
   "name": "サイバー・スピード",
   "difficulty": "NORMAL",
   "description": "NORMAL敵（赤）とFAST敵（黄・高速）が組み合わさったスピーディーなバリエーション",
-  "bgm": "bgm/Cyan_Square_Error.mp4",
+  "bgm": "bgm/Cyan_Square_Error.mp3",
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
     "gridColor": "rgba(0, 255, 136, 0.3)",
