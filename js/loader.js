@@ -34,7 +34,7 @@ class DataLoader {
 
     async loadVariations() {
         try {
-            const listRes = await fetch(`variations/list.json?t=${Date.now()}`);
+            const listRes = await fetch(`variations.json?t=${Date.now()}`);
             const filePaths = await listRes.json();
 
             this.variations = [];
