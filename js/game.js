@@ -156,13 +156,10 @@ class Game {
             const dateStr = v.updatedAt || v.createdAt || '';
 
             card.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span class="var-name">${v.name}</span>
-                    ${dateStr ? `<span style="font-size:10px; color:#888;">📅 ${dateStr}</span>` : ''}
-                </div>
+                <div class="var-name">${v.name}</div>
                 <div class="var-desc">${v.description || ''}</div>
                 <div class="var-stats">
-                    <span>❤️ HP: ${resolved.maxHp} | ⭕ リング径: ${resolved.targetRadius}</span>
+                    <span>${dateStr ? `📅 ${dateStr}` : ''}</span>
                     <span class="var-score">🏆 BEST: ${best}</span>
                 </div>
             `;
