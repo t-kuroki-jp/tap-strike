@@ -4,36 +4,51 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 完全パラメータ駆動（Data-Driven）による無限ゲームバリエーション設計
+- **特徴**: 難易度マスタ × バリエーション設計の2層データ駆動アーキテクチャ
 
 ---
 
-## 2. バリエーション設定パラメータ仕様 (`variations/*.json`)
+## 2. 難易度マスタ仕様 (`difficulties.json`)
 
-1つのJSONファイルに以下の全パラメータを定義することで、ソースコードを変更せずに無限の異なるゲーム性・ルールを生み出すことができます。
+難易度（EASY / NORMAL / HARD）ごとのデフォルトのゲームルール・パラメータを共通管理します。
+
+```json
+{
+  "EASY": {
+    "name": "かんたん",
+    "player": { "maxHp": 3, "missPenaltyDuration": 12 },
+    "gameplay": { "targetRadius": 70, "hitWindow": 30, "tapCooldown": 120, "speedIncrement": 0.005, "baseScore": 100 },
+    "visuals": { "particleCount": 20, "bgScrollSpeed": "4s" }
+  },
+  "NORMAL": {
+    "name": "ふつう",
+    "player": { "maxHp": 2, "missPenaltyDuration": 15 },
+    "gameplay": { "targetRadius": 60, "hitWindow": 25, "tapCooldown": 150, "speedIncrement": 0.008, "baseScore": 150 },
+    "visuals": { "particleCount": 16, "bgScrollSpeed": "2.5s" }
+  },
+  "HARD": {
+    "name": "むずかしい",
+    "player": { "maxHp": 1, "missPenaltyDuration": 20 },
+    "gameplay": { "targetRadius": 50, "hitWindow": 20, "tapCooldown": 180, "speedIncrement": 0.012, "baseScore": 200 },
+    "visuals": { "particleCount": 24, "bgScrollSpeed": "1.8s" }
+  }
+}
+```
+
+---
+
+## 3. バリエーション設定仕様 (`variations/*.json`)
+
+バリエーションファイルは「テーマ色・BGM・敵の出現構成」などの個性・世界観の設定に専念します。
+※必要に応じて `gameplay`, `player`, `visuals` 内の数値を個別に指定することで、難易度デフォルト値を上書き（Override）可能です。
 
 ```json
 {
   "id": "neon_standard",
   "name": "ネオン・スタンダード",
   "difficulty": "EASY",
-  "description": "大きな判定リングとHP 3つの初心者安心バリエーション！基本敵のみ出現。",
+  "description": "基本の「クリムゾン・チェイサー」のみが出現するテンポの良い初心者向けバリエーション",
   "bgm": "bgm/Magenta_Pulse.mp3",
-  "gameplay": {
-    "targetRadius": 70,       // 判定リングのサイズ (px)
-    "hitWindow": 30,          // 判定の甘さ (px)
-    "tapCooldown": 120,       // タップ連打クールダウン (ms)
-    "speedIncrement": 0.005,  // 敵撃破ごとの加速率
-    "baseScore": 100          // 基本スコア
-  },
-  "player": {
-    "maxHp": 3,               // プレイヤーの最大HP (ライフ数)
-    "missPenaltyDuration": 12 // ミス時の操作不能フレーム数
-  },
-  "visuals": {
-    "particleCount": 20,      // 撃破時パーティクル量
-    "bgScrollSpeed": "4s"     // 背景グリッドの流れるスピード
-  },
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
     "gridColor": "rgba(0, 240, 255, 0.3)",
@@ -49,24 +64,15 @@
 
 ---
 
-## 3. 敵マスタ定義 (`enemies.json`)
+## 4. 敵マスタ定義 (`enemies.json`)
 
-`enemies.json` で定義された敵タイプを `id` で指定します：
 - **`CHASER`**: クリムゾン・チェイサー（基本直線型）
 - **`SPEEDER`**: ボルト・スピーダー（高速突入型）
 - **`GLITCH`**: ファントム・グリッチ（リング手前減速フェイント型）
 
 ---
 
-## 4. データ保存 (LocalStorage)
+## 5. データ保存 (LocalStorage)
 
 各バリエーションごとにハイスコアを個別に管理・保存：
 - キー名: `bestScore_${variationId}`
-
----
-
-## 5. 無限バリエーション作成手順
-
-1. `variations/` に新しい JSON ファイルを作成します。
-2. `gameplay`, `player`, `visuals`, `theme`, `enemyPool` の値を自由に変更してオリジナルゲームを作成します。
-3. `variations/list.json` にそのパスを追加します。

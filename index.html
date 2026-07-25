@@ -260,10 +260,11 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // --- バリエーション＆敵マスタ動的読込システム ---
+        // --- バリエーション＆難易度＆敵マスタ動的読込システム ---
         let loadedVariations = [];
         let currentVariation = null;
         let enemyMaster = {};
+        let difficultyMaster = {};
 
         async function loadEnemiesMaster() {
             try {
@@ -274,8 +275,18 @@
             }
         }
 
+        async function loadDifficultiesMaster() {
+            try {
+                const res = await fetch(`difficulties.json?t=${Date.now()}`);
+                difficultyMaster = await res.json();
+            } catch (e) {
+                console.error('Failed to load difficulties.json', e);
+            }
+        }
+
         async function loadVariations() {
             await loadEnemiesMaster();
+            await loadDifficultiesMaster();
             try {
                 const listRes = await fetch(`variations/list.json?t=${Date.now()}`);
                 const filePaths = await listRes.json();
@@ -309,22 +320,24 @@
                 const sec = document.createElement('div');
                 sec.className = 'diff-section';
 
+                const diffDef = difficultyMaster[diff] || {};
                 const title = document.createElement('div');
                 title.className = `diff-title diff-${diff}`;
-                title.innerText = `${diff} モード`;
+                title.innerText = `${diffDef.name || diff} モード`;
                 sec.appendChild(title);
 
                 items.forEach(v => {
                     const card = document.createElement('div');
                     card.className = 'var-card';
                     const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
-                    const hpCount = v.player && v.player.maxHp ? v.player.maxHp : 1;
+                    const hpCount = v.player?.maxHp !== undefined ? v.player.maxHp : (diffDef.player?.maxHp || 1);
+                    const radius = v.gameplay?.targetRadius !== undefined ? v.gameplay.targetRadius : (diffDef.gameplay?.targetRadius || 60);
 
                     card.innerHTML = `
                         <div class="var-name">${v.name}</div>
                         <div class="var-desc">${v.description || ''}</div>
                         <div class="var-stats">
-                            <span>❤️ HP: ${hpCount} | ⭕ リング径: ${v.gameplay?.targetRadius || 60}</span>
+                            <span>❤️ HP: ${hpCount} | ⭕ リング径: ${radius}</span>
                             <span class="var-score">🏆 BEST: ${best}</span>
                         </div>
                     `;
@@ -451,6 +464,7 @@
         let lastTapTime = 0;
         let tapCooldown = 180;
         let missPenaltyTimer = 0;
+        let missPenaltyDuration = 18;
         let hitWindow = 25;
         let speedIncrement = 0.008;
         let baseScore = 100;
@@ -468,22 +482,23 @@
 
         function applyVariationParams(variation) {
             if (!variation) return;
+            const diffDef = difficultyMaster[variation.difficulty] || {};
 
-            // Gameplay
-            player.targetRadius = variation.gameplay?.targetRadius || 60;
-            hitWindow = variation.gameplay?.hitWindow || 25;
-            tapCooldown = variation.gameplay?.tapCooldown || 180;
-            speedIncrement = variation.gameplay?.speedIncrement || 0.008;
-            baseScore = variation.gameplay?.baseScore || 100;
+            // Gameplay (階層化オーバーライド)
+            player.targetRadius = variation.gameplay?.targetRadius ?? diffDef.gameplay?.targetRadius ?? 60;
+            hitWindow = variation.gameplay?.hitWindow ?? diffDef.gameplay?.hitWindow ?? 25;
+            tapCooldown = variation.gameplay?.tapCooldown ?? diffDef.gameplay?.tapCooldown ?? 180;
+            speedIncrement = variation.gameplay?.speedIncrement ?? diffDef.gameplay?.speedIncrement ?? 0.008;
+            baseScore = variation.gameplay?.baseScore ?? diffDef.gameplay?.baseScore ?? 100;
 
             // Player
-            player.maxHp = variation.player?.maxHp || 1;
+            player.maxHp = variation.player?.maxHp ?? diffDef.player?.maxHp ?? 1;
             player.hp = player.maxHp;
-            missPenaltyDuration = variation.player?.missPenaltyDuration || 18;
+            missPenaltyDuration = variation.player?.missPenaltyDuration ?? diffDef.player?.missPenaltyDuration ?? 18;
 
             // Visuals
-            particleCount = variation.visuals?.particleCount || 12;
-            const scrollSpeed = variation.visuals?.bgScrollSpeed || '3s';
+            particleCount = variation.visuals?.particleCount ?? diffDef.visuals?.particleCount ?? 12;
+            const scrollSpeed = variation.visuals?.bgScrollSpeed ?? diffDef.visuals?.bgScrollSpeed ?? '3s';
             document.documentElement.style.setProperty('--bg-scroll-speed', scrollSpeed);
 
             // Theme

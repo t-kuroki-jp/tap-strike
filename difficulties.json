@@ -1,0 +1,56 @@
+{
+  "EASY": {
+    "name": "かんたん",
+    "player": {
+      "maxHp": 3,
+      "missPenaltyDuration": 12
+    },
+    "gameplay": {
+      "targetRadius": 70,
+      "hitWindow": 30,
+      "tapCooldown": 120,
+      "speedIncrement": 0.005,
+      "baseScore": 100
+    },
+    "visuals": {
+      "particleCount": 20,
+      "bgScrollSpeed": "4s"
+    }
+  },
+  "NORMAL": {
+    "name": "ふつう",
+    "player": {
+      "maxHp": 2,
+      "missPenaltyDuration": 15
+    },
+    "gameplay": {
+      "targetRadius": 60,
+      "hitWindow": 25,
+      "tapCooldown": 150,
+      "speedIncrement": 0.008,
+      "baseScore": 150
+    },
+    "visuals": {
+      "particleCount": 16,
+      "bgScrollSpeed": "2.5s"
+    }
+  },
+  "HARD": {
+    "name": "むずかしい",
+    "player": {
+      "maxHp": 1,
+      "missPenaltyDuration": 20
+    },
+    "gameplay": {
+      "targetRadius": 50,
+      "hitWindow": 20,
+      "tapCooldown": 180,
+      "speedIncrement": 0.012,
+      "baseScore": 200
+    },
+    "visuals": {
+      "particleCount": 24,
+      "bgScrollSpeed": "1.8s"
+    }
+  }
+}
