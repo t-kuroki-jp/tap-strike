@@ -88,18 +88,20 @@ class Game {
         this.isGameStarted = false;
         this.isGameOver = false;
         this.stopBGM();
-        document.getElementById('game-over').style.display = 'none';
-        document.getElementById('start-screen').style.display = 'block';
-        document.getElementById('mode-select-view').style.display = 'block';
-        document.getElementById('variation-select-view').style.display = 'none';
+
+        const gameOver = document.getElementById('game-over');
+        const startScreen = document.getElementById('start-screen');
+        const modeSelect = document.getElementById('mode-select-view');
+        const varSelect = document.getElementById('variation-select-view');
+
+        if (gameOver) gameOver.style.setProperty('display', 'none', 'important');
+        if (startScreen) startScreen.style.setProperty('display', 'block', 'important');
+        if (modeSelect) modeSelect.style.setProperty('display', 'block', 'important');
+        if (varSelect) varSelect.style.setProperty('display', 'none', 'important');
     }
 
     backToModeSelect() {
-        audioEngine.init();
-        document.getElementById('start-screen').style.display = 'block';
-        document.getElementById('game-over').style.display = 'none';
-        document.getElementById('mode-select-view').style.display = 'block';
-        document.getElementById('variation-select-view').style.display = 'none';
+        this.showStartScreen();
     }
 
     reselectVariation() {
