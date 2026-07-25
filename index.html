@@ -19,10 +19,36 @@
     </div>
 
     <div id="start-screen">
-        <h1>TAP STRIKE</h1>
-        <p class="subtitle">バリエーションを選択してスタート！</p>
-        <div id="variation-list" class="btn-container">
-            <div class="loading-text">バリエーション読込中...</div>
+        <!-- STEP 1: モード（難易度）選択画面 -->
+        <div id="mode-select-view">
+            <h1>TAP STRIKE</h1>
+            <p class="subtitle">プレイするモードを選択！</p>
+            <div class="btn-container">
+                <button class="btn-mode btn-mode-easy" onclick="game.openVariationMenu('EASY')">
+                    <span>🟢 EASY モード</span>
+                    <span style="font-size:12px; font-weight:normal;">❤️×3</span>
+                </button>
+                <button class="btn-mode btn-mode-normal" onclick="game.openVariationMenu('NORMAL')">
+                    <span>🔵 NORMAL モード</span>
+                    <span style="font-size:12px; font-weight:normal;">❤️×2</span>
+                </button>
+                <button class="btn-mode btn-mode-hard" onclick="game.openVariationMenu('HARD')">
+                    <span>🔴 HARD モード</span>
+                    <span style="font-size:12px; font-weight:normal;">❤️×1</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: バリエーション選択画面 -->
+        <div id="variation-select-view" style="display: none;">
+            <div style="text-align: left;">
+                <button class="btn-back" onclick="game.backToModeSelect()">⬅ モード選択に戻る</button>
+            </div>
+            <h1 id="selected-mode-title" style="font-size: 24px;">EASY</h1>
+            <p class="subtitle">バリエーションを選択してスタート！</p>
+            <div id="variation-list" class="btn-container">
+                <div class="loading-text">読込中...</div>
+            </div>
         </div>
     </div>
 

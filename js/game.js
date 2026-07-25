@@ -58,54 +58,70 @@ class Game {
 
     async startApp() {
         await dataLoader.loadAll();
-        this.renderVariationMenu();
+        this.showStartScreen();
         this.updateUI();
     }
 
-    renderVariationMenu() {
+    showStartScreen() {
+        this.isGameStarted = false;
+        this.stopBGM();
+        document.getElementById('game-over').style.display = 'none';
+        document.getElementById('start-screen').style.display = 'block';
+        this.backToModeSelect();
+    }
+
+    backToModeSelect() {
+        document.getElementById('mode-select-view').style.display = 'block';
+        document.getElementById('variation-select-view').style.display = 'none';
+    }
+
+    openVariationMenu(diff) {
+        document.getElementById('mode-select-view').style.display = 'none';
+        document.getElementById('variation-select-view').style.display = 'block';
+
+        const diffDef = dataLoader.difficultiesMaster[diff] || {};
+        const titleElem = document.getElementById('selected-mode-title');
+        if (titleElem) {
+            titleElem.innerText = `${diffDef.name || diff} モード`;
+            titleElem.className = `diff-title diff-${diff}`;
+        }
+
+        this.renderVariationMenu(diff);
+    }
+
+    renderVariationMenu(diff) {
         const container = document.getElementById('variation-list');
         container.innerHTML = '';
 
-        const diffs = ['EASY', 'NORMAL', 'HARD'];
-        diffs.forEach(diff => {
-            const items = dataLoader.variations.filter(v => v.difficulty === diff);
-            if (items.length === 0) return;
+        const items = dataLoader.variations.filter(v => v.difficulty === diff);
+        if (items.length === 0) {
+            container.innerHTML = '<div class="loading-text" style="color:#aaa;">このモードのバリエーションはまだありません</div>';
+            return;
+        }
 
-            const sec = document.createElement('div');
-            sec.className = 'diff-section';
+        // 日付の降順（新しい順）に並び替え
+        items.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
 
-            const diffDef = dataLoader.difficultiesMaster[diff] || {};
-            const title = document.createElement('div');
-            title.className = `diff-title diff-${diff}`;
-            title.innerText = `${diffDef.name || diff} モード`;
-            sec.appendChild(title);
+        items.forEach(v => {
+            const card = document.createElement('div');
+            card.className = 'var-card';
+            const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
+            const resolved = dataLoader.getResolvedParams(v);
+            const dateStr = v.updatedAt || v.createdAt || '';
 
-            // 日付の降順（新しい順）に並び替え
-            items.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
-
-            items.forEach(v => {
-                const card = document.createElement('div');
-                card.className = 'var-card';
-                const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
-                const resolved = dataLoader.getResolvedParams(v);
-                const dateStr = v.updatedAt || v.createdAt || '';
-
-                card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span class="var-name">${v.name}</span>
-                        ${dateStr ? `<span style="font-size:10px; color:#888;">📅 ${dateStr}</span>` : ''}
-                    </div>
-                    <div class="var-desc">${v.description || ''}</div>
-                    <div class="var-stats">
-                        <span>❤️ HP: ${resolved.maxHp} | ⭕ リング径: ${resolved.targetRadius}</span>
-                        <span class="var-score">🏆 BEST: ${best}</span>
-                    </div>
-                `;
-                card.onclick = () => this.startGameWithVariation(v);
-                sec.appendChild(card);
-            });
-
-            container.appendChild(sec);
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="var-name">${v.name}</span>
+                    ${dateStr ? `<span style="font-size:10px; color:#888;">📅 ${dateStr}</span>` : ''}
+                </div>
+                <div class="var-desc">${v.description || ''}</div>
+                <div class="var-stats">
+                    <span>❤️ HP: ${resolved.maxHp} | ⭕ リング径: ${resolved.targetRadius}</span>
+                    <span class="var-score">🏆 BEST: ${best}</span>
+                </div>
+            `;
+            card.onclick = () => this.startGameWithVariation(v);
+            container.appendChild(card);
         });
     }
 
