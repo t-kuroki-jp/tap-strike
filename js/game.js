@@ -107,12 +107,12 @@ class Game {
             };
         };
 
-        bindButton('.btn-mode-easy', () => this.openVariationMenu('EASY'));
-        bindButton('.btn-mode-normal', () => this.openVariationMenu('NORMAL'));
-        bindButton('.btn-mode-hard', () => this.openVariationMenu('HARD'));
-        bindButton('#variation-select-view .btn-back', () => this.backToModeSelect());
-        bindButton('#game-over .btn-action', () => this.reselectVariation());
-        bindButton('#game-over .btn-back', () => this.showStartScreen());
+        bindButton('#btn-mode-easy', () => this.openVariationMenu('EASY'));
+        bindButton('#btn-mode-normal', () => this.openVariationMenu('NORMAL'));
+        bindButton('#btn-mode-hard', () => this.openVariationMenu('HARD'));
+        bindButton('#btn-variation-back', () => this.backToModeSelect());
+        bindButton('#btn-game-over-retry', () => this.reselectVariation());
+        bindButton('#btn-game-over-to-mode', () => this.showStartScreen());
     }
 
     showStartScreen() {
@@ -391,6 +391,7 @@ class Game {
         document.getElementById('final-score').innerText = `SCORE: ${this.score} (${this.currentVariation ? this.currentVariation.name : ''})`;
         document.getElementById('high-score-notice').innerText = noticeText;
         document.getElementById('game-over').style.display = 'block';
+        this.bindMenuEvents();
     }
 
     gameLoop() {
