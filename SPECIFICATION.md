@@ -25,7 +25,7 @@ tap-strike/
 │   ├── neon_standard.json
 │   ├── cyber_speed.json
 │   ├── purple_trick.json
-│   └── sharp_suits.json  # 新規追加: シャープ・スーツ・アベニュー
+│   └── sharp_suits.json  # EASY: シャープ・スーツ・アベニュー
 ├── bgm/                 # BGM音源 (.mp3)
 │   ├── Cyan_Square_Error.mp3
 │   ├── Magenta_Pulse.mp3
@@ -46,8 +46,8 @@ tap-strike/
 {
   "id": "sharp_suits",
   "name": "シャープ・スーツ・アベニュー",
-  "difficulty": "NORMAL",
-  "description": "スタイリッシュなビートに乗って「チェイサー」「スピーダー」「グリッチ」が乱舞する都市型バリエーション",
+  "difficulty": "EASY",
+  "description": "スタイリッシュなビートに乗ってテンポよく撃破していくノリノリのEASYバリエーション",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -58,11 +58,10 @@ tap-strike/
     "playerColor": "#ffaa00"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 0.5 },
-    { "id": "SPEEDER", "weight": 0.3 },
-    { "id": "GLITCH", "weight": 0.2 }
+    { "id": "CHASER", "weight": 0.8 },
+    { "id": "SPEEDER", "weight": 0.2 }
   ],
-  "spawnRate": 170
+  "spawnRate": 210
 }
 ```
 
