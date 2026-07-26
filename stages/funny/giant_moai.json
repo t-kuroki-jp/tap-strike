@@ -1,0 +1,19 @@
+{
+  "id": "giant_moai",
+  "name": "ジャイアント・モアイ",
+  "difficulty": "FUNNY",
+  "description": "巨大で無表情なモアイ像が迫ってくるシュール極限ステージ！ゴツン！",
+  "bgm": "bgm/Midnight_Porch_Light.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(136, 153, 170, 0.25)",
+    "gridColor": "rgba(136, 153, 170, 0.3)",
+    "ringColor": "#8899aa",
+    "playerColor": "#8899aa"
+  },
+  "enemyPool": [
+    { "id": "MOAI", "weight": 1.0 }
+  ],
+  "spawnRate": 240
+}
