@@ -1,5 +1,5 @@
 /**
- * 打ち上げ花火玉 (ゆったり上昇・タップで画面中央上空へ豪勢スターマイン大開花！)
+ * 打ち上げ花火玉 (画面下部左右ワイド出現・タップで左右上空ワイド飛翔＆多重スターマイン開花)
  */
 class FireworkEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -7,9 +7,9 @@ class FireworkEnemy extends Enemy {
             id: 'FIREWORK', name: '打ち上げ花火玉', color: '#ff3366', shape: 'firework', speedRatio: 0.7, size: 15, hp: 1
         });
 
-        // 画面下部から出現
-        const centerX = canvas.width / 2;
-        this.x = centerX + (Math.random() - 0.5) * 30;
+        // ★画面下部の左右幅広い位置 (画面横幅の 15% 〜 85% の範囲) からランダム出現！
+        const margin = canvas.width * 0.15;
+        this.x = margin + Math.random() * (canvas.width - margin * 2);
         this.y = canvas.height + 40;
     }
 
@@ -21,7 +21,7 @@ class FireworkEnemy extends Enemy {
         const dy = centerY - this.y;
         const dist = Math.hypot(dx, dy);
 
-        // ゆったり風情のあるスピードで上昇
+        // 下の左右から判定リング（中央）に向かってゆったり上昇
         this.x += (dx / dist) * this.speed;
         this.y += (dy / dist) * this.speed;
 
@@ -31,14 +31,14 @@ class FireworkEnemy extends Enemy {
     draw(ctx) {
         ctx.save();
 
-        // 1. 真下に伸びる火花テール
+        // 1. 下へ伸びる火花テール
         ctx.strokeStyle = '#ffaa00';
         ctx.lineWidth = 3.5;
         ctx.shadowColor = '#ffaa00';
         ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x + (Math.random() - 0.5) * 2, this.y + 26);
+        ctx.lineTo(this.x + (Math.random() - 0.5) * 3, this.y + 26);
         ctx.stroke();
 
         // 2. 打ち上げ花火玉
@@ -80,7 +80,6 @@ class FireworkEnemy extends Enemy {
         if (!audioEngine.audioCtx) return;
         const ctx = audioEngine.audioCtx;
 
-        // ドーーーン！と腹に響く豪勢大輪開花サウンド
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sawtooth';
@@ -103,25 +102,28 @@ class FireworkEnemy extends Enemy {
         game.score += game.params.baseScore * game.combo;
         game.gameSpeed += game.params.speedIncrement;
 
-        // ★画面真上中央の夜空 (画面横幅の中央, 上部20%の位置) へ向かって打ち上げスパート！
+        // ★タップ位置から、上空の「左・中央・右」へダイナミックに左右散らばって打ち上がる！
         const launchX = this.x;
         const startY = this.y;
-        const targetX = this.canvas.width / 2; // 画面横幅の真ん中！
-        const targetY = Math.max(70, this.canvas.height * 0.22); // 画面上部中央の夜空
+
+        // 夜空の上空目標 (左・中・右にワイドに分散)
+        const spreadOffset = (Math.random() - 0.5) * (this.canvas.width * 0.7);
+        const targetX = Math.min(this.canvas.width - 40, Math.max(40, (this.canvas.width / 2) + spreadOffset));
+        const targetY = Math.max(60, this.canvas.height * 0.18 + Math.random() * 80);
 
         let currentX = launchX;
         let currentY = startY;
 
         const launchInterval = setInterval(() => {
             currentY -= 18;
-            currentX += (targetX - currentX) * 0.15; // 中央へ誘導
+            currentX += (targetX - currentX) * 0.16; // 目標の左右位置へカーブ誘導
 
             // 上昇軌跡
             game.particles.push(new FireworkSpurtParticle(currentX, currentY));
 
             if (currentY <= targetY) {
                 clearInterval(launchInterval);
-                // 画面中央上空で超豪華大輪スターマイン開花！
+                // 夜空の各位置でダイナミックに大輪スターマイン開花！
                 this.playExplosionSound();
                 this.explodeFireworks(game, targetX, targetY);
             }
@@ -133,8 +135,8 @@ class FireworkEnemy extends Enemy {
     explodeFireworks(game, x, y) {
         const palette = ['#ff0055', '#ffe600', '#00f0ff', '#ff33cc', '#ffffff', '#33ff66', '#ffaa00', '#aa00ff'];
 
-        // ★2重・3重の輪を持つ超ゴージャス72粒子大輪スターマイン！
-        const outerCount = 48; // 外輪
+        // 72粒子の多重豪華大輪スターマイン！
+        const outerCount = 48;
         for (let i = 0; i < outerCount; i++) {
             const angle = (i / outerCount) * Math.PI * 2;
             const speed = 5.5 + Math.random() * 2.5;
@@ -142,7 +144,7 @@ class FireworkEnemy extends Enemy {
             game.particles.push(new FireworkBloomParticle(x, y, angle, speed, color, 4.0));
         }
 
-        const innerCount = 24; // 内輪
+        const innerCount = 24;
         for (let i = 0; i < innerCount; i++) {
             const angle = (i / innerCount) * Math.PI * 2;
             const speed = 2.5 + Math.random() * 1.5;
@@ -150,7 +152,6 @@ class FireworkEnemy extends Enemy {
             game.particles.push(new FireworkBloomParticle(x, y, angle, speed, color, 3.0));
         }
 
-        // 大爆発トリプルショックウェーブ
         game.shockwaves.push(new Shockwave(x, y, '#ffe600'));
         game.shockwaves.push(new Shockwave(x, y, '#ff0055'));
         game.shockwaves.push(new Shockwave(x, y, '#00f0ff'));
@@ -180,7 +181,7 @@ class FireworkSpurtParticle {
     }
 }
 
-/** 画面中央上空で開花して広大に広がるしだれ柳花火粒子 */
+/** 上空で開花して広大に広がるしだれ柳花火粒子 */
 class FireworkBloomParticle {
     constructor(x, y, angle, speed, color, size) {
         this.x = x;
@@ -198,7 +199,7 @@ class FireworkBloomParticle {
         this.y += this.vy;
         this.vy += this.gravity;
         this.vx *= 0.96;
-        this.alpha -= 0.015; // 長めに残像が残る
+        this.alpha -= 0.015;
     }
 
     draw(ctx) {
