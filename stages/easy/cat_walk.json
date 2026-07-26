@@ -1,0 +1,17 @@
+{
+  "id": "cat_walk",
+  "name": "ねこちゃんステップ♪",
+  "difficulty": "EASY",
+  "description": "にゃんこファミリーがやってきた！トコトコ揺れる可愛いお散歩ステップを楽しもう！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 450,
+  "params": {
+    "gameSpeed": 0.85,
+    "spawnInterval": 1500,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "CAT", "behavior": "wave" }
+  ]
+}

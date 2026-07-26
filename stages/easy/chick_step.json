@@ -1,0 +1,17 @@
+{
+  "id": "chick_step",
+  "name": "ひよこのトコトコ散歩",
+  "difficulty": "EASY",
+  "description": "可愛いぴよぴよヒヨコが登場！チョコチョコ波打つ可愛いステップを見極めてタップしよう！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 400,
+  "params": {
+    "gameSpeed": 0.8,
+    "spawnInterval": 1600,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "CHICKEN", "behavior": "wave" }
+  ]
+}
