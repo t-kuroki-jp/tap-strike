@@ -113,11 +113,11 @@ class GlitchBehavior extends Behavior {
     }
 }
 
-// 🪃 6. ブーメラン・フェイント Behavior (一度退避してから爆速突入)
+// 🪃 6. ブーメラン・フェイント Behavior (一度スムーズ退避してから爆速突入)
 class BoomerangBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.retreated = false;
+        this.phase = 0; // 0: 接近中, 1: 退避中, 2: 最終突撃中
         this.retreatTimer = 0;
         this.triggerDist = config.triggerDist || 110;
     }
@@ -131,20 +131,29 @@ class BoomerangBehavior extends Behavior {
 
         if (dist === 0) return 0;
 
-        if (!this.retreated && dist < playerTargetRadius + this.triggerDist) {
-            this.retreatTimer++;
-            // 後退（戻る）
-            enemy.x -= (dx / dist) * (enemy.speed * 1.4);
-            enemy.y -= (dy / dist) * (enemy.speed * 1.4);
-
-            if (this.retreatTimer > 18) {
-                this.retreated = true;
+        // フェーズ0: 境界線に達したら退避フェーズ(1)へ移行
+        if (this.phase === 0) {
+            if (dist < playerTargetRadius + this.triggerDist) {
+                this.phase = 1;
             }
+        }
+
+        if (this.phase === 1) {
+            // フェーズ1: スムーズに外へ引き返す
+            this.retreatTimer++;
+            enemy.x -= (dx / dist) * (enemy.speed * 1.2);
+            enemy.y -= (dy / dist) * (enemy.speed * 1.2);
+            if (this.retreatTimer >= 16) {
+                this.phase = 2; // 引き返し完了！
+            }
+        } else if (this.phase === 2) {
+            // フェーズ2: 引き返した後は倍速突入！
+            enemy.x += (dx / dist) * (enemy.speed * 2.0);
+            enemy.y += (dy / dist) * (enemy.speed * 2.0);
         } else {
-            // 一度引き返した後は倍速突入！
-            const mult = this.retreated ? 2.2 : 1.0;
-            enemy.x += (dx / dist) * (enemy.speed * mult);
-            enemy.y += (dy / dist) * (enemy.speed * mult);
+            // フェーズ0 (通常接近)
+            enemy.x += (dx / dist) * enemy.speed;
+            enemy.y += (dy / dist) * enemy.speed;
         }
 
         return Math.hypot(centerX - enemy.x, centerY - enemy.y);
