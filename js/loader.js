@@ -62,6 +62,8 @@ class DataLoader {
         const difficulty = this.difficultiesMaster[stage.difficulty] || {};
 
         return {
+            targetRadius: stage.targetRadius ?? difficulty.targetRadius ?? 60,
+            maxHp: stage.maxHp ?? difficulty.maxHp ?? 3,
             baseScore: stage.baseScore ?? difficulty.baseScore ?? 100,
             speedIncrement: stage.speedIncrement ?? difficulty.speedIncrement ?? 0.05,
             hitWindow: stage.hitWindow ?? difficulty.hitWindow ?? 35,
@@ -79,6 +81,8 @@ class DataLoader {
 
     getDefaultParams() {
         return {
+            targetRadius: 60,
+            maxHp: 3,
             baseScore: 100,
             speedIncrement: 0.05,
             hitWindow: 35,

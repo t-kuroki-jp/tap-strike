@@ -257,10 +257,10 @@ class Game {
         this.lastTapTime = 0;
         this.isGameOver = false;
 
-        this.params = dataLoader.getResolvedParams(this.currentStage);
-        this.player.targetRadius = this.params.targetRadius;
-        this.player.maxHp = this.params.maxHp;
-        this.player.hp = this.params.maxHp;
+        this.params = dataLoader.getResolvedParams(this.currentStage) || {};
+        this.player.targetRadius = this.params.targetRadius || 60;
+        this.player.maxHp = this.params.maxHp || 3;
+        this.player.hp = this.player.maxHp;
         this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
 
         this.startBGM();
