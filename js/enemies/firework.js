@@ -1,25 +1,27 @@
 /**
- * 打ち上げ花火玉 (玉の色と夜空の大輪花火が完全連動！全6色のアソート・画面下半分全域出現)
+ * 打ち上げ花火玉 (玉の色と夜空の大輪花火が完全連動！レア・七色レインボー花火搭載！全7カラーアソート)
  */
 class FireworkEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
-        // 全6色の花火カラーバリエーション
+        // レインボーを含む全7色の花火カラーバリエーション
         const palette = [
-            { name: 'ルビーレッド', main: '#ff0055', sub: '#ff6699', glow: '#ff0055' },
-            { name: 'ゴールドイエロー', main: '#ffe600', sub: '#ffffaa', glow: '#ffe600' },
-            { name: 'シアンブルー', main: '#00f0ff', sub: '#99ffff', glow: '#00f0ff' },
-            { name: 'エレクトリックパープル', main: '#aa00ff', sub: '#e099ff', glow: '#aa00ff' },
-            { name: 'エメラルドグリーン', main: '#33ff66', sub: '#99ffbb', glow: '#33ff66' },
-            { name: 'サクラピンク', main: '#ff33cc', sub: '#ff99e6', glow: '#ff33cc' }
+            { isRainbow: true, name: '★七色レインボー★', main: 'rainbow', sub: 'rainbow', glow: '#ffffff' },
+            { isRainbow: false, name: 'ルビーレッド', main: '#ff0055', sub: '#ff6699', glow: '#ff0055' },
+            { isRainbow: false, name: 'ゴールドイエロー', main: '#ffe600', sub: '#ffffaa', glow: '#ffe600' },
+            { isRainbow: false, name: 'シアンブルー', main: '#00f0ff', sub: '#99ffff', glow: '#00f0ff' },
+            { isRainbow: false, name: 'エレクトリックパープル', main: '#aa00ff', sub: '#e099ff', glow: '#aa00ff' },
+            { isRainbow: false, name: 'エメラルドグリーン', main: '#33ff66', sub: '#99ffbb', glow: '#33ff66' },
+            { isRainbow: false, name: 'サクラピンク', main: '#ff33cc', sub: '#ff99e6', glow: '#ff33cc' }
         ];
 
-        const chosenColor = palette[Math.floor(Math.random() * palette.length)];
+        // 20%の確率でレインボー花火玉登場！
+        const chosenColor = Math.random() < 0.22 ? palette[0] : palette[1 + Math.floor(Math.random() * 6)];
 
         super(canvas, gameSpeed, stage, {
-            id: 'FIREWORK', name: `打ち上げ花火玉 (${chosenColor.name})`, color: chosenColor.main, shape: 'firework', speedRatio: 0.75, size: 15, hp: 1
+            id: 'FIREWORK', name: `打ち上げ花火玉 (${chosenColor.name})`, color: chosenColor.isRainbow ? '#ffe600' : chosenColor.main, shape: 'firework', speedRatio: 0.75, size: 16, hp: 1
         });
 
-        this.fireworkTheme = chosenColor; // 個別カラーテーマ保持
+        this.fireworkTheme = chosenColor;
 
         // 画面の下半分 (y >= height * 0.5) 全域から出現
         const mode = Math.random();
@@ -55,31 +57,33 @@ class FireworkEnemy extends Enemy {
 
     draw(ctx) {
         ctx.save();
+        const theme = this.fireworkTheme;
+        const currentColor = theme.isRainbow ? `hsl(${(Date.now() / 3) % 360}, 100%, 60%)` : theme.main;
 
-        // 1. テール火花 (玉の色と連動)
+        // 1. テール火花
         const angle = Math.atan2(this.dirY, this.dirX);
         const tailX = this.x - Math.cos(angle) * 26;
         const tailY = this.y - Math.sin(angle) * 26;
 
-        ctx.strokeStyle = this.fireworkTheme.main;
-        ctx.lineWidth = 4.0;
-        ctx.shadowColor = this.fireworkTheme.glow;
-        ctx.shadowBlur = 12;
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = theme.isRainbow ? 5.0 : 4.0;
+        ctx.shadowColor = currentColor;
+        ctx.shadowBlur = 14;
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
         ctx.lineTo(tailX + (Math.random() - 0.5) * 3, tailY + (Math.random() - 0.5) * 3);
         ctx.stroke();
 
-        // 2. 花火玉本体 (玉の色)
-        ctx.fillStyle = this.fireworkTheme.main;
-        ctx.shadowColor = this.fireworkTheme.glow;
-        ctx.shadowBlur = 16;
+        // 2. 花火玉本体
+        ctx.fillStyle = currentColor;
+        ctx.shadowColor = currentColor;
+        ctx.shadowBlur = 18;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2.0;
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
         ctx.stroke();
@@ -128,7 +132,7 @@ class FireworkEnemy extends Enemy {
         this.playLaunchWhistleSound();
         this.hp = 0;
         game.combo++;
-        game.score += game.params.baseScore * game.combo;
+        game.score += game.params.baseScore * game.combo * (this.fireworkTheme.isRainbow ? 2 : 1);
         game.gameSpeed += game.params.speedIncrement;
 
         const launchX = this.x;
@@ -148,13 +152,12 @@ class FireworkEnemy extends Enemy {
             currentY -= 19;
             currentX += (targetX - currentX) * 0.18;
 
-            // ★昇っていく光の軌跡も玉と同じ色！
-            game.particles.push(new FireworkSpurtParticle(currentX, currentY, theme.main));
+            const currentColor = theme.isRainbow ? `hsl(${(Date.now() / 2) % 360}, 100%, 65%)` : theme.main;
+            game.particles.push(new FireworkSpurtParticle(currentX, currentY, currentColor));
 
             if (currentY <= targetY) {
                 clearInterval(launchInterval);
                 this.playExplosionSound();
-                // ★上空で玉の色と同色の極美大輪花火が開花！
                 this.explodeFireworks(game, targetX, targetY, theme);
             }
         }, 16);
@@ -163,20 +166,20 @@ class FireworkEnemy extends Enemy {
     }
 
     explodeFireworks(game, x, y, theme) {
-        // ★玉の色と同色・サブ色・アクセント白を組みあわせた極美カラー同調開花！
         const outerCount = 60;
         for (let i = 0; i < outerCount; i++) {
             const angle = (i / outerCount) * Math.PI * 2;
-            const speed = 7.0 + Math.random() * 3.5;
-            const color = i % 2 === 0 ? theme.main : theme.sub;
+            const speed = 7.5 + Math.random() * 3.5;
+            // レインボーの場合は円周角度に応じて綺麗な虹色グラデーション！
+            const color = theme.isRainbow ? `hsl(${Math.floor((i / outerCount) * 360)}, 100%, 60%)` : (i % 2 === 0 ? theme.main : theme.sub);
             game.particles.push(new FireworkBloomParticle(x, y, angle, speed, color, 4.5));
         }
 
         const midCount = 40;
         for (let i = 0; i < midCount; i++) {
             const angle = (i / midCount) * Math.PI * 2;
-            const speed = 4.0 + Math.random() * 2.0;
-            const color = theme.main;
+            const speed = 4.2 + Math.random() * 2.0;
+            const color = theme.isRainbow ? `hsl(${Math.floor(((i / midCount) * 360 + 180) % 360)}, 100%, 65%)` : theme.main;
             game.particles.push(new FireworkBloomParticle(x, y, angle, speed, color, 3.5));
         }
 
@@ -184,13 +187,14 @@ class FireworkEnemy extends Enemy {
         for (let i = 0; i < innerCount; i++) {
             const angle = (i / innerCount) * Math.PI * 2;
             const speed = 1.8 + Math.random() * 1.5;
-            const color = '#ffffff'; // 中心の星
+            const color = '#ffffff';
             game.particles.push(new FireworkBloomParticle(x, y, angle, speed, color, 3.0));
         }
 
-        game.shockwaves.push(new Shockwave(x, y, theme.main));
-        game.shockwaves.push(new Shockwave(x, y, theme.sub));
+        const ringColor = theme.isRainbow ? '#ffe600' : theme.main;
+        game.shockwaves.push(new Shockwave(x, y, ringColor));
         game.shockwaves.push(new Shockwave(x, y, '#ffffff'));
+        game.shockwaves.push(new Shockwave(x, y, '#00f0ff'));
     }
 }
 
@@ -218,7 +222,7 @@ class FireworkSpurtParticle {
     }
 }
 
-/** 画面上空で開花して夜空一面に長く下垂する同色しだれ柳花火粒子 */
+/** 画面上空で開花して夜空一面に長く下垂する同色・レインボーしだれ柳花火粒子 */
 class FireworkBloomParticle {
     constructor(x, y, angle, speed, color, size) {
         this.x = x;
