@@ -1,10 +1,10 @@
 /**
- * ジャイアント・モアイ (判定リングの視界を害さない絶妙サイズ＆シュールな顔面拡大・岩石SE)
+ * ジャイアント・モアイ (ハッキリわかるモアイ顔構造・判定リング視界確保・岩石SE)
  */
 class MoaiEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'MOAI', name: 'ジャイアント・モアイ', color: '#8899aa', shape: 'moai', speedRatio: 0.75, size: 10, hp: 1
+            id: 'MOAI', name: 'ジャイアント・モアイ', color: '#8899aa', shape: 'moai', speedRatio: 0.75, size: 16, hp: 1
         });
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
@@ -21,67 +21,66 @@ class MoaiEnemy extends Enemy {
         this.x += (dx / dist) * this.speed;
         this.y += (dy / dist) * this.speed;
 
-        // ★判定リング (targetRadius 65) を隠さないスッポリ収まる適正サイズ (10px ➔ 22px) に拡大！
+        // ★判定リング (65px) の内側にしっかり治まるハッキリモアイサイズ (16px ➔ 32px)
         const progress = Math.min(1.0, Math.max(0.0, 1.0 - (dist / (this.maxDistance || 300))));
-        this.size = 10 + progress * 12;
+        this.size = 16 + progress * 16;
 
         return dist;
     }
 
     draw(ctx) {
         ctx.save();
-        const s = this.size / 16; // スケール倍率
+        const s = this.size / 20; // スケール倍率
 
         // 1. モアイベース顔影
         ctx.fillStyle = '#556677';
         ctx.shadowColor = '#8899aa';
         ctx.shadowBlur = 8;
         ctx.beginPath();
-        ctx.roundRect(this.x - 12 * s, this.y - 18 * s, 24 * s, 36 * s, 6 * s);
+        ctx.roundRect(this.x - 14 * s, this.y - 22 * s, 28 * s, 44 * s, 6 * s);
         ctx.fill();
 
         // 2. モアイ表面構造 (石像グレー)
         ctx.fillStyle = '#8899aa';
         ctx.beginPath();
-        ctx.roundRect(this.x - 11 * s, this.y - 17 * s, 22 * s, 34 * s, 5 * s);
+        ctx.roundRect(this.x - 12 * s, this.y - 20 * s, 24 * s, 40 * s, 5 * s);
         ctx.fill();
 
         // 3. 突き出た大きなオデコ・眉
         ctx.fillStyle = '#aabbcc';
         ctx.beginPath();
-        ctx.rect(this.x - 9 * s, this.y - 14 * s, 18 * s, 4 * s);
+        ctx.rect(this.x - 10 * s, this.y - 17 * s, 20 * s, 5 * s);
         ctx.fill();
 
         // 4. 深い無表情の窪んだ目 (黒穴)
         ctx.fillStyle = '#112233';
         ctx.beginPath();
-        ctx.rect(this.x - 8 * s, me => {});
-        ctx.rect(this.x - 8 * s, this.y - 9 * s, 6 * s, 3.5 * s);
-        ctx.rect(this.x + 2 * s, this.y - 9 * s, 6 * s, 3.5 * s);
+        ctx.rect(this.x - 9 * s, this.y - 11 * s, 7 * s, 4 * s);
+        ctx.rect(this.x + 2 * s, this.y - 11 * s, 7 * s, 4 * s);
         ctx.fill();
 
         // 5. 巨大で突き出たモアイの鼻
         ctx.fillStyle = '#bbccdd';
         ctx.beginPath();
-        ctx.moveTo(this.x - 3 * s, this.y - 5 * s);
-        ctx.lineTo(this.x + 3 * s, this.y - 5 * s);
-        ctx.lineTo(this.x + 4 * s, this.y + 7 * s);
-        ctx.lineTo(this.x - 4 * s, this.y + 7 * s);
+        ctx.moveTo(this.x - 3 * s, this.y - 6 * s);
+        ctx.lineTo(this.x + 3 * s, this.y - 6 * s);
+        ctx.lineTo(this.x + 5 * s, this.y + 8 * s);
+        ctx.lineTo(this.x - 5 * s, this.y + 8 * s);
         ctx.closePath();
         ctx.fill();
 
         // 6. 一文字の固い無表情口元
         ctx.strokeStyle = '#112233';
-        ctx.lineWidth = Math.max(1, 2.5 * s);
+        ctx.lineWidth = Math.max(1.5, 2.5 * s);
         ctx.beginPath();
-        ctx.moveTo(this.x - 7 * s, this.y + 11 * s);
-        ctx.lineTo(this.x + 7 * s, this.y + 11 * s);
+        ctx.moveTo(this.x - 8 * s, this.y + 13 * s);
+        ctx.lineTo(this.x + 8 * s, this.y + 13 * s);
         ctx.stroke();
 
         // 7. がっしりした四角い顎 (あご)
         ctx.fillStyle = '#667788';
         ctx.beginPath();
-        ctx.rect(this.x - 9 * s, this.y + 13 * s, 18 * s, 4 * s);
+        ctx.rect(this.x - 10 * s, this.y + 15 * s, 20 * s, 4 * s);
         ctx.fill();
 
         ctx.restore();
