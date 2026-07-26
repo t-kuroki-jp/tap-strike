@@ -217,6 +217,11 @@ class Game {
             `;
         }
         document.documentElement.style.setProperty('--bg-scroll-speed', '3s');
+        const scoreBoard = document.querySelector('.score-board');
+        if (scoreBoard) {
+            scoreBoard.style.color = '#00f0ff';
+            scoreBoard.style.textShadow = '0 0 10px #00f0ff';
+        }
     }
 
     applyTheme(theme) {
@@ -229,9 +234,16 @@ class Game {
                 repeating-linear-gradient(90deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px)
             `;
         }
-        this.ringColor = theme.ringColor || '#00f0ff';
-        this.player.color = theme.playerColor || '#00f0ff';
-        document.documentElement.style.setProperty('--bg-scroll-speed', this.params.bgScrollSpeed);
+        const mainColor = theme.ringColor || theme.playerColor || '#00f0ff';
+        this.ringColor = mainColor;
+        this.player.color = mainColor;
+        document.documentElement.style.setProperty('--bg-scroll-speed', this.params.bgScrollSpeed || '3s');
+
+        const scoreBoard = document.querySelector('.score-board');
+        if (scoreBoard) {
+            scoreBoard.style.color = mainColor;
+            scoreBoard.style.textShadow = `0 0 12px ${mainColor}`;
+        }
     }
 
     resetGame() {

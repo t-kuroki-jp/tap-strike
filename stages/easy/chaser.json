@@ -7,16 +7,13 @@
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
   "theme": {
-    "bgGlow": "rgba(255, 170, 0, 0.25)",
-    "gridColor": "rgba(255, 200, 0, 0.3)",
-    "ringColor": "#ffaa00",
-    "playerColor": "#ffaa00"
+    "bgGlow": "rgba(0, 240, 255, 0.25)",
+    "gridColor": "rgba(0, 240, 255, 0.3)",
+    "ringColor": "#00f0ff",
+    "playerColor": "#00f0ff"
   },
   "enemyPool": [
-    {
-      "id": "CHASER",
-      "weight": 1.0
-    }
+    { "id": "CHASER", "weight": 1.0 }
   ],
   "spawnRate": 230
 }

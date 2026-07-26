@@ -7,16 +7,13 @@
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
   "theme": {
-    "bgGlow": "rgba(170, 0, 255, 0.25)",
-    "gridColor": "rgba(170, 0, 255, 0.3)",
-    "ringColor": "#aa00ff",
-    "playerColor": "#aa00ff"
+    "bgGlow": "rgba(0, 240, 255, 0.25)",
+    "gridColor": "rgba(0, 240, 255, 0.3)",
+    "ringColor": "#00f0ff",
+    "playerColor": "#00f0ff"
   },
   "enemyPool": [
-    {
-      "id": "GLITCH",
-      "weight": 1.0
-    }
+    { "id": "GLITCH", "weight": 1.0 }
   ],
   "spawnRate": 240
 }

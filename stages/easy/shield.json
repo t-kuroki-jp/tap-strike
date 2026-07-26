@@ -7,16 +7,13 @@
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
   "theme": {
-    "bgGlow": "rgba(0, 153, 255, 0.25)",
-    "gridColor": "rgba(0, 153, 255, 0.3)",
-    "ringColor": "#0099ff",
-    "playerColor": "#0099ff"
+    "bgGlow": "rgba(0, 170, 255, 0.25)",
+    "gridColor": "rgba(0, 170, 255, 0.3)",
+    "ringColor": "#00aaff",
+    "playerColor": "#00aaff"
   },
   "enemyPool": [
-    {
-      "id": "SHIELD",
-      "weight": 1.0
-    }
+    { "id": "SHIELD", "weight": 1.0 }
   ],
   "spawnRate": 250
 }
