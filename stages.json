@@ -8,5 +8,7 @@
   "stages/easy/dont_tap.json",
   "stages/normal/neon_standard.json",
   "stages/normal/purple_trick.json",
-  "stages/hard/bolt_overdrive.json"
+  "stages/hard/bolt_overdrive.json",
+  "stages/funny/chicken_panic.json",
+  "stages/funny/rainbow_chaser.json"
 ]

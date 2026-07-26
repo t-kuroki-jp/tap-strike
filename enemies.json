@@ -73,5 +73,14 @@
     "size": 14,
     "hp": 1,
     "behavior": "dont_tap"
+  },
+  "CHICKEN": {
+    "name": "ぴよぴよヒヨコ",
+    "description": "ぴよぴよ跳ねながら飛んでくる可愛いひよこエネミー",
+    "color": "#ffe600",
+    "shape": "chick",
+    "speedRatio": 1.0,
+    "size": 14,
+    "behavior": "chicken"
   }
 }

@@ -1,0 +1,20 @@
+{
+  "id": "rainbow_chaser",
+  "name": "レインボー・チェイサー",
+  "difficulty": "FUNNY",
+  "description": "基本のチェイサーに加えて画面全域が激しく虹色に変色する七色パーティー！",
+  "bgm": "bgm/Cyan_Square_Error.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(255, 0, 255, 0.25)",
+    "gridColor": "rgba(255, 0, 255, 0.3)",
+    "ringColor": "#ff00ff",
+    "playerColor": "#ff00ff",
+    "rainbow": true
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 1.0 }
+  ],
+  "spawnRate": 210
+}

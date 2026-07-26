@@ -46,6 +46,21 @@ class AudioEngine {
         osc.stop(this.audioCtx.currentTime + 0.12);
     }
 
+    playChickSound() {
+        if (!this.audioCtx) return;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1600, this.audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(3200, this.audioCtx.currentTime + 0.06);
+        gain.gain.setValueAtTime(0.4, this.audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.06);
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.start();
+        osc.stop(this.audioCtx.currentTime + 0.06);
+    }
+
     playMissSound() {
         if (!this.audioCtx) return;
         const osc = this.audioCtx.createOscillator();

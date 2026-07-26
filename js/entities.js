@@ -51,7 +51,11 @@ class Enemy {
             currentSpeed *= 0.3;
         }
 
-        if (this.behavior === 'curve') {
+        if (this.behavior === 'chicken') {
+            const hop = Math.abs(Math.sin(dist * 0.15)) * 3;
+            this.x += (dx / dist) * currentSpeed;
+            this.y += (dy / dist) * currentSpeed - hop;
+        } else if (this.behavior === 'curve') {
             const perpX = -dy / dist;
             const perpY = dx / dist;
             const wave = Math.sin(dist * 0.08) * 2.5;
@@ -73,7 +77,30 @@ class Enemy {
         ctx.shadowBlur = 10;
         ctx.beginPath();
 
-        if (this.shape === 'square') {
+        if (this.shape === 'chick') {
+            // 体 (イエロー)
+            ctx.fillStyle = '#ffe600';
+            ctx.shadowColor = '#ffe600';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 目 (黒)
+            ctx.fillStyle = '#05070e';
+            ctx.beginPath();
+            ctx.arc(this.x - 4, this.y - 3, 2, 0, Math.PI * 2);
+            ctx.arc(this.x + 4, this.y - 3, 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // くちばし (オレンジ)
+            ctx.fillStyle = '#ff6600';
+            ctx.beginPath();
+            ctx.moveTo(this.x - 3, this.y + 1);
+            ctx.lineTo(this.x + 3, this.y + 1);
+            ctx.lineTo(this.x, this.y + 6);
+            ctx.closePath();
+            ctx.fill();
+        } else if (this.shape === 'square') {
             ctx.rect(this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
             ctx.fill();
         } else if (this.shape === 'diamond') {
