@@ -84,12 +84,13 @@ class SpiralBehavior extends Behavior {
     }
 }
 
-// 5. テレポート・ノイズ Behavior (瞬時に位置を変えながら迫る)
+// 5. テレポート・直前減速 Behavior
 class GlitchBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.teleportTimer = 0;
-        this.interval = config.interval || 30;
+        this.slowDownMin = config.slowDownMin || 15;
+        this.slowDownMax = config.slowDownMax || 60;
+        this.slowDownRatio = config.slowDownRatio || 0.3;
     }
 
     update(enemy, playerTargetRadius) {
@@ -101,19 +102,14 @@ class GlitchBehavior extends Behavior {
 
         if (dist === 0) return 0;
 
-        this.teleportTimer++;
-        if (this.teleportTimer >= this.interval) {
-            this.teleportTimer = 0;
-            const angle = Math.random() * Math.PI * 2;
-            const jumpDist = Math.random() * 40 + 20;
-            enemy.x = Math.max(20, Math.min(enemy.canvas.width - 20, enemy.x + Math.cos(angle) * jumpDist));
-            enemy.y = Math.max(20, Math.min(enemy.canvas.height - 20, enemy.y + Math.sin(angle) * jumpDist));
-        } else {
-            enemy.x += (dx / dist) * enemy.speed;
-            enemy.y += (dy / dist) * enemy.speed;
+        let currentSpeed = enemy.speed;
+        if (dist < playerTargetRadius + this.slowDownMax && dist > playerTargetRadius + this.slowDownMin) {
+            currentSpeed *= this.slowDownRatio;
         }
 
-        return Math.hypot(centerX - enemy.x, centerY - enemy.y);
+        enemy.x += (dx / dist) * currentSpeed;
+        enemy.y += (dy / dist) * currentSpeed;
+        return dist;
     }
 }
 
