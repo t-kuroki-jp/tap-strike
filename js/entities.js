@@ -180,3 +180,33 @@ class Shockwave {
         ctx.restore();
     }
 }
+
+class FloatingText {
+    constructor(x, y, text, color, fontSize = 20) {
+        this.x = x;
+        this.y = y;
+        this.text = text;
+        this.color = color || '#ffcc00';
+        this.fontSize = fontSize;
+        this.alpha = 1.0;
+        this.scale = 1.5;
+    }
+
+    update() {
+        this.y -= 1.5;
+        this.alpha -= 0.025;
+        if (this.scale > 1.0) this.scale -= 0.05;
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.font = `bold ${Math.round(this.fontSize * this.scale)}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 12;
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.restore();
+    }
+}

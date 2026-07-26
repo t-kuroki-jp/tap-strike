@@ -13,6 +13,7 @@ class Game {
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
+        this.floatingTexts = [];
         this.gameSpeed = 1.0;
 
         this.ringPulse = 0;
@@ -112,6 +113,7 @@ class Game {
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
+        this.floatingTexts = [];
         if (this.ctx) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
@@ -312,16 +314,33 @@ class Game {
         for (let i = this.enemies.length - 1; i >= 0; i--) {
             const enemy = this.enemies[i];
             const dist = Math.hypot(centerX - enemy.x, centerY - enemy.y);
+            const diff = Math.abs(dist - this.player.targetRadius);
 
-            if (Math.abs(dist - this.player.targetRadius) < this.params.hitWindow) {
+            if (diff < this.params.hitWindow) {
                 hit = true;
-                this.createParticles(enemy.x, enemy.y, enemy.color);
+                const isPerfect = diff <= 8;
+                const scoreMultiplier = isPerfect ? 2 : 1;
+
+                if (isPerfect) {
+                    audioEngine.playPerfectSound();
+                    this.createParticles(enemy.x, enemy.y, '#ffcc00');
+                    this.createParticles(enemy.x, enemy.y, '#ffffff');
+                    this.floatingTexts.push(new FloatingText(enemy.x, enemy.y - 15, 'PERFECT!!', '#ffcc00', 22));
+                    this.ringPulse = 22;
+                    this.ringColor = '#ffcc00';
+                } else {
+                    audioEngine.playHitSound();
+                    this.createParticles(enemy.x, enemy.y, enemy.color);
+                    this.floatingTexts.push(new FloatingText(enemy.x, enemy.y - 15, 'GREAT!', '#00f0ff', 16));
+                    this.ringPulse = 14;
+                    this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
+                }
 
                 enemy.hp--;
                 if (enemy.hp <= 0) {
                     this.enemies.splice(i, 1);
                     this.combo++;
-                    this.score += this.params.baseScore * this.combo;
+                    this.score += this.params.baseScore * this.combo * scoreMultiplier;
                     this.gameSpeed += this.params.speedIncrement;
 
                     if (enemy.behavior === 'heal') {
@@ -330,18 +349,15 @@ class Game {
                     }
                 } else {
                     this.combo++;
-                    this.score += this.params.baseScore;
+                    this.score += this.params.baseScore * scoreMultiplier;
                 }
+
+                this.shockwaves.push(new Shockwave(touchX, touchY, isPerfect ? '#ffcc00' : this.ringColor));
                 break;
             }
         }
 
-        if (hit) {
-            audioEngine.playHitSound();
-            this.ringPulse = 15;
-            this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
-            this.shockwaves.push(new Shockwave(touchX, touchY, this.ringColor));
-        } else {
+        if (!hit) {
             audioEngine.playMissSound();
             this.combo = 0;
             this.ringPulse = 8;
@@ -376,6 +392,7 @@ class Game {
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
+        this.floatingTexts = [];
         if (this.ctx) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
@@ -477,6 +494,13 @@ class Game {
             p.update();
             p.draw(this.ctx);
             if (p.alpha <= 0) this.particles.splice(i, 1);
+        }
+
+        for (let i = this.floatingTexts.length - 1; i >= 0; i--) {
+            const ft = this.floatingTexts[i];
+            ft.update();
+            ft.draw(this.ctx);
+            if (ft.alpha <= 0) this.floatingTexts.splice(i, 1);
         }
 
         requestAnimationFrame(() => this.gameLoop());

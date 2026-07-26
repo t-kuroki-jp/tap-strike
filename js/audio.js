@@ -31,6 +31,21 @@ class AudioEngine {
         osc.stop(this.audioCtx.currentTime + 0.08);
     }
 
+    playPerfectSound() {
+        if (!this.audioCtx) return;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(1320, this.audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(2640, this.audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.4, this.audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.start();
+        osc.stop(this.audioCtx.currentTime + 0.12);
+    }
+
     playMissSound() {
         if (!this.audioCtx) return;
         const osc = this.audioCtx.createOscillator();
