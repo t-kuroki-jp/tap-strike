@@ -56,20 +56,22 @@ class DataLoader {
     }
 
     getMergedParams(stageId) {
-        const stage = this.stages.find(s => s.id === stageId);
-        if (!stage) return this.getDefaultParams();
-
+        const stage = this.stages.find(s => s.id === stageId) || {};
         const difficulty = this.difficultiesMaster[stage.difficulty] || {};
+        const p = difficulty.player || {};
+        const g = difficulty.gameplay || {};
+        const v = difficulty.visuals || {};
 
         return {
-            targetRadius: stage.targetRadius ?? difficulty.targetRadius ?? 60,
-            maxHp: stage.maxHp ?? difficulty.maxHp ?? 3,
-            baseScore: stage.baseScore ?? difficulty.baseScore ?? 100,
-            speedIncrement: stage.speedIncrement ?? difficulty.speedIncrement ?? 0.05,
-            hitWindow: stage.hitWindow ?? difficulty.hitWindow ?? 35,
-            missPenaltyDuration: stage.missPenaltyDuration ?? difficulty.missPenaltyDuration ?? 40,
-            particleCount: stage.particleCount ?? difficulty.particleCount ?? 12,
-            tapCooldown: stage.tapCooldown ?? difficulty.tapCooldown ?? 80
+            targetRadius: stage.targetRadius ?? g.targetRadius ?? 65,
+            maxHp: stage.maxHp ?? p.maxHp ?? 3,
+            baseScore: stage.baseScore ?? g.baseScore ?? 100,
+            speedIncrement: stage.speedIncrement ?? g.speedIncrement ?? 0.01,
+            hitWindow: stage.hitWindow ?? g.hitWindow ?? 25,
+            missPenaltyDuration: stage.missPenaltyDuration ?? p.missPenaltyDuration ?? 10,
+            particleCount: stage.particleCount ?? v.particleCount ?? 18,
+            tapCooldown: stage.tapCooldown ?? g.tapCooldown ?? 80,
+            bgScrollSpeed: stage.bgScrollSpeed ?? v.bgScrollSpeed ?? '3s'
         };
     }
 
@@ -81,14 +83,15 @@ class DataLoader {
 
     getDefaultParams() {
         return {
-            targetRadius: 60,
+            targetRadius: 65,
             maxHp: 3,
             baseScore: 100,
-            speedIncrement: 0.05,
-            hitWindow: 35,
-            missPenaltyDuration: 40,
-            particleCount: 12,
-            tapCooldown: 80
+            speedIncrement: 0.01,
+            hitWindow: 25,
+            missPenaltyDuration: 10,
+            particleCount: 18,
+            tapCooldown: 80,
+            bgScrollSpeed: '3s'
         };
     }
 }
