@@ -2,7 +2,7 @@
   "id": "easy_glitch",
   "name": "フェイント・マスター・レッスン",
   "difficulty": "EASY",
-  "description": "直前で一瞬減速するフェイント敵のタイミングをじっくり練習できるEASYトレーニング！",
+  "description": "減速フェイント敵のみ！直前の緩急を見極めるタイミング練習バリエーション",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -13,9 +13,7 @@
     "playerColor": "#aa00ff"
   },
   "enemyPool": [
-    { "id": "GLITCH", "weight": 0.6 },
-    { "id": "CHASER", "weight": 0.2 },
-    { "id": "HEAL", "weight": 0.2 }
+    { "id": "GLITCH", "weight": 1.0 }
   ],
-  "spawnRate": 230
+  "spawnRate": 240
 }

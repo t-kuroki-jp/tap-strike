@@ -1,0 +1,19 @@
+{
+  "id": "easy_speeder",
+  "name": "高速スピーダー・レッスン",
+  "difficulty": "EASY",
+  "description": "スピードに乗った高速敵のみ！素早い反射神経を鍛える練習バリエーション",
+  "bgm": "bgm/Magenta_Pulse.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(255, 204, 0, 0.25)",
+    "gridColor": "rgba(255, 204, 0, 0.3)",
+    "ringColor": "#ffcc00",
+    "playerColor": "#ffcc00"
+  },
+  "enemyPool": [
+    { "id": "SPEEDER", "weight": 1.0 }
+  ],
+  "spawnRate": 250
+}

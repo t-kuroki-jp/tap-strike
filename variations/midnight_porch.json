@@ -2,7 +2,7 @@
   "id": "midnight_porch",
   "name": "ミッドナイト・ポーチ・ライト",
   "difficulty": "EASY",
-  "description": "ウネウネ波打つトリッキーな敵の軌道をチルなビートで楽しく練習できるEASYバリエーション！",
+  "description": "ウネウネ波打つ敵のみ！チルなビートに乗って軌道をマスターする練習バリエーション",
   "bgm": "bgm/Midnight_Porch_Light.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -13,9 +13,7 @@
     "playerColor": "#00ffcc"
   },
   "enemyPool": [
-    { "id": "CURVE", "weight": 0.6 },
-    { "id": "CHASER", "weight": 0.2 },
-    { "id": "HEAL", "weight": 0.2 }
+    { "id": "CURVE", "weight": 1.0 }
   ],
-  "spawnRate": 230
+  "spawnRate": 240
 }

@@ -2,7 +2,7 @@
   "id": "easy_shield",
   "name": "シールド・ブレイク・レッスン",
   "difficulty": "EASY",
-  "description": "2回タップで割る重装甲シールド敵を落ち着いて練習できるEASYトレーニング！",
+  "description": "2回タップのシールド敵のみ！落ち着いて連続撃破をマスターする練習バリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -13,9 +13,7 @@
     "playerColor": "#0099ff"
   },
   "enemyPool": [
-    { "id": "SHIELD", "weight": 0.6 },
-    { "id": "CHASER", "weight": 0.2 },
-    { "id": "HEAL", "weight": 0.2 }
+    { "id": "SHIELD", "weight": 1.0 }
   ],
-  "spawnRate": 240
+  "spawnRate": 250
 }
