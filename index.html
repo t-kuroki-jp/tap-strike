@@ -9,7 +9,7 @@
     <meta http-equiv="Expires" content="0">
     <title>秒殺！1ボタンアクション Tap Strike</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
-    <link rel="stylesheet" href="css/style.css?v=22.1.0">
+    <link rel="stylesheet" href="css/style.css?v=23.0.0">
 </head>
 
 <body>
@@ -54,12 +54,13 @@
         </div>
     </div>
 
-    <!-- モーダル3: ゲームオーバー画面 -->
+    <!-- モーダル3: ゲームオーバー画面 (理想の視認性レイアウト) -->
     <div id="modal-game-over" class="modal-box" style="display: none;">
         <h1>GAME OVER</h1>
-        <p id="final-score" style="font-size: 18px; color: #fff; margin-bottom: 8px;">SCORE: 0</p>
-        <p id="high-score-notice" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px;"></p>
-        <div class="btn-container" style="margin-top: 15px;">
+        <p id="game-over-stage-name" class="game-over-stage-name"></p>
+        <p id="final-score" class="game-over-score">SCORE: 0</p>
+        <p id="high-score-notice" class="game-over-best">BEST SCORE: 0</p>
+        <div class="btn-container" style="margin-top: 18px;">
             <button id="btn-retry" class="btn-action btn-retry" onclick="window.game.restartStage()">
                 もう一度挑戦
             </button>
@@ -75,28 +76,28 @@
     <canvas id="gameCanvas"></canvas>
 
     <!-- モジュールスクリプト -->
-    <script src="js/audio.js?v=22.2.0"></script>
-    <script src="js/loader.js?v=22.2.0"></script>
-    <script src="js/entities.js?v=22.2.0"></script>
+    <script src="js/audio.js?v=23.0.0"></script>
+    <script src="js/loader.js?v=23.0.0"></script>
+    <script src="js/entities.js?v=23.0.0"></script>
 
     <!-- エネミーモジュール群 (1敵1ファイル・サウンドカプセル化) -->
-    <script src="js/enemies/enemy.js?v=22.2.0"></script>
-    <script src="js/enemies/chaser.js?v=22.2.0"></script>
-    <script src="js/enemies/speeder.js?v=22.2.0"></script>
-    <script src="js/enemies/glitch.js?v=22.2.0"></script>
-    <script src="js/enemies/curve.js?v=22.2.0"></script>
-    <script src="js/enemies/shield.js?v=22.2.0"></script>
-    <script src="js/enemies/big_boss.js?v=22.2.0"></script>
-    <script src="js/enemies/heal.js?v=22.2.0"></script>
-    <script src="js/enemies/dont_tap.js?v=22.2.0"></script>
-    <script src="js/enemies/chicken.js?v=22.2.0"></script>
-    <script src="js/enemies/cat.js?v=22.2.0"></script>
-    <script src="js/enemies/sushi.js?v=22.2.0"></script>
-    <script src="js/enemies/bomb.js?v=22.2.0"></script>
-    <script src="js/enemies/firework.js?v=22.2.0"></script>
-    <script src="js/enemies/enemy_factory.js?v=22.2.0"></script>
+    <script src="js/enemies/enemy.js?v=23.0.0"></script>
+    <script src="js/enemies/chaser.js?v=23.0.0"></script>
+    <script src="js/enemies/speeder.js?v=23.0.0"></script>
+    <script src="js/enemies/glitch.js?v=23.0.0"></script>
+    <script src="js/enemies/curve.js?v=23.0.0"></script>
+    <script src="js/enemies/shield.js?v=23.0.0"></script>
+    <script src="js/enemies/big_boss.js?v=23.0.0"></script>
+    <script src="js/enemies/heal.js?v=23.0.0"></script>
+    <script src="js/enemies/dont_tap.js?v=23.0.0"></script>
+    <script src="js/enemies/chicken.js?v=23.0.0"></script>
+    <script src="js/enemies/cat.js?v=23.0.0"></script>
+    <script src="js/enemies/sushi.js?v=23.0.0"></script>
+    <script src="js/enemies/bomb.js?v=23.0.0"></script>
+    <script src="js/enemies/firework.js?v=23.0.0"></script>
+    <script src="js/enemies/enemy_factory.js?v=23.0.0"></script>
 
-    <script src="js/game.js?v=22.2.0"></script>
+    <script src="js/game.js?v=23.0.0"></script>
 </body>
 
 </html>

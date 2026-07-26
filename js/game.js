@@ -406,13 +406,18 @@ class Game {
             const prevBest = parseInt(localStorage.getItem(storageKey) || '0', 10);
             if (this.score > prevBest) {
                 localStorage.setItem(storageKey, this.score.toString());
-                noticeText = '🎉 NEW RECORD!';
+                noticeText = 'NEW RECORD!';
             } else {
                 noticeText = `BEST SCORE: ${prevBest}`;
             }
         }
 
-        document.getElementById('final-score').innerText = `SCORE: ${this.score} (${this.currentStage ? this.currentStage.name : ''})`;
+        const stageNameElem = document.getElementById('game-over-stage-name');
+        if (stageNameElem) {
+            stageNameElem.innerText = this.currentStage ? this.currentStage.name : '';
+        }
+
+        document.getElementById('final-score').innerText = `SCORE: ${this.score}`;
         document.getElementById('high-score-notice').innerText = noticeText;
 
         // ゲームオーバーモーダル表示

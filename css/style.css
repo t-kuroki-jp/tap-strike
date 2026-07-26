@@ -154,6 +154,30 @@ h1 {
 #modal-game-over h1 {
     color: #ff0055;
     text-shadow: 0 0 15px #ff0055;
+    margin-bottom: 8px;
+}
+
+.game-over-stage-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffcc00;
+    margin-bottom: 12px;
+}
+
+.game-over-score {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    margin-bottom: 4px;
+}
+
+.game-over-best {
+    font-size: 14px;
+    font-weight: 700;
+    color: #00f0ff;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+    margin-bottom: 10px;
 }
 
 p.subtitle {
