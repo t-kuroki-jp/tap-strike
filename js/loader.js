@@ -1,9 +1,8 @@
 /**
- * JSON定義（難易度、敵マスタ、ステージ）の非同期取得およびパラメータ合成管理クラス
+ * JSON定義（難易度、ステージ）の非同期取得およびパラメータ合成管理クラス
  */
 class DataLoader {
     constructor() {
-        this.enemiesMaster = {};
         this.difficultiesMaster = {};
         this.stages = [];
         this.isLoaded = false;
@@ -16,7 +15,6 @@ class DataLoader {
 
         this.loadingPromise = (async () => {
             await Promise.all([
-                this.loadEnemies(),
                 this.loadDifficulties(),
                 this.loadStages()
             ]);
@@ -24,15 +22,6 @@ class DataLoader {
         })();
 
         return this.loadingPromise;
-    }
-
-    async loadEnemies() {
-        try {
-            const res = await fetch(`enemies.json?t=${Date.now()}`);
-            this.enemiesMaster = await res.json();
-        } catch (e) {
-            console.error('Failed to load enemies.json', e);
-        }
     }
 
     async loadDifficulties() {
@@ -59,30 +48,26 @@ class DataLoader {
                 }
             });
 
-            const results = await Promise.all(stagePromises);
-            this.stages = results.filter(s => s !== null);
+            const loadedStages = await Promise.all(stagePromises);
+            this.stages = loadedStages.filter(s => s !== null);
         } catch (e) {
-            console.error('Failed to load stages list', e);
+            console.error('Failed to load stages.json', e);
         }
     }
 
-    /**
-     * 難易度デフォルト設定とステージ個別設定を合成
-     */
-    getResolvedParams(stage) {
-        if (!stage) return {};
-        const diffDef = this.difficultiesMaster[stage.difficulty] || {};
+    getMergedParams(stageId) {
+        const stage = this.stages.find(s => s.id === stageId);
+        if (!stage) return null;
+
+        const difficulty = this.difficultiesMaster[stage.difficulty] || {};
 
         return {
-            targetRadius: stage.gameplay?.targetRadius ?? diffDef.gameplay?.targetRadius ?? 65,
-            hitWindow: stage.gameplay?.hitWindow ?? diffDef.gameplay?.hitWindow ?? 25,
-            tapCooldown: stage.gameplay?.tapCooldown ?? diffDef.gameplay?.tapCooldown ?? 120,
-            speedIncrement: stage.gameplay?.speedIncrement ?? diffDef.gameplay?.speedIncrement ?? 0.008,
-            baseScore: stage.gameplay?.baseScore ?? diffDef.gameplay?.baseScore ?? 100,
-            maxHp: stage.player?.maxHp ?? diffDef.player?.maxHp ?? 3,
-            missPenaltyDuration: stage.player?.missPenaltyDuration ?? diffDef.player?.missPenaltyDuration ?? 12,
-            particleCount: stage.visuals?.particleCount ?? diffDef.visuals?.particleCount ?? 16,
-            bgScrollSpeed: stage.visuals?.bgScrollSpeed ?? diffDef.visuals?.bgScrollSpeed ?? '3s'
+            baseScore: stage.baseScore ?? difficulty.baseScore ?? 100,
+            speedIncrement: stage.speedIncrement ?? difficulty.speedIncrement ?? 0.05,
+            hitWindow: stage.hitWindow ?? difficulty.hitWindow ?? 35,
+            missPenaltyDuration: stage.missPenaltyDuration ?? difficulty.missPenaltyDuration ?? 40,
+            particleCount: stage.particleCount ?? difficulty.particleCount ?? 12,
+            tapCooldown: stage.tapCooldown ?? difficulty.tapCooldown ?? 80
         };
     }
 }

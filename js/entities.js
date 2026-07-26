@@ -1,19 +1,20 @@
 /**
  * ゲーム内のオブジェクトエンティティ (基底Enemy, 各種エネミークラス, Particle, Shockwave)
+ * 完全にJSクラスのみで定義・完結するオブジェクト指向設計
  */
 
 // --- エネミー基底クラス ---
 class Enemy {
-    constructor(canvas, gameSpeed, stage, masterData) {
+    constructor(canvas, gameSpeed, stage, config = {}) {
         this.canvas = canvas;
         const angle = Math.random() * Math.PI * 2;
         const distance = Math.max(canvas.width, canvas.height) * 0.6;
         this.x = canvas.width / 2 + Math.cos(angle) * distance;
         this.y = canvas.height / 2 + Math.sin(angle) * distance;
 
-        this.id = masterData?.id || 'CHASER';
-        this.name = masterData?.name || 'エネミー';
-        this.color = masterData?.color || '#ff0055';
+        this.id = config.id || 'CHASER';
+        this.name = config.name || 'クリムゾン・チェイサー';
+        this.color = config.color || '#ff0055';
 
         // レインボーテーマの場合、敵の色をランダムネオン発光に
         if (stage?.theme?.rainbow) {
@@ -21,10 +22,10 @@ class Enemy {
             this.color = `hsl(${randomHue}, 100%, 60%)`;
         }
 
-        this.shape = masterData?.shape || 'circle';
-        this.speed = (2.0 * (masterData?.speedRatio || 1.0)) * gameSpeed;
-        this.size = masterData?.size || 12;
-        this.hp = masterData?.hp || 1;
+        this.shape = config.shape || 'circle';
+        this.speed = (2.0 * (config.speedRatio || 1.0)) * gameSpeed;
+        this.size = config.size || 12;
+        this.hp = config.hp || 1;
         this.maxHp = this.hp;
     }
 
@@ -86,10 +87,7 @@ class Enemy {
 
     /** 自機中心到達時の自立処理 */
     onReachCenter(game) {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
         game.createParticles(this.x, this.y, this.color);
-
         game.player.hp--;
         game.updateUI();
         audioEngine.playMissSound();
@@ -100,16 +98,34 @@ class Enemy {
     }
 }
 
-// --- 個別エネミークラス（ポリモーフィズム） ---
+// --- 個別エネミークラス（自立定義） ---
 
-// 1. 直進チェイサー
-class ChaserEnemy extends Enemy {}
+// 1. クリムゾン・チェイサー (標準型)
+class ChaserEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'CHASER', name: 'クリムゾン・チェイサー', color: '#ff0055', shape: 'circle', speedRatio: 1.0, size: 12, hp: 1
+        });
+    }
+}
 
-// 2. 高速スピーダー
-class SpeederEnemy extends Enemy {}
+// 2. ボルト・スピーダー (高速小型)
+class SpeederEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'SPEEDER', name: 'ボルト・スピーダー', color: '#ffcc00', shape: 'circle', speedRatio: 1.5, size: 9, hp: 1
+        });
+    }
+}
 
-// 3. 直前減速グリッチ
+// 3. ファントム・グリッチ (直前減速)
 class GlitchEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'GLITCH', name: 'ファントム・グリッチ', color: '#aa00ff', shape: 'square', speedRatio: 1.2, size: 13, hp: 1
+        });
+    }
+
     update(playerTargetRadius) {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
@@ -139,8 +155,14 @@ class GlitchEnemy extends Enemy {
     }
 }
 
-// 4. ウネウネ軌道スピナー
+// 4. スパイラル・スピナー (ウネウネ軌道)
 class CurveEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'CURVE', name: 'スパイラル・スピナー', color: '#ff6600', shape: 'triangle', speedRatio: 1.1, size: 12, hp: 1
+        });
+    }
+
     update(playerTargetRadius) {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
@@ -172,8 +194,14 @@ class CurveEnemy extends Enemy {
     }
 }
 
-// 5. シールド重装甲
+// 5. シールド・クラッシャー (耐久2)
 class ShieldEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'SHIELD', name: 'シールド・クラッシャー', color: '#0099ff', shape: 'hexagon', speedRatio: 0.8, size: 15, hp: 2
+        });
+    }
+
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = this.color;
@@ -201,8 +229,28 @@ class ShieldEnemy extends Enemy {
     }
 }
 
-// 6. 回復ポッド
+// 6. ビッグ・ボス (巨大・耐久5)
+class BigBossEnemy extends ShieldEnemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage);
+        this.id = 'BIG_BOSS';
+        this.name = 'ビッグ・ボス';
+        this.color = '#ffaa00';
+        this.speed = (2.0 * 0.65) * gameSpeed;
+        this.size = 42;
+        this.hp = 5;
+        this.maxHp = 5;
+    }
+}
+
+// 7. ライフ・ポッド (HP回復ボーナス)
 class HealEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'HEAL', name: 'ライフ・ポッド', color: '#00ff88', shape: 'diamond', speedRatio: 0.9, size: 11, hp: 1
+        });
+    }
+
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = this.color;
@@ -242,8 +290,14 @@ class HealEnemy extends Enemy {
     }
 }
 
-// 7. タップ禁止スルー敵
+// 8. スルー・ファントム (タップ禁止逆判定)
 class DontTapEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'DONT_TAP', name: 'スルー・ファントム', color: '#ff0055', shape: 'cross', speedRatio: 1.0, size: 14, hp: 1
+        });
+    }
+
     draw(ctx) {
         ctx.save();
         ctx.lineWidth = 4;
@@ -268,7 +322,7 @@ class DontTapEnemy extends Enemy {
         game.missPenaltyTimer = game.params.missPenaltyDuration;
         game.shockwaves.push(new Shockwave(touchX, touchY, '#ff0055'));
         game.createParticles(this.x, this.y, '#ff0055');
-        this.hp = 0; // 消失
+        this.hp = 0;
         return true;
     }
 
@@ -282,8 +336,14 @@ class DontTapEnemy extends Enemy {
     }
 }
 
-// 8. ぴよぴよヒヨコ
+// 9. ぴよぴよヒヨコ (跳ね移動)
 class ChickenEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'CHICKEN', name: 'ぴよぴよヒヨコ', color: '#ffe600', shape: 'chick', speedRatio: 1.0, size: 14, hp: 1
+        });
+    }
+
     update(playerTargetRadius) {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
@@ -339,8 +399,14 @@ class ChickenEnemy extends Enemy {
     }
 }
 
-// 9. にゃんこフェスティバル
+// 10. にゃんこフェスティバル (ネコ顔)
 class CatEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'CAT', name: 'にゃんこフェスティバル', color: '#ff99bb', shape: 'cat', speedRatio: 1.0, size: 14, hp: 1
+        });
+    }
+
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = '#ff99bb';
@@ -377,8 +443,14 @@ class CatEnemy extends Enemy {
     }
 }
 
-// 10. 回転マグロ寿司
+// 11. 回転マグロ寿司 (公転移動)
 class SushiEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'SUSHI', name: '回転マグロ寿司', color: '#ff3344', shape: 'sushi', speedRatio: 1.1, size: 15, hp: 1
+        });
+    }
+
     update(playerTargetRadius) {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
@@ -426,8 +498,14 @@ class SushiEnemy extends Enemy {
     }
 }
 
-// 11. メガボム
+// 12. メガボム (画面大爆発)
 class BombEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage) {
+        super(canvas, gameSpeed, stage, {
+            id: 'BOMB', name: 'メガ・ボム', color: '#ff2200', shape: 'bomb', speedRatio: 1.0, size: 14, hp: 1
+        });
+    }
+
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = '#ff2200';
@@ -464,27 +542,25 @@ class BombEnemy extends Enemy {
     }
 }
 
-// --- エネミーファクトリー（クラス生成管理） ---
+// --- エネミーファクトリー (完全自立型生成管理) ---
 class EnemyFactory {
-    static create(canvas, gameSpeed, stage, enemiesMaster) {
+    static create(canvas, gameSpeed, stage) {
         const pool = stage ? stage.enemyPool : [{ id: 'CHASER', weight: 1.0 }];
         const pickedId = this.pickWeightedId(pool);
-        const masterData = enemiesMaster[pickedId] || {};
-        masterData.id = pickedId;
 
         switch (pickedId) {
-            case 'SPEEDER': return new SpeederEnemy(canvas, gameSpeed, stage, masterData);
-            case 'GLITCH': return new GlitchEnemy(canvas, gameSpeed, stage, masterData);
-            case 'CURVE': return new CurveEnemy(canvas, gameSpeed, stage, masterData);
-            case 'SHIELD': return new ShieldEnemy(canvas, gameSpeed, stage, masterData);
-            case 'BIG_BOSS': return new ShieldEnemy(canvas, gameSpeed, stage, masterData);
-            case 'HEAL': return new HealEnemy(canvas, gameSpeed, stage, masterData);
-            case 'DONT_TAP': return new DontTapEnemy(canvas, gameSpeed, stage, masterData);
-            case 'CHICKEN': return new ChickenEnemy(canvas, gameSpeed, stage, masterData);
-            case 'CAT': return new CatEnemy(canvas, gameSpeed, stage, masterData);
-            case 'SUSHI': return new SushiEnemy(canvas, gameSpeed, stage, masterData);
-            case 'BOMB': return new BombEnemy(canvas, gameSpeed, stage, masterData);
-            default: return new ChaserEnemy(canvas, gameSpeed, stage, masterData);
+            case 'SPEEDER': return new SpeederEnemy(canvas, gameSpeed, stage);
+            case 'GLITCH': return new GlitchEnemy(canvas, gameSpeed, stage);
+            case 'CURVE': return new CurveEnemy(canvas, gameSpeed, stage);
+            case 'SHIELD': return new ShieldEnemy(canvas, gameSpeed, stage);
+            case 'BIG_BOSS': return new BigBossEnemy(canvas, gameSpeed, stage);
+            case 'HEAL': return new HealEnemy(canvas, gameSpeed, stage);
+            case 'DONT_TAP': return new DontTapEnemy(canvas, gameSpeed, stage);
+            case 'CHICKEN': return new ChickenEnemy(canvas, gameSpeed, stage);
+            case 'CAT': return new CatEnemy(canvas, gameSpeed, stage);
+            case 'SUSHI': return new SushiEnemy(canvas, gameSpeed, stage);
+            case 'BOMB': return new BombEnemy(canvas, gameSpeed, stage);
+            default: return new ChaserEnemy(canvas, gameSpeed, stage);
         }
     }
 

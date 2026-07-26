@@ -289,10 +289,10 @@ class Game {
                 const isNana = step >= 9 && step <= 15;
 
                 if (isSan1 || isSan2 || isNana) {
-                    this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
+                    this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage));
                 }
             } else if (this.bgmStep % 2 === 0 && Math.random() > 0.3) {
-                this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
+                this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage));
             }
 
             this.bgmStep++;
