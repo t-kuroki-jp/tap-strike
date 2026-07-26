@@ -270,7 +270,7 @@ class OrbitAttractBehavior extends Behavior {
     }
 }
 
-// 🦘 10. バウンド・反射 Behavior (一度画面内に入ったあと壁で1回バウンド)
+// 🦘 10. バウンド・反射 Behavior (壁に必ず弾けて角度を変えてから中心へ突入)
 class BoundBehavior extends Behavior {
     constructor(config = {}) {
         super();
@@ -285,11 +285,15 @@ class BoundBehavior extends Behavior {
         const centerY = enemy.canvas.height / 2;
 
         if (this.vx === null) {
+            // あえて中心から角度を斜めに逸らして発射 (壁に100%バウンドさせる！)
             const dx = centerX - enemy.x;
             const dy = centerY - enemy.y;
-            const dist = Math.hypot(dx, dy);
-            this.vx = (dx / dist) * enemy.speed * 1.3;
-            this.vy = (dy / dist) * enemy.speed * 1.3;
+            const baseAngle = Math.atan2(dy, dx);
+            const offsetAngle = (Math.random() < 0.5 ? 1 : -1) * (Math.PI * 0.38);
+            const moveAngle = baseAngle + offsetAngle;
+
+            this.vx = Math.cos(moveAngle) * enemy.speed * 1.45;
+            this.vy = Math.sin(moveAngle) * enemy.speed * 1.45;
         }
 
         enemy.x += this.vx;
@@ -297,19 +301,32 @@ class BoundBehavior extends Behavior {
 
         // 1. まず一回画面の中に入るのを待つ
         if (!this.enteredScreen) {
-            if (enemy.x >= 20 && enemy.x <= enemy.canvas.width - 20 &&
-                enemy.y >= 20 && enemy.y <= enemy.canvas.height - 20) {
+            if (enemy.x >= 25 && enemy.x <= enemy.canvas.width - 25 &&
+                enemy.y >= 25 && enemy.y <= enemy.canvas.height - 25) {
                 this.enteredScreen = true;
             }
         } else if (!this.bounced) {
-            // 2. 画面内に入ったあとに壁の端に触れたらバウンド！
+            // 2. 画面内で壁の端に触れたら角度を変えてバウンド ＆ 中心へ向かう！
+            let hit = false;
             if (enemy.x < 15 || enemy.x > enemy.canvas.width - 15) {
                 this.vx *= -1;
-                this.bounced = true;
+                hit = true;
             }
             if (enemy.y < 15 || enemy.y > enemy.canvas.height - 15) {
                 this.vy *= -1;
+                hit = true;
+            }
+
+            if (hit) {
                 this.bounced = true;
+                // バウンド後は中心へ向きを補正して突入！
+                const dx = centerX - enemy.x;
+                const dy = centerY - enemy.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist > 0) {
+                    this.vx = (dx / dist) * enemy.speed * 1.5;
+                    this.vy = (dy / dist) * enemy.speed * 1.5;
+                }
             }
         }
 
