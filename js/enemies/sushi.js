@@ -1,5 +1,5 @@
 /**
- * 回転すし (マグロ・エビ・たまご・アジ・タコ・イカ・小ぶり4切れ盛りかっぱ巻きが和風皿に乗ってクルクル回転！)
+ * 回転すし (上空トップダウン視点！お皿の中央に美しいネタがドンと乗る本物のお皿寿司グラフィック)
  */
 class SushiEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -47,7 +47,7 @@ class SushiEnemy extends Enemy {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotationAngle);
 
-        // 1. 和風回転寿司お皿 (白陶器 ＋ ネタ色の綺麗な和風縁ライン)
+        // 1. 和風回転寿司お皿 (真上から見た丸い陶器皿 ＋ ネタ色の綺麗な和風縁ライン)
         ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
         ctx.shadowBlur = 8;
         
@@ -68,9 +68,9 @@ class SushiEnemy extends Enemy {
         ctx.arc(0, 0, 14.2, 0, Math.PI * 2);
         ctx.stroke();
 
-        // 2. 寿司ネタ別の専用グラフィック描画
+        // 2. 上空トップダウン視点の美しいネタ描画 (ズレゼロ！お皿の中央に完璧配置)
         if (this.sushiType === 'kappa_roll') {
-            // ★ かっぱ巻き (皿の上に小ぶりな 4切れが可愛く並ぶ！)
+            // ★ かっぱ巻き (真上から見た均等な 4切れ巻き寿司)
             const rolls = [
                 { x: -5.5, y: -5.5 },
                 { x: 5.5, y: -5.5 },
@@ -82,22 +82,22 @@ class SushiEnemy extends Enemy {
                 ctx.save();
                 ctx.translate(r.x, r.y);
 
-                // 外側の黒緑海苔
+                // 外側の海苔
                 ctx.fillStyle = '#0d2113';
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
                 ctx.shadowBlur = 3;
                 ctx.beginPath();
                 ctx.arc(0, 0, 5.8, 0, Math.PI * 2);
                 ctx.fill();
 
-                // 内側の白酢飯シャリ
+                // 内側のシャリ
                 ctx.fillStyle = '#fffdf7';
                 ctx.shadowBlur = 0;
                 ctx.beginPath();
                 ctx.arc(0, 0, 4.3, 0, Math.PI * 2);
                 ctx.fill();
 
-                // 中央のシャキシャキきゅうり
+                // きゅうり
                 ctx.fillStyle = '#22cc55';
                 ctx.beginPath();
                 ctx.arc(0, 0, 2.2, 0, Math.PI * 2);
@@ -111,143 +111,138 @@ class SushiEnemy extends Enemy {
 
                 ctx.restore();
             });
-        } else {
-            // ★ 握り寿司共通シャリ (ふっくら酢飯)
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
-            ctx.shadowBlur = 3;
-            ctx.fillStyle = '#fffdf7';
+        } else if (this.sushiType === 'tuna') {
+            // ★ マグロ (真上から見下ろした角丸長円の赤身 ＋ 白スジ)
+            ctx.fillStyle = '#ff2a3b';
+            ctx.shadowColor = '#ff2a3b';
+            ctx.shadowBlur = 6;
             ctx.beginPath();
-            ctx.roundRect(-10, -5, 20, 11, 4);
+            ctx.roundRect(-13, -7.5, 26, 15, 6);
             ctx.fill();
 
-            if (this.sushiType === 'tuna') {
-                // ★ マグロ (赤身 ＋ 白スジ ＋ 光沢)
-                ctx.fillStyle = '#ff2a3b';
-                ctx.shadowColor = '#ff2a3b';
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.roundRect(-13, -9, 26, 12, 5);
-                ctx.fill();
+            // 刺身スジ
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+            ctx.lineWidth = 1.4;
+            ctx.beginPath();
+            ctx.moveTo(-7, -5); ctx.lineTo(-4, 5);
+            ctx.moveTo(-1, -5); ctx.lineTo(2, 5);
+            ctx.moveTo(5, -5); ctx.lineTo(8, 5);
+            ctx.stroke();
 
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
-                ctx.lineWidth = 1.4;
-                ctx.beginPath();
-                ctx.moveTo(-7, -7); ctx.lineTo(-4, -1);
-                ctx.moveTo(-1, -7); ctx.lineTo(2, -1);
-                ctx.moveTo(5, -7); ctx.lineTo(8, -1);
-                ctx.stroke();
-            } else if (this.sushiType === 'shrimp') {
-                // ★ エビ (蒸しエビ ＋ 尻尾)
-                ctx.fillStyle = '#e63900';
-                ctx.beginPath();
-                ctx.moveTo(-13, -2); ctx.lineTo(-17, -7); ctx.lineTo(-15, 2);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#ff7733';
-                ctx.shadowColor = '#ff7733';
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.roundRect(-12, -9, 24, 12, 5);
-                ctx.fill();
-
-                ctx.fillStyle = '#e63900';
-                ctx.beginPath();
-                ctx.roundRect(-12, -9, 6, 12, 3);
-                ctx.roundRect(-2, -9, 6, 12, 3);
-                ctx.roundRect(8, -9, 4, 12, 3);
-                ctx.fill();
-            } else if (this.sushiType === 'egg') {
-                // ★ たまご (黄金色玉子焼き ＋ 海苔帯)
-                ctx.fillStyle = '#ffcc00';
-                ctx.shadowColor = '#ffcc00';
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.roundRect(-13, -10, 26, 13, 4);
-                ctx.fill();
-
-                ctx.strokeStyle = '#e6b800';
-                ctx.lineWidth = 1.2;
-                ctx.beginPath();
-                ctx.moveTo(-11, -4); ctx.lineTo(11, -4);
-                ctx.stroke();
-
-                ctx.fillStyle = '#111822';
-                ctx.shadowBlur = 0;
-                ctx.fillRect(-3, -10.5, 6, 14);
-            } else if (this.sushiType === 'mackerel') {
-                // ★ アジ (青皮 ＋ 切れ込み ＋ 生姜ネギ)
-                ctx.fillStyle = '#2b6b99';
-                ctx.shadowColor = '#2b6b99';
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.roundRect(-13, -9, 26, 12, 5);
-                ctx.fill();
-
-                ctx.fillStyle = '#e6f2ff';
-                ctx.beginPath();
-                ctx.ellipse(0, -3, 9, 3, 0, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#22cc55';
-                ctx.beginPath();
-                ctx.arc(-2, -6, 1.8, 0, Math.PI * 2);
-                ctx.arc(3, -5, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = '#ffdd44';
-                ctx.beginPath();
-                ctx.arc(0, -7, 1.2, 0, Math.PI * 2);
-                ctx.fill();
-            } else if (this.sushiType === 'octopus') {
-                // ★ タコ (赤皮 ＋ 白身 ＋ 吸盤)
-                ctx.fillStyle = '#cc2255';
-                ctx.shadowColor = '#cc2255';
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.roundRect(-13, -9, 26, 12, 5);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.ellipse(0, -3, 11, 3.5, 0, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff88aa';
-                ctx.beginPath();
-                ctx.arc(-7, -5, 2.2, 0, Math.PI * 2);
-                ctx.arc(-1, -6, 2.2, 0, Math.PI * 2);
-                ctx.arc(5, -5, 2.2, 0, Math.PI * 2);
-                ctx.fill();
-            } else if (this.sushiType === 'squid') {
-                // ★ イカ (鹿の子包丁切り込み)
-                ctx.fillStyle = '#ffffff';
-                ctx.shadowColor = '#ffffff';
-                ctx.shadowBlur = 8;
-                ctx.beginPath();
-                ctx.roundRect(-13, -9, 26, 12, 5);
-                ctx.fill();
-
-                ctx.strokeStyle = '#d4e6f1';
-                ctx.lineWidth = 1.3;
-                ctx.beginPath();
-                ctx.moveTo(-8, -7); ctx.lineTo(-4, -1);
-                ctx.moveTo(-2, -7); ctx.lineTo(2, -1);
-                ctx.moveTo(4, -7); ctx.lineTo(8, -1);
-                ctx.moveTo(-4, -7); ctx.lineTo(-8, -1);
-                ctx.moveTo(2, -7); ctx.lineTo(-2, -1);
-                ctx.moveTo(8, -7); ctx.lineTo(4, -1);
-                ctx.stroke();
-
-                ctx.fillStyle = 'rgba(34, 187, 85, 0.45)';
-                ctx.beginPath();
-                ctx.ellipse(0, -3, 8, 2.5, 0, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            // ネタ共通光沢ハイライト
+            // 光沢ハイライト
             ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
             ctx.beginPath();
-            ctx.ellipse(-4, -6, 3.5, 1.2, -Math.PI / 8, 0, Math.PI * 2);
+            ctx.ellipse(-4, -4, 4, 1.8, -Math.PI / 8, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (this.sushiType === 'shrimp') {
+            // ★ エビ (真上から見下ろした美しい海老 ＋ 尾)
+            // しっぽ
+            ctx.fillStyle = '#e63900';
+            ctx.beginPath();
+            ctx.moveTo(-12, -2); ctx.lineTo(-17, -7); ctx.lineTo(-15, 3);
+            ctx.closePath();
+            ctx.fill();
+
+            // 海老身 (中央にぴったり配置)
+            ctx.fillStyle = '#ff7733';
+            ctx.shadowColor = '#ff7733';
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.roundRect(-12, -7.5, 24, 15, 6);
+            ctx.fill();
+
+            // 節の赤ライン
+            ctx.fillStyle = '#e63900';
+            ctx.beginPath();
+            ctx.roundRect(-12, -7.5, 6, 15, 3);
+            ctx.roundRect(-2, -7.5, 6, 15, 3);
+            ctx.roundRect(8, -7.5, 4, 15, 3);
+            ctx.fill();
+        } else if (this.sushiType === 'egg') {
+            // ★ たまご (真上から見た黄色い厚焼き玉子 ＋ 海苔帯)
+            ctx.fillStyle = '#ffcc00';
+            ctx.shadowColor = '#ffcc00';
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.roundRect(-13, -8, 26, 16, 5);
+            ctx.fill();
+
+            // 中央を横切る黒い海苔帯
+            ctx.fillStyle = '#111822';
+            ctx.shadowBlur = 0;
+            ctx.fillRect(-3.5, -8.5, 7, 17);
+        } else if (this.sushiType === 'mackerel') {
+            // ★ アジ (真上から見た青皮 ＋ 切れ込み ＋ 生姜ネギ)
+            ctx.fillStyle = '#2b6b99';
+            ctx.shadowColor = '#2b6b99';
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.roundRect(-13, -7.5, 26, 15, 6);
+            ctx.fill();
+
+            // 中央のシルバー切り込み
+            ctx.fillStyle = '#e6f2ff';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 9, 4, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ネギ＆生姜トッピング
+            ctx.fillStyle = '#22cc55';
+            ctx.beginPath();
+            ctx.arc(-3, -2, 2.0, 0, Math.PI * 2);
+            ctx.arc(3, 1, 1.8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#ffdd44';
+            ctx.beginPath();
+            ctx.arc(1, -3, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (this.sushiType === 'octopus') {
+            // ★ タコ (真上から見た赤皮 ＋ 白身 ＋ 吸盤)
+            ctx.fillStyle = '#cc2255';
+            ctx.shadowColor = '#cc2255';
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.roundRect(-13, -7.5, 26, 15, 6);
+            ctx.fill();
+
+            // 中央の白い身
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 11, 4.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 左右の吸盤
+            ctx.fillStyle = '#ff88aa';
+            ctx.beginPath();
+            ctx.arc(-7, -2, 2.5, 0, Math.PI * 2);
+            ctx.arc(0, -3, 2.5, 0, Math.PI * 2);
+            ctx.arc(7, -2, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (this.sushiType === 'squid') {
+            // ★ イカ (真上から見た白いイカ身 ＋ 鹿の子包丁格子)
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = '#ffffff';
+            ctx.shadowBlur = 8;
+            ctx.beginPath();
+            ctx.roundRect(-13, -7.5, 26, 15, 6);
+            ctx.fill();
+
+            // 鹿の子包丁切り込み
+            ctx.strokeStyle = '#d4e6f1';
+            ctx.lineWidth = 1.3;
+            ctx.beginPath();
+            ctx.moveTo(-8, -5); ctx.lineTo(-4, 5);
+            ctx.moveTo(-2, -5); ctx.lineTo(2, 5);
+            ctx.moveTo(4, -5); ctx.lineTo(8, 5);
+            ctx.moveTo(-4, -5); ctx.lineTo(-8, 5);
+            ctx.moveTo(2, -5); ctx.lineTo(-2, 5);
+            ctx.moveTo(8, -5); ctx.lineTo(4, 5);
+            ctx.stroke();
+
+            // 透ける大葉
+            ctx.fillStyle = 'rgba(34, 187, 85, 0.4)';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 8, 3, 0, 0, Math.PI * 2);
             ctx.fill();
         }
 
