@@ -78,6 +78,34 @@ canvas {
     margin-top: 3px;
 }
 
+.btn-pause {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 240, 255, 0.5);
+    background: rgba(5, 7, 14, 0.75);
+    color: #00f0ff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    pointer-events: auto !important;
+    z-index: 900;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    transition: all 0.2s;
+}
+
+.btn-pause:active {
+    transform: scale(0.92);
+    background: rgba(0, 240, 255, 0.3);
+}
+
 /* --- フラット独立モーダル共通CSS (トップ画面・ゲームオーバーはコンテンツ吸着) --- */
 .modal-box {
     position: fixed;

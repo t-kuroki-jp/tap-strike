@@ -10,6 +10,7 @@ class Game {
         this.combo = 0;
         this.isGameOver = false;
         this.isGameStarted = false;
+        this.isPaused = false;
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
@@ -52,11 +53,18 @@ class Game {
                 el.closest('.btn-mode') ||
                 el.closest('.btn-action') ||
                 el.closest('.btn-back') ||
+                el.closest('.btn-pause') ||
                 el.closest('.stage-card') ||
                 el.closest('.var-card') ||
                 el.closest('.modal-box')
             );
         };
+
+        window.addEventListener('keydown', (e) => {
+            if ((e.key === 'Escape' || e.key === 'p' || e.key === 'P') && this.isGameStarted && !this.isGameOver) {
+                this.togglePause();
+            }
+        });
 
         window.addEventListener('touchstart', (e) => {
             if (this.isGameStarted && !this.isGameOver && !isUIElement(e.target)) {
@@ -103,7 +111,29 @@ class Game {
         }
     }
 
+    togglePause() {
+        if (!this.isGameStarted || this.isGameOver) return;
+
+        this.isPaused = !this.isPaused;
+
+        if (this.isPaused) {
+            if (this.bgmAudio) {
+                try { this.bgmAudio.pause(); } catch (e) {}
+            }
+            this.showModal('modal-pause');
+        } else {
+            const pauseElem = document.getElementById('modal-pause');
+            if (pauseElem) pauseElem.style.display = 'none';
+
+            if (this.bgmAudio) {
+                try { this.bgmAudio.play(); } catch (e) {}
+            }
+            requestAnimationFrame(() => this.gameLoop());
+        }
+    }
+
     restartStage() {
+        this.isPaused = false;
         if (!this.currentStage) {
             this.showModeSelect();
             return;
@@ -210,6 +240,7 @@ class Game {
 
         this.isGameStarted = true;
         this.isGameOver = false;
+        this.isPaused = false;
 
         // 全モーダル隠してプレイ画面へ
         this.hideAllModals();
@@ -321,7 +352,7 @@ class Game {
     }
 
     handleInput(e) {
-        if (!this.isGameStarted || this.isGameOver) return;
+        if (!this.isGameStarted || this.isGameOver || this.isPaused) return;
         if (e && e.cancelable && e.preventDefault) e.preventDefault();
 
         const now = Date.now();
@@ -425,7 +456,7 @@ class Game {
     }
 
     gameLoop() {
-        if (!this.isGameStarted || this.isGameOver) return;
+        if (!this.isGameStarted || this.isGameOver || this.isPaused) return;
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
