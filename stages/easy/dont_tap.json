@@ -1,0 +1,19 @@
+{
+  "id": "dont_tap",
+  "name": "スルー・マスター",
+  "difficulty": "EASY",
+  "description": "タップ禁止の×印スルー敵のみ！引きつけて見送るタイミング特訓ステージ",
+  "bgm": "bgm/Midnight_Porch_Light.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(0, 255, 136, 0.25)",
+    "gridColor": "rgba(0, 255, 136, 0.3)",
+    "ringColor": "#00ff88",
+    "playerColor": "#00ff88"
+  },
+  "enemyPool": [
+    { "id": "DONT_TAP", "weight": 1.0 }
+  ],
+  "spawnRate": 260
+}

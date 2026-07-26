@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 完全モジュール化 × 3フラットモーダルUI × ステージ名・ファイル名完全一致構造 (`v3.5.0`)
+- **特徴**: 完全モジュール化 × 3フラットモーダルUI × BIG_BOSS & DONT_TAP ギミック搭載 (`v4.2.0`)
 
 ---
 
@@ -26,7 +26,9 @@ tap-strike/
 │   │   ├── spiral_curve.json   # 「スパイラル・カーブ」
 │   │   ├── shield_break.json   # 「シールド・ブレイク」
 │   │   ├── phantom_glitch.json # 「ファントム・グリッチ」
-│   │   └── bolt_speeder.json   # 「ボルト・スピーダー」
+│   │   ├── bolt_speeder.json   # 「ボルト・スピーダー」
+│   │   ├── big_boss.json       # 「ビッグ・ボス」 (NEW!)
+│   │   └── dont_tap.json       # 「スルー・マスター」 (NEW!)
 │   ├── normal/                 # NORMALモード用（ギミック複合）
 │   │   ├── neon_standard.json  # 「ネオン・スタンダード」
 │   │   └── purple_trick.json   # 「パープル・トリック・ナイト」
@@ -34,7 +36,7 @@ tap-strike/
 │       └── bolt_overdrive.json # 「ボルト・オーバードライブ」
 ├── bgm/                        # BGM音源 (.mp3)
 ├── stages.json                 # 全ステージ相対パス一覧
-├── enemies.json                # 敵マスタ定義
+├── enemies.json                # 敵マスタ定義 (BIG_BOSS, DONT_TAP含む)
 ├── difficulties.json           # 難易度マスタ定義
 ├── SPECIFICATION.md
 └── README.md

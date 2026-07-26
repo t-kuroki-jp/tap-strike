@@ -115,6 +115,15 @@ class Enemy {
             ctx.lineTo(this.x - this.size, this.y + this.size);
             ctx.closePath();
             ctx.fill();
+        } else if (this.shape === 'cross') {
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = this.color;
+            ctx.beginPath();
+            ctx.moveTo(this.x - this.size, this.y - this.size);
+            ctx.lineTo(this.x + this.size, this.y + this.size);
+            ctx.moveTo(this.x + this.size, this.y - this.size);
+            ctx.lineTo(this.x - this.size, this.y + this.size);
+            ctx.stroke();
         } else {
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();

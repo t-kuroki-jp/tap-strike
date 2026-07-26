@@ -53,5 +53,25 @@
     "speedRatio": 1.1,
     "size": 12,
     "behavior": "curve"
+  },
+  "BIG_BOSS": {
+    "name": "ビッグ・ボス",
+    "description": "超巨大で高耐久(HP5)。連打でブチ破る巨大ボスエネミー",
+    "color": "#ffaa00",
+    "shape": "hexagon",
+    "speedRatio": 0.65,
+    "size": 42,
+    "hp": 5,
+    "behavior": "shield"
+  },
+  "DONT_TAP": {
+    "name": "スルー・ファントム",
+    "description": "タップするとミス！見送って中心へ届かせると成功する逆判定エネミー",
+    "color": "#ff0055",
+    "shape": "cross",
+    "speedRatio": 1.0,
+    "size": 14,
+    "hp": 1,
+    "behavior": "dont_tap"
   }
 }

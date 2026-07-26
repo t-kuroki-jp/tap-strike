@@ -329,6 +329,19 @@ class Game {
 
             if (diff < this.params.hitWindow) {
                 hit = true;
+
+                if (enemy.behavior === 'dont_tap') {
+                    audioEngine.playMissSound();
+                    this.combo = 0;
+                    this.ringPulse = 8;
+                    this.ringColor = '#ff0055';
+                    this.missPenaltyTimer = this.params.missPenaltyDuration;
+                    this.shockwaves.push(new Shockwave(touchX, touchY, '#ff0055'));
+                    this.createParticles(enemy.x, enemy.y, '#ff0055');
+                    this.enemies.splice(i, 1);
+                    break;
+                }
+
                 const isPerfect = diff <= 8;
                 const scoreMultiplier = isPerfect ? 2 : 1;
 
@@ -477,7 +490,12 @@ class Game {
                 this.createParticles(enemy.x, enemy.y, enemy.color);
                 this.enemies.splice(i, 1);
 
-                if (enemy.behavior !== 'heal') {
+                if (enemy.behavior === 'dont_tap') {
+                    this.combo++;
+                    this.score += this.params.baseScore * this.combo;
+                    audioEngine.playHitSound();
+                    this.updateUI();
+                } else if (enemy.behavior !== 'heal') {
                     this.player.hp--;
                     this.updateUI();
                     audioEngine.playMissSound();
