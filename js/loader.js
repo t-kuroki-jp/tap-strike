@@ -57,7 +57,7 @@ class DataLoader {
 
     getMergedParams(stageId) {
         const stage = this.stages.find(s => s.id === stageId);
-        if (!stage) return null;
+        if (!stage) return this.getDefaultParams();
 
         const difficulty = this.difficultiesMaster[stage.difficulty] || {};
 
@@ -68,6 +68,23 @@ class DataLoader {
             missPenaltyDuration: stage.missPenaltyDuration ?? difficulty.missPenaltyDuration ?? 40,
             particleCount: stage.particleCount ?? difficulty.particleCount ?? 12,
             tapCooldown: stage.tapCooldown ?? difficulty.tapCooldown ?? 80
+        };
+    }
+
+    getResolvedParams(stage) {
+        if (!stage) return this.getDefaultParams();
+        const stageId = typeof stage === 'string' ? stage : stage.id;
+        return this.getMergedParams(stageId);
+    }
+
+    getDefaultParams() {
+        return {
+            baseScore: 100,
+            speedIncrement: 0.05,
+            hitWindow: 35,
+            missPenaltyDuration: 40,
+            particleCount: 12,
+            tapCooldown: 80
         };
     }
 }
