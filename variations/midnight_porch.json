@@ -2,7 +2,7 @@
   "id": "midnight_porch",
   "name": "ミッドナイト・ポーチ・ライト",
   "difficulty": "EASY",
-  "description": "素直な敵とたくさんの回復ポッド！夜の静けさとチルなビートで癒やされる超やさしいEASYバリエーション",
+  "description": "ウネウネ波打つトリッキーな敵の軌道をチルなビートで楽しく練習できるEASYバリエーション！",
   "bgm": "bgm/Midnight_Porch_Light.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -13,8 +13,9 @@
     "playerColor": "#00ffcc"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 0.7 },
-    { "id": "HEAL", "weight": 0.3 }
+    { "id": "CURVE", "weight": 0.6 },
+    { "id": "CHASER", "weight": 0.2 },
+    { "id": "HEAL", "weight": 0.2 }
   ],
-  "spawnRate": 240
+  "spawnRate": 230
 }
