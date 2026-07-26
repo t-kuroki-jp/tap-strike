@@ -1,5 +1,5 @@
 /**
- * 打ち上げ花火玉 (斜め下からダイナミック直線上昇・140粒子超豪華三輪スターマイン)
+ * 打ち上げ花火玉 (斜め下から一切曲がらず判定リングへ一直線到達・140粒子超豪華三輪スターマイン)
  */
 class FireworkEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -7,26 +7,24 @@ class FireworkEnemy extends Enemy {
             id: 'FIREWORK', name: '打ち上げ花火玉', color: '#ff3366', shape: 'firework', speedRatio: 0.75, size: 15, hp: 1
         });
 
-        // 画面下部の左右ワイドな位置
-        const margin = canvas.width * 0.08;
+        // 画面下部の左右ワイドな位置 (10% 〜 90%)
+        const margin = canvas.width * 0.1;
         this.x = margin + Math.random() * (canvas.width - margin * 2);
         this.y = canvas.height + 40;
 
-        // ★中央へ引き寄せられず、画面の下から斜め上へ向かってダイナミックに突き抜ける直進ベクトル！
+        // ★出現位置から自機中心 (centerX, centerY) へ向かって「一切曲がらずまっすぐ突き抜ける」固定直線ベクトル！
         const centerX = canvas.width / 2;
-        const targetX = centerX + (this.x - centerX) * 0.4; // 左右斜め上方向へ直進
-        const targetY = canvas.height * 0.2;
+        const centerY = canvas.height / 2;
+        const dx = centerX - this.x;
+        const dy = centerY - this.y;
+        const dist = Math.hypot(dx, dy);
 
-        const vx = targetX - this.x;
-        const vy = targetY - this.y;
-        const len = Math.hypot(vx, vy);
-
-        this.dirX = (vx / len) * this.speed;
-        this.dirY = (vy / len) * this.speed;
+        this.dirX = (dx / dist) * this.speed;
+        this.dirY = (dy / dist) * this.speed;
     }
 
     update(playerTargetRadius) {
-        // 斜め下からダイナミックに直進！
+        // 固定直線ベクトルで斜め下から一直線移動（判定リングにピッタリ到達！）
         this.x += this.dirX;
         this.y += this.dirY;
 
@@ -113,12 +111,11 @@ class FireworkEnemy extends Enemy {
         game.score += game.params.baseScore * game.combo;
         game.gameSpeed += game.params.speedIncrement;
 
-        // ★現在位置から、そのまま斜め上空の夜空へスパート打ち上げ！
+        // ★現在位置から、そのまま進行方向の延長上の夜空へスパート打ち上げ！
         const launchX = this.x;
         const startY = this.y;
 
-        // 進行方向の斜め上の上空位置へ
-        const targetX = Math.min(this.canvas.width - 25, Math.max(25, launchX + this.dirX * 35));
+        const targetX = Math.min(this.canvas.width - 25, Math.max(25, launchX + (this.dirX / this.speed) * 80));
         const targetY = Math.max(50, this.canvas.height * 0.15 + Math.random() * 70);
 
         let currentX = launchX;
