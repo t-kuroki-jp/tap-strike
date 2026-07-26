@@ -2,7 +2,7 @@
   "id": "easy_chaser",
   "name": "ノーマル・チェイサー",
   "difficulty": "EASY",
-  "description": "まっすぐ進む基本敵のみ！リズムに乗ってシンプルに楽しめる入門バリエーション",
+  "description": "まっすぐ進む基本敵のみ！リズムに乗ってシンプルに楽しめる入門ステージ",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -13,7 +13,10 @@
     "playerColor": "#ffaa00"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 1.0 }
+    {
+      "id": "CHASER",
+      "weight": 1.0
+    }
   ],
   "spawnRate": 230
 }

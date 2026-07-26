@@ -2,7 +2,7 @@
   "id": "easy_glitch",
   "name": "ファントム・グリッチ",
   "difficulty": "EASY",
-  "description": "減速フェイント敵のみ！直前の緩急を見極めるタイミング練習バリエーション",
+  "description": "減速フェイント敵のみ！直前の緩急を見極めるタイミング練習ステージ",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -13,7 +13,10 @@
     "playerColor": "#aa00ff"
   },
   "enemyPool": [
-    { "id": "GLITCH", "weight": 1.0 }
+    {
+      "id": "GLITCH",
+      "weight": 1.0
+    }
   ],
   "spawnRate": 240
 }
