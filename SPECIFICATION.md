@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: FUNNY 7大ステージ搭載 (夏の大輪花火、ひよこ、レインボー、三・三・七拍子、ネコ、お寿司、爆発) (`v11.0.0`)
+- **特徴**: FUNNY 7大ステージ ＆ スマホ最適化ポーズ・爆速リトライ機能搭載 (`v13.0.0`)
 
 ---
 
@@ -12,14 +12,14 @@
 
 ```text
 tap-strike/
-├── index.html                  # 3フラットモーダルコンテナを含むエントリーポイント
+├── index.html                  # 4フラットモーダルコンテナ (モード、ステージ、ゲームオーバー、ポーズ)
 ├── css/
-│   └── style.css               # モーダル・ネオンアニメーションCSS
+│   └── style.css               # モーダル・ネオンアニメーション・ポーズボタンCSS
 ├── js/
 │   ├── audio.js                # 汎用Web Audio APIトーンシンセサイザー / BGM再生管理
 │   ├── loader.js               # ステージ・難易度JSONフェッチおよびパラメータ合成
 │   ├── entities.js             # Particle, Shockwave 視覚演出
-│   ├── game.js                 # メインゲームエンジン・一元モーダル管理
+│   ├── game.js                 # メインゲームエンジン・一元モーダル・ポーズ・リトライ管理
 │   └── enemies/                # 自立型エネミーモジュール群 (サウンド完全カプセル化)
 │       ├── enemy.js            # 基底 Enemy クラス
 │       ├── enemy_factory.js    # EnemyFactory 生成管理
@@ -35,7 +35,7 @@ tap-strike/
 │       ├── cat.js              # 🐱 にゃんこフェスティバル
 │       ├── sushi.js            # 🍣 回転マグロ寿司
 │       ├── bomb.js             # 💥 メガ・ボム
-│       └── firework.js         # 🎆 打ち上げ花火玉 (NEW!)
+│       └── firework.js         # 🎆 打ち上げ花火玉
 ├── stages/                     # モードごとに分類されたステージJSON
 │   ├── easy/                   # EASYモード用
 │   ├── normal/                 # NORMALモード用
@@ -47,8 +47,9 @@ tap-strike/
 │       ├── cat_festival.json   # 「ネコ・フェスティバル」
 │       ├── rotating_sushi.json # 「回転マグロ寿司」
 │       ├── bomb_party.json     # 「爆発まつり」
-│       └── summer_fireworks.json# 「たまや〜！夏の大輪花火」 (NEW!)
+│       └── summer_fireworks.json# 「たまや〜！夏の大輪花火」
 ├── bgm/                        # BGM音源 (.mp3)
+│   └── Matsuri_High.mp3        # 夏の大輪花火用お祭りBGM
 ├── stages.json                 # 全ステージ相対パス一覧
 ├── difficulties.json           # 難易度マスタ定義
 ├── SPECIFICATION.md

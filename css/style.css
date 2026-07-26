@@ -53,29 +53,27 @@ canvas {
 #ui {
     position: absolute;
     top: 20px;
-    left: 0;
-    width: 100%;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 700;
     pointer-events: none;
-    z-index: 10;
+    z-index: 100;
 }
 
 .score-board {
-    font-size: 24px;
-    font-weight: bold;
     color: #00f0ff;
-    text-shadow: 0 0 10px #00f0ff;
+    text-shadow: 0 0 8px #00f0ff;
 }
 
 .hp-board {
     font-size: 18px;
-    color: #ff0055;
-    margin-top: 4px;
-    letter-spacing: 2px;
-    text-shadow: 0 0 8px #ff0055;
 }
 
 .combo-board {
-    font-size: 16px;
     color: #ff007f;
     margin-top: 3px;
 }
