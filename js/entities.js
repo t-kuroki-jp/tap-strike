@@ -52,9 +52,11 @@ class Enemy {
         }
 
         if (this.behavior === 'chicken') {
-            const hop = Math.abs(Math.sin(dist * 0.15)) * 3;
-            this.x += (dx / dist) * currentSpeed;
-            this.y += (dy / dist) * currentSpeed - hop;
+            const perpX = -dy / dist;
+            const perpY = dx / dist;
+            const hop = Math.sin(dist * 0.2) * 2.5;
+            this.x += (dx / dist) * currentSpeed + perpX * hop;
+            this.y += (dy / dist) * currentSpeed + perpY * hop;
         } else if (this.behavior === 'curve') {
             const perpX = -dy / dist;
             const perpY = dx / dist;
