@@ -2,7 +2,7 @@
  * 新・幾何学ノーツ群 (EASYモード全9動作対応)
  */
 
-// 1. ブーメランノーツ (V字ブーメランフォルム ＋ 超高速グルグル回転・純粋ネオンカラー)
+// 1. ブーメランノーツ (正方形の1/4を削ったスタイリッシュL字幾何学ノーツ ＋ 高速グルグル回転)
 class CrossEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
@@ -14,7 +14,7 @@ class CrossEnemy extends Enemy {
 
     update(playerTargetRadius) {
         const dist = super.update(playerTargetRadius);
-        // ブーメラン特有のシャシャシャッと風を切る高速自転！
+        // 高速自転！
         this.rotationAngle += 0.22;
         return dist;
     }
@@ -26,19 +26,19 @@ class CrossEnemy extends Enemy {
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         
-        // 白フチを撤去し、高コントラストなクッキリ純性ネオンカラーで描画！
         ctx.fillStyle = this.color;
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 14;
 
-        // 本物の V字くの字 ブーメラン描画
+        // 正方形の1/4を削った直角スタイリッシュL字幾何学ノーツ
+        const s = this.size;
         ctx.beginPath();
-        ctx.moveTo(0, 5);           // 中央くびれ下
-        ctx.lineTo(-15, -12);       // 左翼先
-        ctx.lineTo(-9, -15);        // 左翼外角
-        ctx.lineTo(0, -3);          // 中央くびれ上
-        ctx.lineTo(9, -15);         // 右翼外角
-        ctx.lineTo(15, -12);        // 右翼先
+        ctx.moveTo(-s, -s);
+        ctx.lineTo(0, -s);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(s, 0);
+        ctx.lineTo(s, s);
+        ctx.lineTo(-s, s);
         ctx.closePath();
         
         ctx.fill();
