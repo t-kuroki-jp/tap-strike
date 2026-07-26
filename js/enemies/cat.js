@@ -1,5 +1,5 @@
 /**
- * にゃんこフェスティバル (トコトコ気まぐれ移動・リアル猫グラフィック・ニャ〜オSE)
+ * にゃんこフェスティバル (トコトコ気まぐれ移動・横ゆらゆらしっぽ・ニャ〜オSE)
  */
 class CatEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -16,6 +16,8 @@ class CatEnemy extends Enemy {
         const dy = centerY - this.y;
         const dist = Math.hypot(dx, dy);
 
+        if (dist === 0) return 0;
+
         // 猫特有のすばしっこいトコトコ気まぐれステップ
         const perpX = -dy / dist;
         const perpY = dx / dist;
@@ -23,7 +25,7 @@ class CatEnemy extends Enemy {
 
         this.x += (dx / dist) * this.speed + perpX * step;
         this.y += (dy / dist) * this.speed + perpY * step;
-        this.tailAngle += 0.15;
+        this.tailAngle += 0.18;
 
         return dist;
     }
@@ -31,17 +33,20 @@ class CatEnemy extends Enemy {
     draw(ctx) {
         ctx.save();
 
-        // 1. ふりふりシッポ (後ろ)
+        // 1. ゆらゆら横しっぽ (右横からぴょこんと立ち上がってゆらゆら揺れるキュートな横しっぽ！)
         ctx.strokeStyle = '#ff99bb';
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 4.5;
         ctx.lineCap = 'round';
         ctx.shadowColor = '#ff99bb';
         ctx.shadowBlur = 8;
         ctx.beginPath();
-        const tailX = this.x + Math.sin(this.tailAngle) * 12;
-        const tailY = this.y + 14 + Math.cos(this.tailAngle) * 4;
-        ctx.moveTo(this.x, this.y + 10);
-        ctx.quadraticCurveTo(this.x + 8, this.y + 18, tailX, tailY);
+
+        const tailSwing = Math.sin(this.tailAngle) * 6;
+        const tailTipX = this.x + 20 + tailSwing;
+        const tailTipY = this.y - 5 + Math.cos(this.tailAngle) * 4;
+
+        ctx.moveTo(this.x + 10, this.y + 5); // 右横の付け根
+        ctx.quadraticCurveTo(this.x + 20, this.y + 8, tailTipX, tailTipY); // 横に伸びるしっぽ！
         ctx.stroke();
 
         // 2. 猫の頭 (メインの円)
@@ -68,8 +73,6 @@ class CatEnemy extends Enemy {
         // 内側インナー耳 (ピンク)
         ctx.fillStyle = '#ff6699';
         ctx.beginPath();
-        ctx.moveTo(this.x - 12, me => {}); ctx.lineTo(this.x - 11, this.y - 5); ctx.lineTo(this.x - 9, me => {});
-        ctx.moveTo(this.x - 12, this.y - 6); ctx.lineTo(this.x - 9, this.y - 15); ctx.lineTo(this.x - 4, me => {});
         ctx.moveTo(this.x - 11, this.y - 6); ctx.lineTo(this.x - 9, this.y - 14); ctx.lineTo(this.x - 4, this.y - 9);
         ctx.moveTo(this.x + 11, this.y - 6); ctx.lineTo(this.x + 9, this.y - 14); ctx.lineTo(this.x + 4, this.y - 9);
         ctx.fill();
@@ -97,47 +100,23 @@ class CatEnemy extends Enemy {
         ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.arc(this.x - 1.8, this.y + 3.5, 1.8, 0, Math.PI * 0.85);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(this.x + 1.8, this.y + 3.5, 1.8, Math.PI * 0.15, Math.PI);
+        ctx.arc(this.x + 1.8, this.y + 3.5, 1.8, 0.15 * Math.PI, Math.PI);
         ctx.stroke();
 
-        // 6. ピンと生えた猫のヒゲ (左右3本ずつ)
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1.0;
+        // 6. 白くて可愛いおヒゲ (左右6本)
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.lineWidth = 1.2;
         ctx.beginPath();
         // 左ヒゲ
         ctx.moveTo(this.x - 8, this.y + 1); ctx.lineTo(this.x - 18, this.y - 1);
-        ctx.moveTo(this.x - 8, this.y + 3); ctx.lineTo(this.x - 19, this.y + 3);
-        ctx.moveTo(this.x - 8, this.y + 5); ctx.lineTo(this.x - 17, this.y + 7);
+        ctx.moveTo(this.x - 8, this.y + 3); ctx.lineTo(this.x - 18, this.y + 4);
+        ctx.moveTo(this.x - 8, this.y + 5); ctx.lineTo(this.x - 17, this.y + 9);
         // 右ヒゲ
         ctx.moveTo(this.x + 8, this.y + 1); ctx.lineTo(this.x + 18, this.y - 1);
-        ctx.moveTo(this.x + 8, this.y + 3); ctx.lineTo(this.x + 19, this.y + 3);
-        ctx.moveTo(this.x + 8, this.y + 5); ctx.lineTo(this.x + 17, this.y + 7);
+        ctx.moveTo(this.x + 8, this.y + 3); ctx.lineTo(this.x + 18, this.y + 4);
+        ctx.moveTo(this.x + 8, this.y + 5); ctx.lineTo(this.x + 17, this.y + 9);
         ctx.stroke();
 
         ctx.restore();
-    }
-
-    playCatSound() {
-        // ニャ〜オ！の愛らしい高音スライド
-        audioEngine.playTone({ type: 'triangle', startFreq: 850, endFreq: 1450, duration: 0.12, volume: 0.4 });
-        setTimeout(() => {
-            audioEngine.playTone({ type: 'sine', startFreq: 1450, endFreq: 1100, duration: 0.1, volume: 0.35 });
-        }, 100);
-    }
-
-    onHit(game, touchX, touchY, isPerfect) {
-        this.playCatSound();
-        game.createParticles(this.x, this.y, '#ff99bb');
-        game.createParticles(this.x, this.y, '#ffffff');
-        game.ringPulse = 18;
-        game.ringColor = '#ff99bb';
-        this.hp = 0;
-        game.combo++;
-        game.score += game.params.baseScore * game.combo;
-        game.gameSpeed += game.params.speedIncrement;
-        game.shockwaves.push(new Shockwave(touchX, touchY, '#ff99bb'));
-        return true;
     }
 }
