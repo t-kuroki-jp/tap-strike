@@ -15,5 +15,5 @@
   "enemyPool": [
     { "id": "FIREWORK", "weight": 1.0 }
   ],
-  "spawnRate": 160
+  "spawnRate": 280
 }
