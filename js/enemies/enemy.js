@@ -55,6 +55,9 @@ class Enemy {
 
     draw(ctx) {
         ctx.save();
+        if (this.alpha !== undefined) {
+            ctx.globalAlpha = this.alpha;
+        }
         ctx.fillStyle = this.color;
         ctx.strokeStyle = this.color;
         ctx.shadowColor = this.color;
