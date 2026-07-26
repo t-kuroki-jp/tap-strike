@@ -11,11 +11,12 @@ class SineWaveEnemy extends Enemy {
 
     draw(ctx) {
         ctx.save();
+        if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
+        
+        // 白線を撤去し、他の幾何学ノーツと統一感のあるソリッドな単色ネオン描画に！
         ctx.fillStyle = this.color;
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1.5;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 10;
 
         // ひし形 (ダイアモンドノーツ)
         ctx.beginPath();
@@ -25,7 +26,6 @@ class SineWaveEnemy extends Enemy {
         ctx.lineTo(this.x - this.size, this.y);
         ctx.closePath();
         ctx.fill();
-        ctx.stroke();
 
         ctx.restore();
     }
