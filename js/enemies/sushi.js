@@ -1,5 +1,5 @@
 /**
- * 回転マグロ寿司 (公転移動)
+ * 回転マグロ寿司 (公転移動・自律和風SE)
  */
 class SushiEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -41,8 +41,12 @@ class SushiEnemy extends Enemy {
         ctx.restore();
     }
 
+    playSushiSound() {
+        audioEngine.playTone({ type: 'square', startFreq: 440, endFreq: 880, duration: 0.12, volume: 0.3 });
+    }
+
     onHit(game, touchX, touchY, isPerfect) {
-        audioEngine.playSushiSound();
+        this.playSushiSound();
         game.createParticles(this.x, this.y, '#ff3344');
         game.ringPulse = 16;
         game.ringColor = '#ff3344';

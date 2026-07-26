@@ -1,5 +1,5 @@
 /**
- * にゃんこフェスティバル (ネコ顔)
+ * にゃんこフェスティバル (ネコ顔・自律ニャーSE)
  */
 class CatEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -30,8 +30,12 @@ class CatEnemy extends Enemy {
         ctx.restore();
     }
 
+    playCatSound() {
+        audioEngine.playTone({ type: 'triangle', startFreq: 900, endFreq: 1500, duration: 0.2, volume: 0.4 });
+    }
+
     onHit(game, touchX, touchY, isPerfect) {
-        audioEngine.playCatSound();
+        this.playCatSound();
         game.createParticles(this.x, this.y, '#ff99bb');
         game.ringPulse = 16;
         game.ringColor = '#ff99bb';

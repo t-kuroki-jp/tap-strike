@@ -1,5 +1,5 @@
 /**
- * ぴよぴよヒヨコ (跳ね移動)
+ * ぴよぴよヒヨコ (跳ね移動・自律ピヨピヨSE)
  */
 class ChickenEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -49,8 +49,12 @@ class ChickenEnemy extends Enemy {
         ctx.restore();
     }
 
+    playChickSound() {
+        audioEngine.playTone({ type: 'sine', startFreq: 1600, endFreq: 3200, duration: 0.06, volume: 0.4 });
+    }
+
     onHit(game, touchX, touchY, isPerfect) {
-        audioEngine.playChickSound();
+        this.playChickSound();
         game.createParticles(this.x, this.y, '#ffe600');
         game.ringPulse = 14;
         game.ringColor = '#ffe600';

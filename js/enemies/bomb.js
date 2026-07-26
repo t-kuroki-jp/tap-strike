@@ -1,5 +1,5 @@
 /**
- * メガボム (画面大爆発)
+ * メガボム (画面大爆発・自律爆発SE)
  */
 class BombEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -26,8 +26,12 @@ class BombEnemy extends Enemy {
         ctx.restore();
     }
 
+    playBombSound() {
+        audioEngine.playTone({ type: 'sawtooth', startFreq: 300, endFreq: 40, duration: 0.35, volume: 0.6 });
+    }
+
     onHit(game, touchX, touchY, isPerfect) {
-        audioEngine.playBombSound();
+        this.playBombSound();
         for (let b = 0; b < 4; b++) {
             game.createParticles(this.x, this.y, '#ff2200');
             game.createParticles(this.x, this.y, '#ffe600');
