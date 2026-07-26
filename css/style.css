@@ -78,7 +78,7 @@ canvas {
     margin-top: 3px;
 }
 
-/* --- フラット独立モーダル共通CSS --- */
+/* --- フラット独立モーダル共通CSS (スマホ実機見切れ完全防止) --- */
 .modal-box {
     position: fixed;
     top: 50%;
@@ -86,15 +86,33 @@ canvas {
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 9999;
-    width: 90%;
-    max-width: 420px;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: rgba(5, 7, 14, 0.95);
-    padding: 20px;
-    border-radius: 15px;
+    width: 88vw;
+    max-width: 400px;
+    max-height: 72vh;
+    max-height: 72dvh; /* ★スマホのアドレスバー等を考慮してコンパクト化！見切れを100%防止！ */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    background: rgba(5, 7, 14, 0.96);
+    padding: 20px 16px;
+    border-radius: 18px;
     border: 1px solid rgba(0, 240, 255, 0.4);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.modal-box::-webkit-scrollbar {
+    width: 5px;
+}
+
+.modal-box::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.5);
+    border-radius: 4px;
 }
 
 h1 {
@@ -211,6 +229,7 @@ p.subtitle {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     padding: 12px 14px;
+    margin-bottom: 10px;
     text-align: left;
     cursor: pointer;
     transition: all 0.2s;
