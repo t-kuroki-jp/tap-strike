@@ -13,7 +13,6 @@ class Game {
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
-        this.floatingTexts = [];
         this.gameSpeed = 1.0;
 
         this.ringPulse = 0;
@@ -113,7 +112,6 @@ class Game {
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
-        this.floatingTexts = [];
         if (this.ctx) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
@@ -383,7 +381,6 @@ class Game {
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
-        this.floatingTexts = [];
         if (this.ctx) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
@@ -473,24 +470,9 @@ class Game {
             enemy.draw(this.ctx);
 
             if (dist <= this.player.radius) {
-                this.createParticles(enemy.x, enemy.y, enemy.color);
+                enemy.onReachCenter(this);
                 this.enemies.splice(i, 1);
-
-                if (enemy.behavior === 'dont_tap') {
-                    this.combo++;
-                    this.score += this.params.baseScore * this.combo;
-                    audioEngine.playHitSound();
-                    this.updateUI();
-                } else if (enemy.behavior !== 'heal') {
-                    this.player.hp--;
-                    this.updateUI();
-                    audioEngine.playMissSound();
-
-                    if (this.player.hp <= 0) {
-                        this.gameOver();
-                        return;
-                    }
-                }
+                if (this.isGameOver) return;
             }
         }
 
@@ -507,13 +489,6 @@ class Game {
             p.update();
             p.draw(this.ctx);
             if (p.alpha <= 0) this.particles.splice(i, 1);
-        }
-
-        for (let i = this.floatingTexts.length - 1; i >= 0; i--) {
-            const ft = this.floatingTexts[i];
-            ft.update();
-            ft.draw(this.ctx);
-            if (ft.alpha <= 0) this.floatingTexts.splice(i, 1);
         }
 
         requestAnimationFrame(() => this.gameLoop());
