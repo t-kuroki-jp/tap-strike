@@ -121,14 +121,10 @@ class BehaviorFactory {
         const key = type.toLowerCase();
         switch (key) {
             case 'wave':
-            case 'step':
-            case 'hop':
                 return new WaveBehavior(config);
             case 'spiral':
-            case 'orbit':
                 return new SpiralBehavior(config);
             case 'glitch':
-            case 'teleport':
                 return new GlitchBehavior(config);
             case 'straight':
             default:
