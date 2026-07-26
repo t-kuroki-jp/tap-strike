@@ -7,34 +7,15 @@
 class CatEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CAT', name: 'にゃんこフェスティバル', color: '#ffb3cc', shape: 'cat', speedRatio: 1.05, size: 15, hp: 1
+            id: 'CAT', name: 'にゃんこフェスティバル', color: '#ffb3cc', shape: 'cat', speedRatio: 1.05, size: 15, hp: 1,
+            behavior: 'wave', behaviorConfig: { frequency: 0.35, amplitude: 2.2 }
         });
         this.tailAngle = Math.random() * Math.PI * 2;
     }
 
     update(playerTargetRadius) {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const dx = centerX - this.x;
-        const dy = centerY - this.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist === 0) return 0;
-
-        // ★ ステージごとの動きの切り替え例 (this.stage?.id による分岐)
-        let stepMultiplier = 1.0;
-        if (this.stage?.id === 'cat_festival') {
-            stepMultiplier = 1.2; // フェスでは動きがよりワチャワチャ活発に！
-        }
-
-        const perpX = -dy / dist;
-        const perpY = dx / dist;
-        const step = Math.sin(dist * 0.35) * 2.2 * stepMultiplier;
-
-        this.x += (dx / dist) * this.speed + perpX * step;
-        this.y += (dy / dist) * this.speed + perpY * step;
+        const dist = super.update(playerTargetRadius);
         this.tailAngle += 0.18;
-
         return dist;
     }
 
@@ -129,28 +110,15 @@ class CatEnemy extends Enemy {
 class KijitoraCatEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CAT_KIJITORA', name: 'キジトラねこ', color: '#9c7344', shape: 'cat_kijitora', speedRatio: 1.08, size: 15, hp: 1
+            id: 'CAT_KIJITORA', name: 'キジトラねこ', color: '#9c7344', shape: 'cat_kijitora', speedRatio: 1.08, size: 15, hp: 1,
+            behavior: 'wave', behaviorConfig: { frequency: 0.35, amplitude: 2.3 }
         });
         this.tailAngle = Math.random() * Math.PI * 2;
     }
 
     update(playerTargetRadius) {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const dx = centerX - this.x;
-        const dy = centerY - this.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist === 0) return 0;
-
-        const perpX = -dy / dist;
-        const perpY = dx / dist;
-        const step = Math.sin(dist * 0.35) * 2.3;
-
-        this.x += (dx / dist) * this.speed + perpX * step;
-        this.y += (dy / dist) * this.speed + perpY * step;
+        const dist = super.update(playerTargetRadius);
         this.tailAngle += 0.18;
-
         return dist;
     }
 
@@ -279,28 +247,15 @@ class KijitoraCatEnemy extends Enemy {
 class HachiwareCatEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CAT_HACHIWARE', name: 'ハチワレねこ', color: '#16161c', shape: 'cat_hachiware', speedRatio: 1.05, size: 15, hp: 1
+            id: 'CAT_HACHIWARE', name: 'ハチワレねこ', color: '#16161c', shape: 'cat_hachiware', speedRatio: 1.05, size: 15, hp: 1,
+            behavior: 'wave', behaviorConfig: { frequency: 0.35, amplitude: 2.2 }
         });
         this.tailAngle = Math.random() * Math.PI * 2;
     }
 
     update(playerTargetRadius) {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const dx = centerX - this.x;
-        const dy = centerY - this.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist === 0) return 0;
-
-        const perpX = -dy / dist;
-        const perpY = dx / dist;
-        const step = Math.sin(dist * 0.35) * 2.2;
-
-        this.x += (dx / dist) * this.speed + perpX * step;
-        this.y += (dy / dist) * this.speed + perpY * step;
+        const dist = super.update(playerTargetRadius);
         this.tailAngle += 0.18;
-
         return dist;
     }
 

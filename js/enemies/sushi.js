@@ -17,7 +17,8 @@ class SushiEnemy extends Enemy {
         if (type === 'kappa_roll') color = '#22aa44';
 
         super(canvas, gameSpeed, stage, {
-            id: 'SUSHI', name: '回転すし', color: color, shape: 'sushi', speedRatio: 1.1, size: 18, hp: 1
+            id: 'SUSHI', name: '回転すし', color: color, shape: 'sushi', speedRatio: 1.1, size: 18, hp: 1,
+            behavior: 'straight'
         });
 
         this.sushiType = type;
@@ -25,21 +26,8 @@ class SushiEnemy extends Enemy {
     }
 
     update(playerTargetRadius) {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const dx = centerX - this.x;
-        const dy = centerY - this.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist === 0) return 0;
-
-        // 直線でストレートに中心へ！
-        this.x += (dx / dist) * this.speed;
-        this.y += (dy / dist) * this.speed;
-
-        // クルクル自転回転アニメーション！
+        const dist = super.update(playerTargetRadius);
         this.rotationAngle += 0.07;
-
         return dist;
     }
 

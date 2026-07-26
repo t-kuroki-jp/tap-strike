@@ -4,29 +4,15 @@
 class ChickenEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CHICKEN', name: 'ぴよぴよヒヨコ', color: '#ffe600', shape: 'chick', speedRatio: 1.0, size: 17, hp: 1
+            id: 'CHICKEN', name: 'ぴよぴよヒヨコ', color: '#ffe600', shape: 'chick', speedRatio: 1.0, size: 17, hp: 1,
+            behavior: 'wave', behaviorConfig: { frequency: 0.28, amplitude: 3.0 }
         });
         this.wingAngle = Math.random() * Math.PI * 2;
     }
 
     update(playerTargetRadius) {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const dx = centerX - this.x;
-        const dy = centerY - this.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist === 0) return 0;
-
-        const perpX = -dy / dist;
-        const perpY = dx / dist;
-        // ひよこ特有の「ちょこちょこ」跳ねるリズム歩行
-        const hop = Math.sin(dist * 0.28) * 3.0;
-
-        this.x += (dx / dist) * this.speed + perpX * hop;
-        this.y += (dy / dist) * this.speed + perpY * hop;
+        const dist = super.update(playerTargetRadius);
         this.wingAngle += 0.3;
-
         return dist;
     }
 
