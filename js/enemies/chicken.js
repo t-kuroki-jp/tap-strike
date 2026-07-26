@@ -1,5 +1,5 @@
 /**
- * ぴよぴよヒヨコ (ふっくら2段モチモチボディ・パタパタ翼・立体くちばし・チョコン尾羽・アホ毛)
+ * ぴよぴよヒヨコ (つるんと滑らかなひよこフォルム・童顔なパッチリ黒目・一本のちょこん産毛)
  */
 class ChickenEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -33,31 +33,31 @@ class ChickenEnemy extends Enemy {
     draw(ctx) {
         ctx.save();
 
-        // 1. おしりのチョコンとした尾羽 (ぴょこん)
+        // 1. おしりの小さなチョコン尾羽
         ctx.fillStyle = '#ffd700';
         ctx.beginPath();
-        ctx.arc(this.x, this.y + 13, 4, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y + 11, 4, 0, Math.PI * 2);
         ctx.fill();
 
-        // 2. チョコンとついた小さな翼 (パタパタアニメーション)
+        // 2. パタパタ動く小さな翼
         const wingYOffset = Math.sin(this.wingAngle) * 2.5;
         ctx.fillStyle = '#ffdb1a';
 
         // 左羽
         ctx.save();
-        ctx.translate(this.x - 12, this.y + 2 + wingYOffset);
+        ctx.translate(this.x - 12, this.y + 1 + wingYOffset);
         ctx.rotate(Math.PI / 4);
         ctx.beginPath();
-        ctx.arc(0, 0, 4, 0, Math.PI * 2);
+        ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
         // 右羽
         ctx.save();
-        ctx.translate(this.x + 12, this.y + 2 + wingYOffset);
+        ctx.translate(this.x + 12, this.y + 1 + wingYOffset);
         ctx.rotate(-Math.PI / 4);
         ctx.beginPath();
-        ctx.arc(0, 0, 4, 0, Math.PI * 2);
+        ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
@@ -66,68 +66,62 @@ class ChickenEnemy extends Enemy {
         ctx.lineWidth = 2.2;
         ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.moveTo(this.x - 4, this.y + 12); ctx.lineTo(this.x - 6, this.y + 17);
-        ctx.moveTo(this.x + 4, this.y + 12); ctx.lineTo(this.x + 6, this.y + 17);
+        ctx.moveTo(this.x - 4, this.y + 11); ctx.lineTo(this.x - 5, this.y + 16);
+        ctx.moveTo(this.x + 4, this.y + 11); ctx.lineTo(this.x + 5, this.y + 16);
         ctx.stroke();
 
-        // 4. ひよこモチモチ2段体型 (下部ふっくらおなか ＋ 上部まるまるお顔)
-        // 胴体 (ふっくらおなか)
+        // 4. 滑らかなひよこ饅頭・たまごシルエットボディ (頭と身体の一体感)
         ctx.fillStyle = '#ffe600';
+        ctx.shadowColor = '#ffe600';
+        ctx.shadowBlur = 8;
+        
+        // 胴体 (下部ふっくら)
         ctx.beginPath();
-        ctx.arc(this.x, this.y + 4, 13, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y + 2, 14, 0, Math.PI * 2);
         ctx.fill();
 
-        // お顔 (まんまる頭)
+        // つるんとした頭部 (スムーズな丸み)
         ctx.beginPath();
-        ctx.arc(this.x, this.y - 4, 11, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y - 4, 11.5, 0, Math.PI * 2);
         ctx.fill();
 
-        // 5. 頭の上のふわふわアホ毛 (チョコンと2本)
-        ctx.strokeStyle = '#ffcc00';
-        ctx.lineWidth = 2.0;
+        // 5. 頭のてっぺんのチョコンと生えた一本の小さな産毛 (アホ毛)
+        ctx.strokeStyle = '#ffb700';
+        ctx.lineWidth = 2.2;
         ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.moveTo(this.x - 1, this.y - 14);
-        ctx.quadraticCurveTo(this.x - 5, this.y - 20, this.x - 3, this.y - 22);
-        ctx.moveTo(this.x + 1, this.y - 14);
-        ctx.quadraticCurveTo(this.x + 4, this.y - 19, this.x + 3, this.y - 21);
+        ctx.moveTo(this.x, this.y - 15);
+        ctx.quadraticCurveTo(this.x + 3, this.y - 20, this.x + 4, this.y - 21);
         ctx.stroke();
 
-        // 6. ほんのりピンクのほっぺた (チーク 💕)
+        // 6. ほんのりピンクのチーク (ほっぺた 💕)
         ctx.fillStyle = 'rgba(255, 99, 132, 0.55)';
         ctx.beginPath();
-        ctx.arc(this.x - 7.5, this.y - 2, 3.2, 0, Math.PI * 2);
-        ctx.arc(this.x + 7.5, this.y - 2, 3.2, 0, Math.PI * 2);
+        ctx.arc(this.x - 7, this.y - 1, 3.2, 0, Math.PI * 2);
+        ctx.arc(this.x + 7, this.y - 1, 3.2, 0, Math.PI * 2);
         ctx.fill();
 
-        // 7. つぶらな大きい黒目 ＋ ハイライト (パッチリキュート)
+        // 7. 童顔パッチリ黒目 ＋ ハイライト (少し低めの愛くるしい位置)
         ctx.fillStyle = '#0a0d14';
         ctx.beginPath();
-        ctx.arc(this.x - 4.5, this.y - 6, 2.5, 0, Math.PI * 2);
-        ctx.arc(this.x + 4.5, this.y - 6, 2.5, 0, Math.PI * 2);
+        ctx.arc(this.x - 4.5, this.y - 4, 2.5, 0, Math.PI * 2);
+        ctx.arc(this.x + 4.5, this.y - 4, 2.5, 0, Math.PI * 2);
         ctx.fill();
 
-        // 白目ハイライト (キラキラ)
+        // 白目ハイライト
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(this.x - 5.5, this.y - 7, 1.0, 0, Math.PI * 2);
-        ctx.arc(this.x + 3.5, this.y - 7, 1.0, 0, Math.PI * 2);
+        ctx.arc(this.x - 5.5, this.y - 5, 1.0, 0, Math.PI * 2);
+        ctx.arc(this.x + 3.5, this.y - 5, 1.0, 0, Math.PI * 2);
         ctx.fill();
 
-        // 8. ぽっこり立体三角形のくちばし (上くちばし ＋ 下くちばし)
+        // 8. ちょこんと小さくて可愛い三角形の口ばし
         ctx.fillStyle = '#ff6600';
         ctx.beginPath();
-        // 上くちばし
-        ctx.moveTo(this.x - 4, this.y - 3);
-        ctx.lineTo(this.x + 4, this.y - 3);
+        ctx.moveTo(this.x - 3.5, this.y - 2);
+        ctx.lineTo(this.x + 3.5, this.y - 2);
         ctx.lineTo(this.x, this.y + 3);
         ctx.closePath();
-        ctx.fill();
-
-        // 下くちばし (ぷっくり影)
-        ctx.fillStyle = '#e65c00';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y + 2, 2.0, 0, Math.PI);
         ctx.fill();
 
         ctx.restore();
