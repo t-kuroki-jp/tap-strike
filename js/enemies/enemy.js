@@ -23,14 +23,29 @@ class Enemy {
         this.size = config.size || 12;
         this.hp = config.hp || 1;
         this.maxHp = this.hp;
+
+        // 行動コンポーネント (Behavior) の設定
+        if (config.behavior) {
+            this.behavior = typeof config.behavior === 'string' 
+                ? BehaviorFactory.create(config.behavior, config.behaviorConfig || {}) 
+                : config.behavior;
+        } else {
+            this.behavior = BehaviorFactory.create('straight');
+        }
     }
 
     update(playerTargetRadius) {
+        if (this.behavior) {
+            return this.behavior.update(this, playerTargetRadius);
+        }
+
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
         const dx = centerX - this.x;
         const dy = centerY - this.y;
         const dist = Math.hypot(dx, dy);
+
+        if (dist === 0) return 0;
 
         this.x += (dx / dist) * this.speed;
         this.y += (dy / dist) * this.speed;
