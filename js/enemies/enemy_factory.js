@@ -12,6 +12,7 @@ class EnemyFactory {
             case 'SPEEDER': enemy = new SpeederEnemy(canvas, gameSpeed, stage); break;
             case 'GLITCH': enemy = new GlitchEnemy(canvas, gameSpeed, stage); break;
             case 'CURVE': enemy = new CurveEnemy(canvas, gameSpeed, stage); break;
+            case 'SINE_WAVE': enemy = new SineWaveEnemy(canvas, gameSpeed, stage); break;
             case 'SHIELD': enemy = new ShieldEnemy(canvas, gameSpeed, stage); break;
             case 'BIG_BOSS': enemy = new BigBossEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;

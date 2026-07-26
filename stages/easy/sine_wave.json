@@ -1,0 +1,17 @@
+{
+  "id": "sine_wave",
+  "name": "サイン・ウェイバー！",
+  "difficulty": "EASY",
+  "description": "シアンカラーのネオンダイアモンド登場！波状（サイン波）のゆったりとした波動ラインを見極めろ！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 450,
+  "params": {
+    "gameSpeed": 0.85,
+    "spawnInterval": 1500,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "SINE_WAVE", "weight": 1.0 }
+  ]
+}
