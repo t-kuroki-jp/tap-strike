@@ -2,11 +2,11 @@
  * 新・幾何学ノーツ群 (EASYモード全9動作対応)
  */
 
-// 1. ブーメランノーツ (V字ブーメランフォルム ＋ 超高速グルグル回転)
+// 1. ブーメランノーツ (V字ブーメランフォルム ＋ 超高速グルグル回転・純粋ネオンカラー)
 class CrossEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CROSS', name: 'ブーメラン・クロス', color: '#ff3388', shape: 'boomerang', speedRatio: 0.95, size: 14, hp: 1,
+            id: 'CROSS', name: 'ブーメラン・クロス', color: '#ff0077', shape: 'boomerang', speedRatio: 0.95, size: 14, hp: 1,
             behavior: 'boomerang'
         });
         this.rotationAngle = Math.random() * Math.PI * 2;
@@ -25,13 +25,13 @@ class CrossEnemy extends Enemy {
         ctx.rotate(this.rotationAngle);
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
+        
+        // 白フチを撤去し、高コントラストなクッキリ純性ネオンカラーで描画！
         ctx.fillStyle = this.color;
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1.8;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 14;
 
-        // 本物の V字くの字 ブーメラン描画 (ローカル座標中心)
+        // 本物の V字くの字 ブーメラン描画
         ctx.beginPath();
         ctx.moveTo(0, 5);           // 中央くびれ下
         ctx.lineTo(-15, -12);       // 左翼先
@@ -42,8 +42,6 @@ class CrossEnemy extends Enemy {
         ctx.closePath();
         
         ctx.fill();
-        ctx.stroke();
-
         ctx.restore();
     }
 }
@@ -60,15 +58,12 @@ class GhostEnemy extends Enemy {
     draw(ctx) {
         ctx.save();
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
-        ctx.strokeStyle = this.color;
-        ctx.fillStyle = 'rgba(170, 255, 102, 0.3)';
-        ctx.lineWidth = 2.0;
+        ctx.fillStyle = this.color;
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 12;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.stroke();
         ctx.restore();
     }
 }
