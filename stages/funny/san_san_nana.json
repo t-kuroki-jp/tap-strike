@@ -1,0 +1,20 @@
+{
+  "id": "san_san_nana",
+  "name": "サン・サン・七拍子",
+  "difficulty": "FUNNY",
+  "description": "タン・タン・タン！タン・タン・タン！タンタンタンタンタンタンタン！手拍子のリズムで遊ぶリズムステージ！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(255, 170, 0, 0.25)",
+    "gridColor": "rgba(255, 170, 0, 0.3)",
+    "ringColor": "#ffaa00",
+    "playerColor": "#ffaa00"
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 1.0 }
+  ],
+  "spawnPattern": "san_san_nana",
+  "spawnRate": 190
+}

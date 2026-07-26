@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: FUNNYモード搭載 × ひよこ＆レインボー演出 × 完全モジュール化 (`v5.0.0`)
+- **特徴**: FUNNYモード（サン・サン・七拍子、ひよこ、レインボー） × 完全モジュール化 (`v5.2.0`)
 
 ---
 
@@ -34,12 +34,13 @@ tap-strike/
 │   │   └── purple_trick.json
 │   ├── hard/                   # HARDモード用
 │   │   └── bolt_overdrive.json
-│   └── funny/                  # FUNNYモード用 (NEW!)
-│       ├── chicken_panic.json  # 「ヒヨコ・パニック」 (🐥ひよこ撃破SE&跳ね移動)
-│       └── rainbow_chaser.json # 「レインボー・チェイサー」 (🌈七色リアルタイム変色)
+│   └── funny/                  # FUNNYモード用
+│       ├── chicken_panic.json  # 「ヒヨコ・パニック」
+│       ├── rainbow_chaser.json # 「レインボー・チェイサー」
+│       └── san_san_nana.json   # 「サン・サン・七拍子」 (NEW!)
 ├── bgm/                        # BGM音源 (.mp3)
 ├── stages.json                 # 全ステージ相対パス一覧
-├── enemies.json                # 敵マスタ定義 (CHICKEN含む)
+├── enemies.json                # 敵マスタ定義
 ├── difficulties.json           # 難易度マスタ定義
 ├── SPECIFICATION.md
 └── README.md
