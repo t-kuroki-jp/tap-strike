@@ -1,5 +1,5 @@
 /**
- * 打ち上げ花火玉 (斜め下から一切曲がらず判定リングへ一直線到達・140粒子超豪華三輪スターマイン)
+ * 打ち上げ花火玉 (画面下半分全域[左右の横壁含む]から出現・画面上半分を広大な花火夜空キャンバスとして解放！)
  */
 class FireworkEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -7,12 +7,23 @@ class FireworkEnemy extends Enemy {
             id: 'FIREWORK', name: '打ち上げ花火玉', color: '#ff3366', shape: 'firework', speedRatio: 0.75, size: 15, hp: 1
         });
 
-        // 画面下部の左右ワイドな位置 (10% 〜 90%)
-        const margin = canvas.width * 0.1;
-        this.x = margin + Math.random() * (canvas.width - margin * 2);
-        this.y = canvas.height + 40;
+        // ★敵の出現位置を「画面の下半分 (y >= height * 0.5)」全全域 [左下サイド・右下サイド・真下] に限定！
+        const mode = Math.random();
+        if (mode < 0.4) {
+            // 真下から出現
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + 40;
+        } else if (mode < 0.7) {
+            // 左下の横壁から出現
+            this.x = -40;
+            this.y = canvas.height * 0.5 + Math.random() * (canvas.height * 0.5);
+        } else {
+            // 右下の横壁から出現
+            this.x = canvas.width + 40;
+            this.y = canvas.height * 0.5 + Math.random() * (canvas.height * 0.5);
+        }
 
-        // ★出現位置から自機中心 (centerX, centerY) へ向かって「一切曲がらずまっすぐ突き抜ける」固定直線ベクトル！
+        // 自機中心 (centerX, centerY) へ向かって一直線に直進！
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
         const dx = centerX - this.x;
@@ -24,7 +35,6 @@ class FireworkEnemy extends Enemy {
     }
 
     update(playerTargetRadius) {
-        // 固定直線ベクトルで斜め下から一直線移動（判定リングにピッタリ到達！）
         this.x += this.dirX;
         this.y += this.dirY;
 
@@ -36,7 +46,7 @@ class FireworkEnemy extends Enemy {
     draw(ctx) {
         ctx.save();
 
-        // 1. 進行方向の反対へ伸びる綺麗なテール火花
+        // 進行方向の反対へ伸びる綺麗なテール火花
         const angle = Math.atan2(this.dirY, this.dirX);
         const tailX = this.x - Math.cos(angle) * 26;
         const tailY = this.y - Math.sin(angle) * 26;
@@ -50,7 +60,7 @@ class FireworkEnemy extends Enemy {
         ctx.lineTo(tailX + (Math.random() - 0.5) * 3, tailY + (Math.random() - 0.5) * 3);
         ctx.stroke();
 
-        // 2. 打ち上げ花火玉
+        // 花火玉
         ctx.fillStyle = '#ff3366';
         ctx.shadowColor = '#ff3366';
         ctx.shadowBlur = 16;
@@ -111,12 +121,14 @@ class FireworkEnemy extends Enemy {
         game.score += game.params.baseScore * game.combo;
         game.gameSpeed += game.params.speedIncrement;
 
-        // ★現在位置から、そのまま進行方向の延長上の夜空へスパート打ち上げ！
+        // ★画面上半分（広大な夜空エリア）にダイナミックに打ち上げる！
         const launchX = this.x;
         const startY = this.y;
 
-        const targetX = Math.min(this.canvas.width - 25, Math.max(25, launchX + (this.dirX / this.speed) * 80));
-        const targetY = Math.max(50, this.canvas.height * 0.15 + Math.random() * 70);
+        const sideSign = Math.random() < 0.5 ? -1 : 1;
+        const spreadOffset = sideSign * (this.canvas.width * (0.15 + Math.random() * 0.3));
+        const targetX = Math.min(this.canvas.width - 30, Math.max(30, (this.canvas.width / 2) + spreadOffset));
+        const targetY = Math.max(40, this.canvas.height * 0.14 + Math.random() * 80); // 画面上部15%〜25%の広い夜空
 
         let currentX = launchX;
         let currentY = startY;
