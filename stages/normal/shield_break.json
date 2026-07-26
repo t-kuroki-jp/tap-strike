@@ -1,0 +1,18 @@
+{
+  "id": "shield_break",
+  "name": "シールド・ブレイク！",
+  "difficulty": "NORMAL",
+  "description": "青いバリアを身にまとった耐久エネミー登場！2回タップしてシールドを打ち破れ！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 500,
+  "params": {
+    "gameSpeed": 1.0,
+    "spawnInterval": 1400,
+    "speedIncrement": 0.01,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 4 },
+    { "id": "SHIELD", "weight": 3 }
+  ]
+}

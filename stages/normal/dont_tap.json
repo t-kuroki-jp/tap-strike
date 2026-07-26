@@ -1,0 +1,18 @@
+{
+  "id": "dont_tap",
+  "name": "ドント・タップ！",
+  "difficulty": "NORMAL",
+  "description": "ドクロの「タップ禁止ノーツ」が出現！手を出さずにスルーして見極めろ！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 500,
+  "params": {
+    "gameSpeed": 1.0,
+    "spawnInterval": 1400,
+    "speedIncrement": 0.01,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 4 },
+    { "id": "DONT_TAP", "weight": 2 }
+  ]
+}
