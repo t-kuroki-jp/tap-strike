@@ -142,10 +142,9 @@ class Game {
         // 難易度指定（フォールバック付き）
         diff = (diff || this.currentStage?.difficulty || 'EASY').toUpperCase();
 
-        const diffDef = dataLoader.difficultiesMaster[diff] || {};
         const titleElem = document.getElementById('selected-mode-title');
         if (titleElem) {
-            titleElem.innerText = `${diffDef.name || diff} モード`;
+            titleElem.innerText = diff;
             titleElem.className = `diff-title diff-${diff}`;
         }
 
