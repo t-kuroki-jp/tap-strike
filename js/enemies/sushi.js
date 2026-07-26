@@ -1,5 +1,5 @@
 /**
- * 回転マグロ寿司 (和風皿に盛られた王道のマグロ握りがクルクル自転しながら押し寄せる！)
+ * 回転マグロ寿司 (ゆらゆら蛇行なし！直線移動 ＋ クルクル自転のみの本格回転寿司)
  */
 class SushiEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -18,14 +18,11 @@ class SushiEnemy extends Enemy {
 
         if (dist === 0) return 0;
 
-        const perpX = -dy / dist;
-        const perpY = dx / dist;
-        const orbit = Math.sin(dist * 0.05) * 4.0;
+        // ゆらゆら（蛇行）を完全除去！中心に向かってまっすぐストレート移動！
+        this.x += (dx / dist) * this.speed;
+        this.y += (dy / dist) * this.speed;
 
-        this.x += (dx / dist) * this.speed + perpX * orbit;
-        this.y += (dy / dist) * this.speed + perpY * orbit;
-
-        // お寿司自体のクルクル自転アニメーション！
+        // お寿司自体のクルクル自転のみ！
         this.rotationAngle += 0.07;
 
         return dist;
