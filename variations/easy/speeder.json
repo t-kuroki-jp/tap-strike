@@ -1,8 +1,8 @@
 {
   "id": "easy_speeder",
-  "name": "高速スピーダー・レッスン",
+  "name": "ボルト・スピーダー・レッスン",
   "difficulty": "EASY",
-  "description": "スピードに乗った高速敵のみ！素早い反射神経を鍛える練習バリエーション",
+  "description": "スピードに乗った高速敵のみ！素早い反射神経を鍛える練習レッスン",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",

@@ -1,8 +1,8 @@
 {
   "id": "easy_curve",
-  "name": "ミッドナイト・ポーチ・ライト",
+  "name": "スパイラル・カーブ・レッスン",
   "difficulty": "EASY",
-  "description": "ウネウネ波打つ敵のみ！チルなビートに乗って軌道をマスターする練習バリエーション",
+  "description": "ウネウネ波打つ敵のみ！チルなビートに乗って軌道をマスターする練習レッスン",
   "bgm": "bgm/Midnight_Porch_Light.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
