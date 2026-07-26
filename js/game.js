@@ -325,13 +325,11 @@ class Game {
                     audioEngine.playPerfectSound();
                     this.createParticles(enemy.x, enemy.y, '#ffcc00');
                     this.createParticles(enemy.x, enemy.y, '#ffffff');
-                    this.floatingTexts.push(new FloatingText(enemy.x, enemy.y - 15, 'PERFECT!!', '#ffcc00', 22));
                     this.ringPulse = 22;
                     this.ringColor = '#ffcc00';
                 } else {
                     audioEngine.playHitSound();
                     this.createParticles(enemy.x, enemy.y, enemy.color);
-                    this.floatingTexts.push(new FloatingText(enemy.x, enemy.y - 15, 'GREAT!', '#00f0ff', 16));
                     this.ringPulse = 14;
                     this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
                 }
