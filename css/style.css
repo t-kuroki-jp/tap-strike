@@ -78,7 +78,7 @@ canvas {
     margin-top: 3px;
 }
 
-/* --- フラット独立モーダル共通CSS (スマホ実機見切れ完全防止) --- */
+/* --- フラット独立モーダル共通CSS (トップ画面・ゲームオーバーはコンテンツ吸着) --- */
 .modal-box {
     position: fixed;
     top: 50%;
@@ -88,17 +88,43 @@ canvas {
     z-index: 9999;
     width: 88vw;
     max-width: 400px;
-    max-height: 72vh;
-    max-height: 72dvh; /* ★スマホのアドレスバー等を考慮してコンパクト化！見切れを100%防止！ */
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    touch-action: pan-y !important;
+    height: auto;
+    max-height: 85vh;
+    max-height: 85dvh;
+    box-sizing: border-box;
     background: rgba(5, 7, 14, 0.96);
     padding: 20px 16px;
     border-radius: 18px;
     border: 1px solid rgba(0, 240, 255, 0.4);
     backdrop-filter: blur(12px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+/* ★ステージ選択モーダル専用 (広めの82dvh高さ ＆ ヘッダー完全固定 ＆ カードのみ縦スクロール) */
+#modal-stage-select {
+    height: 82vh;
+    height: 82dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+}
+
+#modal-stage-select h1,
+#modal-stage-select p.subtitle,
+#modal-stage-select .btn-back,
+#modal-stage-select .diff-title {
+    flex: 0 0 auto;
+}
+
+#stage-list {
+    flex: 1 1 0px;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+    padding-right: 4px;
+    margin-top: 10px;
 }
 
 .modal-box::-webkit-scrollbar {
