@@ -9,7 +9,7 @@
     <meta http-equiv="Expires" content="0">
     <title>秒殺！1ボタンアクション Tap Strike</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
-    <link rel="stylesheet" href="css/style.css?v=2.0.0">
+    <link rel="stylesheet" href="css/style.css?v=3.0.0">
 </head>
 
 <body>
@@ -27,29 +27,29 @@
         <h1>TAP STRIKE</h1>
         <p class="subtitle">プレイするモードを選択！</p>
         <div class="btn-container">
-            <button id="btn-mode-easy" class="btn-mode btn-mode-easy" onclick="window.game.showVariationSelect('EASY')">
+            <button id="btn-mode-easy" class="btn-mode btn-mode-easy" onclick="window.game.showStageSelect('EASY')">
                 <span>🟢 EASY モード</span>
-                <span style="font-size:12px; font-weight:normal;">単一敵・練習</span>
+                <span style="font-size:12px; font-weight:normal;">単一敵・特訓</span>
             </button>
-            <button id="btn-mode-normal" class="btn-mode btn-mode-normal" onclick="window.game.showVariationSelect('NORMAL')">
+            <button id="btn-mode-normal" class="btn-mode btn-mode-normal" onclick="window.game.showStageSelect('NORMAL')">
                 <span>🔵 NORMAL モード</span>
                 <span style="font-size:12px; font-weight:normal;">ギミック複合</span>
             </button>
-            <button id="btn-mode-hard" class="btn-mode btn-mode-hard" onclick="window.game.showVariationSelect('HARD')">
+            <button id="btn-mode-hard" class="btn-mode btn-mode-hard" onclick="window.game.showStageSelect('HARD')">
                 <span>🔴 HARD モード</span>
                 <span style="font-size:12px; font-weight:normal;">激ムズラッシュ</span>
             </button>
         </div>
     </div>
 
-    <!-- モーダル2: バリエーション選択画面 -->
-    <div id="modal-variation-select" class="modal-box" style="display: none;">
+    <!-- モーダル2: ステージ選択画面 -->
+    <div id="modal-stage-select" class="modal-box" style="display: none;">
         <div style="text-align: left;">
-            <button id="btn-variation-back" class="btn-back" onclick="window.game.showModeSelect()">⬅ モード選択に戻る</button>
+            <button id="btn-stage-back" class="btn-back" onclick="window.game.showModeSelect()">⬅ モード選択に戻る</button>
         </div>
         <h1 id="selected-mode-title" style="font-size: 24px;">EASY</h1>
-        <p class="subtitle">バリエーションを選択してスタート！</p>
-        <div id="variation-list" class="btn-container">
+        <p class="subtitle">ステージを選択してスタート！</p>
+        <div id="stage-list" class="btn-container">
             <div class="loading-text">読込中...</div>
         </div>
     </div>
@@ -60,7 +60,7 @@
         <p id="final-score" style="font-size: 18px; color: #fff; margin-bottom: 8px;">SCORE: 0</p>
         <p id="high-score-notice" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px;"></p>
         <div class="btn-container">
-            <button id="btn-game-over-retry" class="btn-action btn-normal" onclick="window.game.showVariationSelect()">↺ もう一度遊ぶ / バリエーション選択</button>
+            <button id="btn-game-over-retry" class="btn-action btn-normal" onclick="window.game.showStageSelect()">↺ もう一度遊ぶ / ステージ選択</button>
             <button id="btn-game-over-to-mode" class="btn-back" style="margin-top:5px;" onclick="window.game.showModeSelect()">モード選択に戻る</button>
         </div>
     </div>
@@ -68,10 +68,10 @@
     <canvas id="gameCanvas"></canvas>
 
     <!-- モジュールスクリプト -->
-    <script src="js/audio.js?v=2.8.0"></script>
-    <script src="js/loader.js?v=2.8.0"></script>
-    <script src="js/entities.js?v=2.8.0"></script>
-    <script src="js/game.js?v=2.8.0"></script>
+    <script src="js/audio.js?v=3.0.0"></script>
+    <script src="js/loader.js?v=3.0.0"></script>
+    <script src="js/entities.js?v=3.0.0"></script>
+    <script src="js/game.js?v=3.0.0"></script>
 </body>
 
 </html>

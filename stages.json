@@ -1,0 +1,10 @@
+[
+  "stages/easy/chaser.json",
+  "stages/easy/curve.json",
+  "stages/easy/shield.json",
+  "stages/easy/glitch.json",
+  "stages/easy/speeder.json",
+  "stages/normal/standard.json",
+  "stages/normal/trick.json",
+  "stages/hard/overdrive.json"
+]

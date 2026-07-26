@@ -1,11 +1,11 @@
 /**
- * JSON定義（難易度、敵マスタ、バリエーション）の非同期取得およびパラメータ合成管理クラス
+ * JSON定義（難易度、敵マスタ、ステージ）の非同期取得およびパラメータ合成管理クラス
  */
 class DataLoader {
     constructor() {
         this.enemiesMaster = {};
         this.difficultiesMaster = {};
-        this.variations = [];
+        this.stages = [];
         this.isLoaded = false;
         this.loadingPromise = null;
     }
@@ -18,7 +18,7 @@ class DataLoader {
             await Promise.all([
                 this.loadEnemies(),
                 this.loadDifficulties(),
-                this.loadVariations()
+                this.loadStages()
             ]);
             this.isLoaded = true;
         })();
@@ -44,45 +44,45 @@ class DataLoader {
         }
     }
 
-    async loadVariations() {
+    async loadStages() {
         try {
-            const listRes = await fetch(`variations.json?t=${Date.now()}`);
+            const listRes = await fetch(`stages.json?t=${Date.now()}`);
             const filePaths = await listRes.json();
 
-            const variationPromises = filePaths.map(async (path) => {
+            const stagePromises = filePaths.map(async (path) => {
                 try {
-                    const varRes = await fetch(`${path}?t=${Date.now()}`);
-                    return await varRes.json();
+                    const stageRes = await fetch(`${path}?t=${Date.now()}`);
+                    return await stageRes.json();
                 } catch (e) {
-                    console.error(`Failed to load variation at ${path}`, e);
+                    console.error(`Failed to load stage at ${path}`, e);
                     return null;
                 }
             });
 
-            const results = await Promise.all(variationPromises);
-            this.variations = results.filter(v => v !== null);
+            const results = await Promise.all(stagePromises);
+            this.stages = results.filter(s => s !== null);
         } catch (e) {
-            console.error('Failed to load variations list', e);
+            console.error('Failed to load stages list', e);
         }
     }
 
     /**
-     * 難易度デフォルト設定とバリエーション個別設定を合成
+     * 難易度デフォルト設定とステージ個別設定を合成
      */
-    getResolvedParams(variation) {
-        if (!variation) return {};
-        const diffDef = this.difficultiesMaster[variation.difficulty] || {};
+    getResolvedParams(stage) {
+        if (!stage) return {};
+        const diffDef = this.difficultiesMaster[stage.difficulty] || {};
 
         return {
-            targetRadius: variation.gameplay?.targetRadius ?? diffDef.gameplay?.targetRadius ?? 60,
-            hitWindow: variation.gameplay?.hitWindow ?? diffDef.gameplay?.hitWindow ?? 25,
-            tapCooldown: variation.gameplay?.tapCooldown ?? diffDef.gameplay?.tapCooldown ?? 180,
-            speedIncrement: variation.gameplay?.speedIncrement ?? diffDef.gameplay?.speedIncrement ?? 0.008,
-            baseScore: variation.gameplay?.baseScore ?? diffDef.gameplay?.baseScore ?? 100,
-            maxHp: variation.player?.maxHp ?? diffDef.player?.maxHp ?? 1,
-            missPenaltyDuration: variation.player?.missPenaltyDuration ?? diffDef.player?.missPenaltyDuration ?? 18,
-            particleCount: variation.visuals?.particleCount ?? diffDef.visuals?.particleCount ?? 12,
-            bgScrollSpeed: variation.visuals?.bgScrollSpeed ?? diffDef.visuals?.bgScrollSpeed ?? '3s'
+            targetRadius: stage.gameplay?.targetRadius ?? diffDef.gameplay?.targetRadius ?? 65,
+            hitWindow: stage.gameplay?.hitWindow ?? diffDef.gameplay?.hitWindow ?? 25,
+            tapCooldown: stage.gameplay?.tapCooldown ?? diffDef.gameplay?.tapCooldown ?? 120,
+            speedIncrement: stage.gameplay?.speedIncrement ?? diffDef.gameplay?.speedIncrement ?? 0.008,
+            baseScore: stage.gameplay?.baseScore ?? diffDef.gameplay?.baseScore ?? 100,
+            maxHp: stage.player?.maxHp ?? diffDef.player?.maxHp ?? 3,
+            missPenaltyDuration: stage.player?.missPenaltyDuration ?? diffDef.player?.missPenaltyDuration ?? 12,
+            particleCount: stage.visuals?.particleCount ?? diffDef.visuals?.particleCount ?? 16,
+            bgScrollSpeed: stage.visuals?.bgScrollSpeed ?? diffDef.visuals?.bgScrollSpeed ?? '3s'
         };
     }
 }

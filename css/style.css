@@ -167,6 +167,7 @@ p.subtitle {
     box-shadow: 0 0 12px rgba(255, 0, 85, 0.2);
 }
 
+.stage-card,
 .var-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -177,28 +178,33 @@ p.subtitle {
     transition: all 0.2s;
 }
 
+.stage-card *,
 .var-card * {
     pointer-events: none;
 }
 
+.stage-card:hover, .stage-card:active,
 .var-card:hover, .var-card:active {
     background: rgba(0, 240, 255, 0.15);
     border-color: #00f0ff;
     transform: scale(0.98);
 }
 
+.stage-name,
 .var-name {
     font-size: 16px;
     font-weight: bold;
     color: #fff;
 }
 
+.stage-desc,
 .var-desc {
     font-size: 12px;
     color: #bbb;
     margin-top: 4px;
 }
 
+.stage-stats,
 .var-stats {
     font-size: 11px;
     color: #888;
@@ -207,6 +213,7 @@ p.subtitle {
     justify-content: space-between;
 }
 
+.stage-score,
 .var-score {
     font-size: 11px;
     color: #ffcc00;

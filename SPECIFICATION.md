@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 完全モジュール化 × 3フラットモーダルUI × モード別サブディレクトリバリエーション構造 (`v2.5.0`)
+- **特徴**: 完全モジュール化 × 3フラットモーダルUI × ステージ別管理構造 (`v3.0.0`)
 
 ---
 
@@ -20,8 +20,8 @@ tap-strike/
 │   ├── loader.js        # 各種JSONフェッチ・パラメータ合成 (DataLoader)
 │   ├── entities.js      # Enemy / Particle / Shockwave クラス定義
 │   └── game.js          # メインゲームエンジン・一元モーダル管理 (Game)
-├── variations/          # モードごとに分類されたバリエーションJSON
-│   ├── easy/            # EASYモード用（単一エネミー練習・入門特化）
+├── stages/              # モードごとに分類されたステージJSON
+│   ├── easy/            # EASYモード用（単一エネミー特訓・入門）
 │   │   ├── chaser.json  # 直進敵 100%
 │   │   ├── curve.json   # ウネウネ軌道敵 100%
 │   │   ├── shield.json  # 2回タップ重装甲敵 100%
@@ -33,7 +33,7 @@ tap-strike/
 │   └── hard/            # HARDモード用（激ムズ高密度）
 │       └── overdrive.json
 ├── bgm/                 # BGM音源 (.mp3)
-├── variations.json      # 全バリエーション相対パス一覧
+├── stages.json          # 全ステージ相対パス一覧
 ├── enemies.json         # 敵マスタ定義
 ├── difficulties.json    # 難易度マスタ定義
 ├── SPECIFICATION.md
@@ -46,4 +46,4 @@ tap-strike/
 
 - 全難易度基本一律ルール: **HP 3** / **リング径 65**（自機操作感をブレさせず統一）
 - 難易度の差は **「出現エネミーの組み合わせ」** と **「出現間隔 (spawnRate)」** で表現
-- 任意でバリエーションJSONによる個別の `maxHp` / `targetRadius` オーバーライド可能
+- 任意でステージJSONによる個別の `maxHp` / `targetRadius` オーバーライド可能

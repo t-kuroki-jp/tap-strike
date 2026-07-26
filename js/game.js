@@ -24,7 +24,7 @@ class Game {
         this.bgmStep = 0;
         this.bgmInterval = null;
 
-        this.currentVariation = null;
+        this.currentStage = null;
         this.params = {};
 
         this.player = {
@@ -32,8 +32,8 @@ class Game {
             y: 0,
             radius: 20,
             targetRadius: 60,
-            hp: 1,
-            maxHp: 1,
+            hp: 3,
+            maxHp: 3,
             color: '#00f0ff'
         };
 
@@ -52,6 +52,7 @@ class Game {
                 el.closest('.btn-mode') ||
                 el.closest('.btn-action') ||
                 el.closest('.btn-back') ||
+                el.closest('.stage-card') ||
                 el.closest('.var-card') ||
                 el.closest('.modal-box')
             );
@@ -76,9 +77,9 @@ class Game {
         this.canvas.height = window.innerHeight;
     }
 
-    // --- 画面モーダル切替ロジック (超シンプル一元管理) ---
+    // --- 画面モーダル切替ロジック ---
     hideAllModals() {
-        const modalIds = ['modal-mode-select', 'modal-variation-select', 'modal-game-over'];
+        const modalIds = ['modal-mode-select', 'modal-stage-select', 'modal-game-over'];
         modalIds.forEach(id => {
             const elem = document.getElementById(id);
             if (elem) elem.style.display = 'none';
@@ -122,7 +123,7 @@ class Game {
         this.showModal('modal-mode-select');
     }
 
-    async showVariationSelect(diff) {
+    async showStageSelect(diff) {
         audioEngine.init();
         this.isGameStarted = false;
         this.isGameOver = false;
@@ -137,7 +138,7 @@ class Game {
         }
 
         // 難易度指定（フォールバック付き）
-        diff = (diff || this.currentVariation?.difficulty || 'EASY').toUpperCase();
+        diff = (diff || this.currentStage?.difficulty || 'EASY').toUpperCase();
 
         const diffDef = dataLoader.difficultiesMaster[diff] || {};
         const titleElem = document.getElementById('selected-mode-title');
@@ -146,52 +147,52 @@ class Game {
             titleElem.className = `diff-title diff-${diff}`;
         }
 
-        if (!dataLoader.isLoaded || dataLoader.variations.length === 0) {
-            document.getElementById('variation-list').innerHTML = '<div class="loading-text">バリエーション読込中...</div>';
+        if (!dataLoader.isLoaded || dataLoader.stages.length === 0) {
+            document.getElementById('stage-list').innerHTML = '<div class="loading-text">ステージ読込中...</div>';
             await dataLoader.loadAll();
         }
 
-        this.renderVariationMenu(diff);
-        this.showModal('modal-variation-select');
+        this.renderStageMenu(diff);
+        this.showModal('modal-stage-select');
     }
 
-    renderVariationMenu(diff) {
-        const container = document.getElementById('variation-list');
+    renderStageMenu(diff) {
+        const container = document.getElementById('stage-list');
         container.innerHTML = '';
 
-        const items = dataLoader.variations.filter(v => v.difficulty === diff);
+        const items = dataLoader.stages.filter(s => s.difficulty === diff);
         if (items.length === 0) {
-            container.innerHTML = '<div class="loading-text" style="color:#aaa;">このモードのバリエーションはまだありません</div>';
+            container.innerHTML = '<div class="loading-text" style="color:#aaa;">このモードのステージはまだありません</div>';
             return;
         }
 
         // 日付の降順（新しい順）に並び替え
         items.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
 
-        items.forEach(v => {
+        items.forEach(s => {
             const card = document.createElement('div');
-            card.className = 'var-card';
-            const best = localStorage.getItem(`bestScore_${v.id}`) || 0;
-            const dateStr = v.updatedAt || v.createdAt || '';
+            card.className = 'stage-card';
+            const best = localStorage.getItem(`bestScore_${s.id}`) || 0;
+            const dateStr = s.updatedAt || s.createdAt || '';
 
             card.innerHTML = `
-                <div class="var-name">${v.name}</div>
-                <div class="var-desc">${v.description || ''}</div>
-                <div class="var-stats">
+                <div class="stage-name">${s.name}</div>
+                <div class="stage-desc">${s.description || ''}</div>
+                <div class="stage-stats">
                     <span>${dateStr ? `📅 ${dateStr}` : ''}</span>
-                    <span class="var-score">🏆 BEST: ${best}</span>
+                    <span class="stage-score">🏆 BEST: ${best}</span>
                 </div>
             `;
-            card.onclick = () => this.startGameWithVariation(v);
+            card.onclick = () => this.startGameWithStage(s);
             container.appendChild(card);
         });
     }
 
-    startGameWithVariation(variation) {
+    startGameWithStage(stage) {
         audioEngine.init();
-        this.currentVariation = variation;
-        this.params = dataLoader.getResolvedParams(variation);
-        this.applyTheme(variation.theme);
+        this.currentStage = stage;
+        this.params = dataLoader.getResolvedParams(stage);
+        this.applyTheme(stage.theme);
 
         this.isGameStarted = true;
         this.isGameOver = false;
@@ -243,11 +244,11 @@ class Game {
         this.lastTapTime = 0;
         this.isGameOver = false;
 
-        this.params = dataLoader.getResolvedParams(this.currentVariation);
+        this.params = dataLoader.getResolvedParams(this.currentStage);
         this.player.targetRadius = this.params.targetRadius;
         this.player.maxHp = this.params.maxHp;
         this.player.hp = this.params.maxHp;
-        this.ringColor = this.currentVariation?.theme?.ringColor || '#00f0ff';
+        this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
 
         this.startBGM();
         this.updateUI();
@@ -257,19 +258,19 @@ class Game {
     startBGM() {
         this.stopBGM();
 
-        if (this.currentVariation && this.currentVariation.bgm) {
-            audioEngine.startBGM(this.currentVariation.bgm);
+        if (this.currentStage && this.currentStage.bgm) {
+            audioEngine.startBGM(this.currentStage.bgm);
         }
 
         this.bgmStep = 0;
-        const spawnInterval = this.currentVariation?.spawnRate || 187;
+        const spawnInterval = this.currentStage?.spawnRate || 187;
 
         this.bgmInterval = setInterval(() => {
             if (this.isGameOver || !this.isGameStarted) return;
             this.beatPulse = 5;
 
             if (this.bgmStep % 2 === 0 && Math.random() > 0.3) {
-                this.enemies.push(new Enemy(this.canvas, this.gameSpeed, this.currentVariation, dataLoader.enemiesMaster));
+                this.enemies.push(new Enemy(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
             }
 
             this.bgmStep++;
@@ -338,7 +339,7 @@ class Game {
         if (hit) {
             audioEngine.playHitSound();
             this.ringPulse = 15;
-            this.ringColor = this.currentVariation?.theme?.ringColor || '#00f0ff';
+            this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
             this.shockwaves.push(new Shockwave(touchX, touchY, this.ringColor));
         } else {
             audioEngine.playMissSound();
@@ -380,8 +381,8 @@ class Game {
         }
 
         let noticeText = '';
-        if (this.currentVariation) {
-            const storageKey = `bestScore_${this.currentVariation.id}`;
+        if (this.currentStage) {
+            const storageKey = `bestScore_${this.currentStage.id}`;
             const prevBest = parseInt(localStorage.getItem(storageKey) || '0', 10);
             if (this.score > prevBest) {
                 localStorage.setItem(storageKey, this.score.toString());
@@ -391,7 +392,7 @@ class Game {
             }
         }
 
-        document.getElementById('final-score').innerText = `SCORE: ${this.score} (${this.currentVariation ? this.currentVariation.name : ''})`;
+        document.getElementById('final-score').innerText = `SCORE: ${this.score} (${this.currentStage ? this.currentStage.name : ''})`;
         document.getElementById('high-score-notice').innerText = noticeText;
 
         // ゲームオーバーモーダル表示
@@ -412,7 +413,7 @@ class Game {
             this.missPenaltyTimer--;
             this.ringColor = '#ff0055';
         } else if (this.ringPulse === 0) {
-            this.ringColor = this.currentVariation?.theme?.ringColor || '#00f0ff';
+            this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
         }
 
         if (this.ringPulse > 0) {
