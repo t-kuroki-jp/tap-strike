@@ -13,9 +13,7 @@
     "playerColor": "#ff99bb"
   },
   "enemyPool": [
-    { "id": "CAT", "weight": 0.4 },
-    { "id": "CAT_KIJITORA", "weight": 0.3 },
-    { "id": "CAT_HACHIWARE", "weight": 0.3 }
+    { "id": "CAT", "weight": 1.0 }
   ],
   "spawnRate": 230
 }

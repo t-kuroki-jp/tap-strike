@@ -1,0 +1,20 @@
+{
+  "id": "real_cats",
+  "name": "リアルねこ集会",
+  "difficulty": "FUNNY",
+  "description": "リアルなキジトラねことハチワレねこが仲良くトコトコ登場！ねこ好き必見のスペシャルステージ！",
+  "bgm": "bgm/Under_The_Lanterns.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(217, 160, 91, 0.25)",
+    "gridColor": "rgba(42, 59, 92, 0.3)",
+    "ringColor": "#d9a05b",
+    "playerColor": "#d9a05b"
+  },
+  "enemyPool": [
+    { "id": "CAT_KIJITORA", "weight": 0.5 },
+    { "id": "CAT_HACHIWARE", "weight": 0.5 }
+  ],
+  "spawnRate": 175
+}
