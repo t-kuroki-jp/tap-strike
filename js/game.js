@@ -284,16 +284,15 @@ class Game {
 
             if (this.currentStage?.spawnPattern === 'san_san_nana') {
                 const step = this.bgmStep % 20;
-                // サン(0,1,2)・サン(4,5,6)・ナナ(9..15)
                 const isSan1 = step >= 0 && step <= 2;
                 const isSan2 = step >= 4 && step <= 6;
                 const isNana = step >= 9 && step <= 15;
 
                 if (isSan1 || isSan2 || isNana) {
-                    this.enemies.push(new Enemy(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
+                    this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
                 }
             } else if (this.bgmStep % 2 === 0 && Math.random() > 0.3) {
-                this.enemies.push(new Enemy(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
+                this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
             }
 
             this.bgmStep++;
@@ -339,76 +338,12 @@ class Game {
 
             if (diff < this.params.hitWindow) {
                 hit = true;
-
-                if (enemy.behavior === 'dont_tap') {
-                    audioEngine.playMissSound();
-                    this.combo = 0;
-                    this.ringPulse = 8;
-                    this.ringColor = '#ff0055';
-                    this.missPenaltyTimer = this.params.missPenaltyDuration;
-                    this.shockwaves.push(new Shockwave(touchX, touchY, '#ff0055'));
-                    this.createParticles(enemy.x, enemy.y, '#ff0055');
-                    this.enemies.splice(i, 1);
-                    break;
-                }
-
                 const isPerfect = diff <= 8;
-                const scoreMultiplier = isPerfect ? 2 : 1;
+                enemy.onHit(this, touchX, touchY, isPerfect);
 
-                if (enemy.behavior === 'chicken') {
-                    audioEngine.playChickSound();
-                    this.createParticles(enemy.x, enemy.y, '#ffe600');
-                    this.ringPulse = 14;
-                    this.ringColor = '#ffe600';
-                } else if (enemy.behavior === 'cat') {
-                    audioEngine.playCatSound();
-                    this.createParticles(enemy.x, enemy.y, '#ff99bb');
-                    this.ringPulse = 16;
-                    this.ringColor = '#ff99bb';
-                } else if (enemy.behavior === 'sushi') {
-                    audioEngine.playSushiSound();
-                    this.createParticles(enemy.x, enemy.y, '#ff3344');
-                    this.ringPulse = 16;
-                    this.ringColor = '#ff3344';
-                } else if (enemy.behavior === 'bomb') {
-                    audioEngine.playBombSound();
-                    for (let b = 0; b < 4; b++) {
-                        this.createParticles(enemy.x, enemy.y, '#ff2200');
-                        this.createParticles(enemy.x, enemy.y, '#ffe600');
-                        this.createParticles(enemy.x, enemy.y, '#ffffff');
-                    }
-                    this.ringPulse = 35;
-                    this.ringColor = '#ff3300';
-                } else if (isPerfect) {
-                    audioEngine.playPerfectSound();
-                    this.createParticles(enemy.x, enemy.y, '#ffcc00');
-                    this.createParticles(enemy.x, enemy.y, '#ffffff');
-                    this.ringPulse = 22;
-                    this.ringColor = '#ffcc00';
-                } else {
-                    audioEngine.playHitSound();
-                    this.createParticles(enemy.x, enemy.y, enemy.color);
-                    this.ringPulse = 14;
-                    this.ringColor = this.currentStage?.theme?.ringColor || '#00f0ff';
-                }
-
-                enemy.hp--;
                 if (enemy.hp <= 0) {
                     this.enemies.splice(i, 1);
-                    this.combo++;
-                    this.score += this.params.baseScore * this.combo * scoreMultiplier;
-                    this.gameSpeed += this.params.speedIncrement;
-
-                    if (enemy.behavior === 'heal') {
-                        this.player.hp = Math.min(this.player.maxHp, this.player.hp + 1);
-                        this.createParticles(centerX, centerY, '#00ff88');
-                    }
-                } else {
-                    this.combo++;
-                    this.score += this.params.baseScore * scoreMultiplier;
                 }
-
-                this.shockwaves.push(new Shockwave(touchX, touchY, isPerfect ? '#ffcc00' : this.ringColor));
                 break;
             }
         }
@@ -531,7 +466,7 @@ class Game {
         this.ctx.stroke();
         this.ctx.restore();
 
-        // 敵更新・描画
+        // 敵更新・描画・判定（ポリモーフィズム）
         for (let i = this.enemies.length - 1; i >= 0; i--) {
             const enemy = this.enemies[i];
             const dist = enemy.update(this.player.targetRadius);
