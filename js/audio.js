@@ -61,6 +61,52 @@ class AudioEngine {
         osc.stop(this.audioCtx.currentTime + 0.06);
     }
 
+    playCatSound() {
+        if (!this.audioCtx) return;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(900, this.audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1500, this.audioCtx.currentTime + 0.1);
+        osc.frequency.exponentialRampToValueAtTime(700, this.audioCtx.currentTime + 0.2);
+        gain.gain.setValueAtTime(0.4, this.audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.2);
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.start();
+        osc.stop(this.audioCtx.currentTime + 0.2);
+    }
+
+    playSushiSound() {
+        if (!this.audioCtx) return;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(440, this.audioCtx.currentTime);
+        osc.frequency.setValueAtTime(880, this.audioCtx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.3, this.audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.start();
+        osc.stop(this.audioCtx.currentTime + 0.12);
+    }
+
+    playBombSound() {
+        if (!this.audioCtx) return;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, this.audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, this.audioCtx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.6, this.audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.start();
+        osc.stop(this.audioCtx.currentTime + 0.3);
+    }
+
     playMissSound() {
         if (!this.audioCtx) return;
         const osc = this.audioCtx.createOscillator();

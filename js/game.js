@@ -360,6 +360,25 @@ class Game {
                     this.createParticles(enemy.x, enemy.y, '#ffe600');
                     this.ringPulse = 14;
                     this.ringColor = '#ffe600';
+                } else if (enemy.behavior === 'cat') {
+                    audioEngine.playCatSound();
+                    this.createParticles(enemy.x, enemy.y, '#ff99bb');
+                    this.ringPulse = 16;
+                    this.ringColor = '#ff99bb';
+                } else if (enemy.behavior === 'sushi') {
+                    audioEngine.playSushiSound();
+                    this.createParticles(enemy.x, enemy.y, '#ff3344');
+                    this.ringPulse = 16;
+                    this.ringColor = '#ff3344';
+                } else if (enemy.behavior === 'bomb') {
+                    audioEngine.playBombSound();
+                    for (let b = 0; b < 4; b++) {
+                        this.createParticles(enemy.x, enemy.y, '#ff2200');
+                        this.createParticles(enemy.x, enemy.y, '#ffe600');
+                        this.createParticles(enemy.x, enemy.y, '#ffffff');
+                    }
+                    this.ringPulse = 35;
+                    this.ringColor = '#ff3300';
                 } else if (isPerfect) {
                     audioEngine.playPerfectSound();
                     this.createParticles(enemy.x, enemy.y, '#ffcc00');

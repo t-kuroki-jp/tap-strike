@@ -1,0 +1,19 @@
+{
+  "id": "rotating_sushi",
+  "name": "回転マグロ寿司",
+  "difficulty": "FUNNY",
+  "description": "判定リングの周りをクルクル回りながら吸い込まれてくる極上マグロ寿司！へいらっしゃい！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(255, 68, 51, 0.25)",
+    "gridColor": "rgba(255, 68, 51, 0.3)",
+    "ringColor": "#ff4433",
+    "playerColor": "#ff4433"
+  },
+  "enemyPool": [
+    { "id": "SUSHI", "weight": 1.0 }
+  ],
+  "spawnRate": 220
+}

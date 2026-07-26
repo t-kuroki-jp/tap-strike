@@ -1,0 +1,19 @@
+{
+  "id": "cat_festival",
+  "name": "ネコ・フェスティバル",
+  "difficulty": "FUNNY",
+  "description": "「ニャー！」と鳴いて飛んでくる可愛いネコちゃん大集合の癒しステージ！",
+  "bgm": "bgm/Midnight_Porch_Light.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(255, 153, 187, 0.25)",
+    "gridColor": "rgba(255, 153, 187, 0.3)",
+    "ringColor": "#ff99bb",
+    "playerColor": "#ff99bb"
+  },
+  "enemyPool": [
+    { "id": "CAT", "weight": 1.0 }
+  ],
+  "spawnRate": 230
+}

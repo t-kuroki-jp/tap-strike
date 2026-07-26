@@ -82,5 +82,32 @@
     "speedRatio": 1.0,
     "size": 14,
     "behavior": "chicken"
+  },
+  "CAT": {
+    "name": "にゃんこフェスティバル",
+    "description": "「ニャー！」と鳴いて飛び込んでくる可愛いネコちゃんエネミー",
+    "color": "#ff99bb",
+    "shape": "cat",
+    "speedRatio": 1.0,
+    "size": 14,
+    "behavior": "cat"
+  },
+  "SUSHI": {
+    "name": "回転マグロ寿司",
+    "description": "判定リングの周りをくるくる回りながら突入してくる極上マグロ寿司",
+    "color": "#ff4433",
+    "shape": "sushi",
+    "speedRatio": 1.1,
+    "size": 15,
+    "behavior": "sushi"
+  },
+  "BOMB": {
+    "name": "メガ・ボム",
+    "description": "タップした瞬間に画面全体が花火大爆発するストレス解消ボム",
+    "color": "#ff2200",
+    "shape": "bomb",
+    "speedRatio": 1.0,
+    "size": 14,
+    "behavior": "bomb"
   }
 }

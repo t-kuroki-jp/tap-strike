@@ -56,11 +56,17 @@ class Enemy {
         }
 
         if (this.behavior === 'chicken') {
+            const hop = Math.sin(dist * 0.2) * 2.5;
             const perpX = -dy / dist;
             const perpY = dx / dist;
-            const hop = Math.sin(dist * 0.2) * 2.5;
             this.x += (dx / dist) * currentSpeed + perpX * hop;
             this.y += (dy / dist) * currentSpeed + perpY * hop;
+        } else if (this.behavior === 'sushi') {
+            const perpX = -dy / dist;
+            const perpY = dx / dist;
+            const orbit = Math.sin(dist * 0.05) * 4.0;
+            this.x += (dx / dist) * currentSpeed + perpX * orbit;
+            this.y += (dy / dist) * currentSpeed + perpY * orbit;
         } else if (this.behavior === 'curve') {
             const perpX = -dy / dist;
             const perpY = dx / dist;
@@ -83,7 +89,56 @@ class Enemy {
         ctx.shadowBlur = 10;
         ctx.beginPath();
 
-        if (this.shape === 'chick') {
+        if (this.shape === 'cat') {
+            // ネコ顔
+            ctx.fillStyle = '#ff99bb';
+            ctx.shadowColor = '#ff99bb';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 耳（左・右）
+            ctx.beginPath();
+            ctx.moveTo(this.x - 12, this.y - 6); ctx.lineTo(this.x - 6, this.y - 15); ctx.lineTo(this.x - 2, this.y - 8);
+            ctx.moveTo(this.x + 12, this.y - 6); ctx.lineTo(this.x + 6, this.y - 15); ctx.lineTo(this.x + 2, this.y - 8);
+            ctx.fill();
+
+            // 目
+            ctx.fillStyle = '#05070e';
+            ctx.beginPath();
+            ctx.arc(this.x - 4, this.y - 2, 2, 0, Math.PI * 2);
+            ctx.arc(this.x + 4, this.y - 2, 2, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (this.shape === 'sushi') {
+            // シャリ (白)
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(this.x - 14, this.y - 4, 28, 12, 4);
+            ctx.fill();
+
+            // ネタ (マグロ赤)
+            ctx.fillStyle = '#ff3344';
+            ctx.shadowColor = '#ff3344';
+            ctx.beginPath();
+            ctx.roundRect(this.x - 15, this.y - 10, 30, 10, 5);
+            ctx.fill();
+        } else if (this.shape === 'bomb') {
+            // ボム黒体
+            ctx.fillStyle = '#ff2200';
+            ctx.shadowColor = '#ff2200';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 導火線スパーク (黄色)
+            ctx.strokeStyle = '#ffe600';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - this.size);
+            ctx.lineTo(this.x + 6, this.y - this.size - 8);
+            ctx.stroke();
+        } else if (this.shape === 'chick') {
             // 体 (イエロー)
             ctx.fillStyle = '#ffe600';
             ctx.shadowColor = '#ffe600';
