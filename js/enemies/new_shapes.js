@@ -2,27 +2,48 @@
  * 新・幾何学ノーツ群 (EASYモード全9動作対応)
  */
 
-// 1. クロスノーツ (ブーメラン移動)
+// 1. ブーメランノーツ (V字ブーメランフォルム ＋ 超高速グルグル回転)
 class CrossEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CROSS', name: 'ブーメラン・クロス', color: '#ff3399', shape: 'cross', speedRatio: 0.95, size: 13, hp: 1,
+            id: 'CROSS', name: 'ブーメラン・クロス', color: '#ff3388', shape: 'boomerang', speedRatio: 0.95, size: 14, hp: 1,
             behavior: 'boomerang'
         });
+        this.rotationAngle = Math.random() * Math.PI * 2;
+    }
+
+    update(playerTargetRadius) {
+        const dist = super.update(playerTargetRadius);
+        // ブーメラン特有のシャシャシャッと風を切る高速自転！
+        this.rotationAngle += 0.22;
+        return dist;
     }
 
     draw(ctx) {
         ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotationAngle);
+
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.8;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 12;
+
+        // 本物の V字くの字 ブーメラン描画 (ローカル座標中心)
         ctx.beginPath();
-        const s = this.size;
-        const w = s * 0.4;
-        ctx.rect(this.x - w, this.y - s, w * 2, s * 2);
-        ctx.rect(this.x - s, this.y - w, s * 2, w * 2);
+        ctx.moveTo(0, 5);           // 中央くびれ下
+        ctx.lineTo(-15, -12);       // 左翼先
+        ctx.lineTo(-9, -15);        // 左翼外角
+        ctx.lineTo(0, -3);          // 中央くびれ上
+        ctx.lineTo(9, -15);         // 右翼外角
+        ctx.lineTo(15, -12);        // 右翼先
+        ctx.closePath();
+        
         ctx.fill();
+        ctx.stroke();
+
         ctx.restore();
     }
 }
