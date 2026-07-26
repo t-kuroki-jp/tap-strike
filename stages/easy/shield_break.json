@@ -1,9 +1,9 @@
 {
-  "id": "easy_speeder",
-  "name": "ボルト・スピーダー",
+  "id": "shield_break",
+  "name": "シールド・ブレイク",
   "difficulty": "EASY",
-  "description": "スピードに乗った高速敵のみ！素早い反射神経を鍛える練習ステージ",
-  "bgm": "bgm/Magenta_Pulse.mp3",
+  "description": "2回タップのシールド敵のみ！落ち着いて連続撃破をマスターする練習ステージ",
+  "bgm": "bgm/Cyan_Square_Error.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
   "theme": {
@@ -13,7 +13,7 @@
     "playerColor": "#00ff88"
   },
   "enemyPool": [
-    { "id": "SPEEDER", "weight": 1.0 }
+    { "id": "SHIELD", "weight": 1.0 }
   ],
   "spawnRate": 250
 }

@@ -1,10 +1,10 @@
 [
-  "stages/easy/chaser.json",
-  "stages/easy/curve.json",
-  "stages/easy/shield.json",
-  "stages/easy/glitch.json",
-  "stages/easy/speeder.json",
-  "stages/normal/standard.json",
-  "stages/normal/trick.json",
-  "stages/hard/overdrive.json"
+  "stages/easy/normal_chaser.json",
+  "stages/easy/spiral_curve.json",
+  "stages/easy/shield_break.json",
+  "stages/easy/phantom_glitch.json",
+  "stages/easy/bolt_speeder.json",
+  "stages/normal/neon_standard.json",
+  "stages/normal/purple_trick.json",
+  "stages/hard/bolt_overdrive.json"
 ]
