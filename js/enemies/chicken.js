@@ -1,5 +1,5 @@
 /**
- * ぴよぴよヒヨコ (100%確実に安全描画されるふっくら2段モチモチボディ・パタパタ翼・立体くちばし)
+ * ぴよぴよヒヨコ (ふっくら2段モチモチボディ・パタパタ翼・立体くちばし・チョコン尾羽・アホ毛)
  */
 class ChickenEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -131,9 +131,5 @@ class ChickenEnemy extends Enemy {
         ctx.fill();
 
         ctx.restore();
-
-        // 9. 被弾エフェクト / HPバー
-        this.drawHitEffect(ctx);
-        this.drawHpBar(ctx);
     }
 }
