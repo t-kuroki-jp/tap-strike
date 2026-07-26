@@ -103,13 +103,12 @@ class Game {
         }
     }
 
-    async restartStage() {
+    restartStage() {
         if (!this.currentStage) {
             this.showModeSelect();
             return;
         }
-        this.hideAllModals();
-        await this.startStage(this.currentStage.id);
+        this.startGameWithStage(this.currentStage);
     }
 
     async startApp() {
