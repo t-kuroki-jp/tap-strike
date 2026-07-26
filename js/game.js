@@ -10,7 +10,6 @@ class Game {
         this.combo = 0;
         this.isGameOver = false;
         this.isGameStarted = false;
-        this.isPaused = false;
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
@@ -72,14 +71,8 @@ class Game {
             }
         });
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' || e.key === 'p' || e.key === 'P') {
-                if (this.isPaused) {
-                    this.resumeGame();
-                } else if (this.isGameStarted && !this.isGameOver) {
-                    this.pauseGame();
-                }
-            } else if (e.key === 'r' || e.key === 'R') {
-                if (this.isGameStarted || this.isGameOver || this.isPaused) {
+            if (e.key === 'r' || e.key === 'R') {
+                if (this.isGameStarted || this.isGameOver) {
                     this.restartStage();
                 }
             }
@@ -93,7 +86,7 @@ class Game {
 
     // --- 画面モーダル切替ロジック ---
     hideAllModals() {
-        const modalIds = ['modal-mode-select', 'modal-stage-select', 'modal-game-over', 'modal-pause'];
+        const modalIds = ['modal-mode-select', 'modal-stage-select', 'modal-game-over'];
         modalIds.forEach(id => {
             const elem = document.getElementById(id);
             if (elem) elem.style.display = 'none';
@@ -110,33 +103,11 @@ class Game {
         }
     }
 
-    pauseGame() {
-        if (!this.isGameStarted || this.isGameOver || this.isPaused) return;
-        this.isPaused = true;
-        if (audioEngine.bgmAudio) {
-            audioEngine.bgmAudio.pause();
-        }
-        this.showModal('modal-pause');
-    }
-
-    resumeGame() {
-        if (!this.isPaused) return;
-        this.isPaused = false;
-        this.hideAllModals();
-        const uiElem = document.getElementById('ui');
-        if (uiElem) uiElem.style.display = 'flex';
-        if (audioEngine.bgmAudio) {
-            audioEngine.bgmAudio.play().catch(() => {});
-        }
-        requestAnimationFrame(() => this.gameLoop());
-    }
-
     async restartStage() {
         if (!this.currentStage) {
             this.showModeSelect();
             return;
         }
-        this.isPaused = false;
         this.hideAllModals();
         await this.startStage(this.currentStage.id);
     }
@@ -450,7 +421,7 @@ class Game {
     }
 
     gameLoop() {
-        if (!this.isGameStarted || this.isGameOver || this.isPaused) return;
+        if (!this.isGameStarted || this.isGameOver) return;
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
