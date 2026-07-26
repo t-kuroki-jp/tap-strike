@@ -7,10 +7,10 @@
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
   "theme": {
-    "bgGlow": "rgba(0, 170, 255, 0.25)",
-    "gridColor": "rgba(0, 170, 255, 0.3)",
-    "ringColor": "#00aaff",
-    "playerColor": "#00aaff"
+    "bgGlow": "rgba(0, 240, 255, 0.25)",
+    "gridColor": "rgba(0, 240, 255, 0.3)",
+    "ringColor": "#00f0ff",
+    "playerColor": "#00f0ff"
   },
   "enemyPool": [
     { "id": "SHIELD", "weight": 1.0 }
