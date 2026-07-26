@@ -19,6 +19,10 @@ class Enemy {
         this.id = pickedItem.id;
         this.name = masterData.name;
         this.color = masterData.color || '#ff0055';
+        if (variation?.theme?.rainbow) {
+            const randomHue = Math.floor(Math.random() * 360);
+            this.color = `hsl(${randomHue}, 100%, 60%)`;
+        }
         this.shape = masterData.shape || 'circle';
         this.behavior = masterData.behavior || 'straight';
         this.speed = (2.0 * (masterData.speedRatio || 1.0)) * gameSpeed;
