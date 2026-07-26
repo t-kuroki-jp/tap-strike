@@ -18,7 +18,6 @@ class EnemyFactory {
             case 'CAT': return new CatEnemy(canvas, gameSpeed, stage);
             case 'SUSHI': return new SushiEnemy(canvas, gameSpeed, stage);
             case 'BOMB': return new BombEnemy(canvas, gameSpeed, stage);
-            case 'MOAI': return new MoaiEnemy(canvas, gameSpeed, stage);
             default: return new ChaserEnemy(canvas, gameSpeed, stage);
         }
     }

@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: FUNNY 7大ステージ搭載 (モアイ像、ひよこ、レインボー、三・三・七拍子、ネコ、お寿司、爆発) (`v10.0.0`)
+- **特徴**: FUNNY 6大ステージ搭載 (ひよこ、レインボー、三・三・七拍子、ネコ、お寿司、爆発) (`v10.2.0`)
 
 ---
 
@@ -34,8 +34,7 @@ tap-strike/
 │       ├── chicken.js          # 🐥 ぴよぴよヒヨコ
 │       ├── cat.js              # 🐱 にゃんこフェスティバル
 │       ├── sushi.js            # 🍣 回転マグロ寿司
-│       ├── bomb.js             # 💥 メガ・ボム
-│       └── moai.js             # 🗿 ジャイアント・モアイ (NEW!)
+│       └── bomb.js             # 💥 メガ・ボム
 ├── stages/                     # モードごとに分類されたステージJSON
 │   ├── easy/                   # EASYモード用
 │   ├── normal/                 # NORMALモード用
@@ -46,8 +45,7 @@ tap-strike/
 │       ├── san_san_nana.json   # 「三・三・七拍子」
 │       ├── cat_festival.json   # 「ネコ・フェスティバル」
 │       ├── rotating_sushi.json # 「回転マグロ寿司」
-│       ├── bomb_party.json     # 「爆発まつり」
-│       └── giant_moai.json     # 「ジャイアント・モアイ」 (NEW!)
+│       └── bomb_party.json     # 「爆発まつり」
 ├── bgm/                        # BGM音源 (.mp3)
 ├── stages.json                 # 全ステージ相対パス一覧
 ├── difficulties.json           # 難易度マスタ定義
