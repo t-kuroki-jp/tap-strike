@@ -127,14 +127,15 @@ p.subtitle {
 .btn-mode {
     width: 100%;
     padding: 16px 20px;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 4px;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -142,29 +143,32 @@ p.subtitle {
     pointer-events: none;
 }
 
-.btn-mode:active {
-    transform: scale(0.97);
+.btn-mode:hover, .btn-mode:active {
+    transform: scale(0.98);
 }
 
 .btn-mode-easy {
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.05));
+    background: rgba(0, 255, 136, 0.08);
     border: 2px solid #00ff88;
     color: #00ff88;
-    box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.25);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .btn-mode-normal {
-    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 240, 255, 0.05));
+    background: rgba(0, 240, 255, 0.08);
     border: 2px solid #00f0ff;
     color: #00f0ff;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
 .btn-mode-hard {
-    background: linear-gradient(135deg, rgba(255, 0, 85, 0.2), rgba(255, 0, 85, 0.05));
+    background: rgba(255, 0, 85, 0.08);
     border: 2px solid #ff0055;
     color: #ff0055;
-    box-shadow: 0 0 12px rgba(255, 0, 85, 0.2);
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
+    text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
 }
 
 .stage-card,
