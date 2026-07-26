@@ -16,6 +16,8 @@ class EnemyFactory {
             case 'DONT_TAP': return new DontTapEnemy(canvas, gameSpeed, stage);
             case 'CHICKEN': return new ChickenEnemy(canvas, gameSpeed, stage);
             case 'CAT': return new CatEnemy(canvas, gameSpeed, stage);
+            case 'CAT_KIJITORA': return new KijitoraCatEnemy(canvas, gameSpeed, stage);
+            case 'CAT_HACHIWARE': return new HachiwareCatEnemy(canvas, gameSpeed, stage);
             case 'SUSHI': return new SushiEnemy(canvas, gameSpeed, stage);
             case 'BOMB': return new BombEnemy(canvas, gameSpeed, stage);
             case 'FIREWORK': return new FireworkEnemy(canvas, gameSpeed, stage);

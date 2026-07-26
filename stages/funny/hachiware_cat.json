@@ -1,0 +1,19 @@
+{
+  "id": "hachiware_cat",
+  "name": "ハチワレ・パラダイス",
+  "difficulty": "FUNNY",
+  "description": "額の八の字模様が超クール＆キュートなハチワレねこちゃんが大集合！",
+  "bgm": "bgm/Under_The_Lanterns.mp3",
+  "createdAt": "2026-07-26",
+  "updatedAt": "2026-07-26",
+  "theme": {
+    "bgGlow": "rgba(42, 59, 92, 0.25)",
+    "gridColor": "rgba(42, 59, 92, 0.3)",
+    "ringColor": "#2a3b5c",
+    "playerColor": "#2a3b5c"
+  },
+  "enemyPool": [
+    { "id": "CAT_HACHIWARE", "weight": 1.0 }
+  ],
+  "spawnRate": 175
+}
