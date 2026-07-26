@@ -16,12 +16,17 @@
 
     <div class="bg-animated"></div>
 
-    <!-- ゲームプレイHUD (ヘッダー ＋ ポーズボタン) -->
+    <!-- ゲームプレイHUD (ヘッダー ＋ スタイリッシュポーズボタン) -->
     <div id="ui" style="display: none;">
         <div class="score-board" id="score">SCORE: 0</div>
         <div class="hp-board" id="hp">❤️❤️❤️</div>
         <div class="combo-board" id="combo">COMBO: 0</div>
-        <button id="btn-pause" class="btn-pause" onclick="window.game.togglePause()">⏸</button>
+        <button id="btn-pause" class="btn-pause" onclick="window.game.togglePause()" aria-label="一時停止">
+            <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="1" width="4.5" height="16" rx="2" fill="#00f0ff"/>
+                <rect x="10.5" y="1" width="4.5" height="16" rx="2" fill="#00f0ff"/>
+            </svg>
+        </button>
     </div>
 
     <!-- モーダル1: モード（難易度）選択画面 -->
@@ -97,30 +102,30 @@
     <canvas id="gameCanvas"></canvas>
 
     <!-- モジュールスクリプト -->
-    <script src="js/audio.js?v=33.0.0"></script>
-    <script src="js/loader.js?v=33.0.0"></script>
-    <script src="js/entities.js?v=33.0.0"></script>
+    <script src="js/audio.js?v=34.0.0"></script>
+    <script src="js/loader.js?v=34.0.0"></script>
+    <script src="js/entities.js?v=34.0.0"></script>
 
     <!-- エネミーモジュール群 (1敵1ファイル・サウンドカプセル化) -->
-    <script src="js/enemies/enemy.js?v=33.0.0"></script>
-    <script src="js/enemies/chaser.js?v=33.0.0"></script>
-    <script src="js/enemies/speeder.js?v=33.0.0"></script>
-    <script src="js/enemies/glitch.js?v=33.0.0"></script>
-    <script src="js/enemies/curve.js?v=33.0.0"></script>
-    <script src="js/enemies/shield.js?v=33.0.0"></script>
-    <script src="js/enemies/big_boss.js?v=33.0.0"></script>
-    <script src="js/enemies/heal.js?v=33.0.0"></script>
-    <script src="js/enemies/dont_tap.js?v=33.0.0"></script>
-    <script src="js/enemies/chicken.js?v=33.0.0"></script>
-    <script src="js/enemies/cat.js?v=33.0.0"></script>
-    <script src="js/enemies/cat_kijitora.js?v=33.0.0"></script>
-    <script src="js/enemies/cat_hachiware.js?v=33.0.0"></script>
-    <script src="js/enemies/sushi.js?v=33.0.0"></script>
-    <script src="js/enemies/bomb.js?v=33.0.0"></script>
-    <script src="js/enemies/firework.js?v=33.0.0"></script>
-    <script src="js/enemies/enemy_factory.js?v=33.0.0"></script>
+    <script src="js/enemies/enemy.js?v=34.0.0"></script>
+    <script src="js/enemies/chaser.js?v=34.0.0"></script>
+    <script src="js/enemies/speeder.js?v=34.0.0"></script>
+    <script src="js/enemies/glitch.js?v=34.0.0"></script>
+    <script src="js/enemies/curve.js?v=34.0.0"></script>
+    <script src="js/enemies/shield.js?v=34.0.0"></script>
+    <script src="js/enemies/big_boss.js?v=34.0.0"></script>
+    <script src="js/enemies/heal.js?v=34.0.0"></script>
+    <script src="js/enemies/dont_tap.js?v=34.0.0"></script>
+    <script src="js/enemies/chicken.js?v=34.0.0"></script>
+    <script src="js/enemies/cat.js?v=34.0.0"></script>
+    <script src="js/enemies/cat_kijitora.js?v=34.0.0"></script>
+    <script src="js/enemies/cat_hachiware.js?v=34.0.0"></script>
+    <script src="js/enemies/sushi.js?v=34.0.0"></script>
+    <script src="js/enemies/bomb.js?v=34.0.0"></script>
+    <script src="js/enemies/firework.js?v=34.0.0"></script>
+    <script src="js/enemies/enemy_factory.js?v=34.0.0"></script>
 
-    <script src="js/game.js?v=33.0.0"></script>
+    <script src="js/game.js?v=34.0.0"></script>
 </body>
 
 </html>
