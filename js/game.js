@@ -94,12 +94,6 @@ class Game {
 
     // --- 画面モーダル切替ロジック ---
     hideAllModals() {
-        const modalIds = ['modal-mode-select', 'modal-stage-select', 'modal-game-over'];
-        modalIds.forEach(id => {
-            const elem = document.getElementById(id);
-            if (elem) elem.style.display = 'none';
-        });
-    hideAllModals() {
         ['modal-mode-select', 'modal-stage-select', 'modal-game-over', 'modal-pause'].forEach(id => {
             const elem = document.getElementById(id);
             if (elem) elem.style.display = 'none';
