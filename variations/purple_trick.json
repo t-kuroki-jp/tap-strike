@@ -2,7 +2,7 @@
   "id": "purple_trick",
   "name": "パープル・トリック・ナイト",
   "difficulty": "NORMAL",
-  "description": "フェイント減速とウネウネ螺旋移動で揺さぶりをかけてくる技巧派バリエーション",
+  "description": "基本の敵に加えて減速フェイント敵が登場！緩急に惑わされないように立ち回る技巧派バリエーション",
   "bgm": "bgm/Cyan_Square_Error.mp3",
   "createdAt": "2026-07-25",
   "theme": {
@@ -12,9 +12,9 @@
     "playerColor": "#aa00ff"
   },
   "enemyPool": [
-    { "id": "GLITCH", "weight": 0.4 },
-    { "id": "CURVE", "weight": 0.4 },
-    { "id": "HEAL", "weight": 0.2 }
+    { "id": "CHASER", "weight": 0.5 },
+    { "id": "GLITCH", "weight": 0.35 },
+    { "id": "HEAL", "weight": 0.15 }
   ],
-  "spawnRate": 170
+  "spawnRate": 190
 }

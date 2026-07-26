@@ -2,7 +2,7 @@
   "id": "cyber_speed",
   "name": "ボルト・オーバードライブ",
   "difficulty": "HARD",
-  "description": "超高速エネミーと重装甲シールド敵が息つく間もなく襲いかかる激ムズハードバリエーション",
+  "description": "高速敵と2回タップの重装甲シールド敵が容赦なく襲いかかるスリリングな激ムズハードバリエーション",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "createdAt": "2026-07-25",
   "theme": {
@@ -12,9 +12,9 @@
     "playerColor": "#ff0055"
   },
   "enemyPool": [
-    { "id": "SPEEDER", "weight": 0.5 },
-    { "id": "SHIELD", "weight": 0.3 },
-    { "id": "CHASER", "weight": 0.2 }
+    { "id": "CHASER", "weight": 0.5 },
+    { "id": "SPEEDER", "weight": 0.3 },
+    { "id": "SHIELD", "weight": 0.2 }
   ],
-  "spawnRate": 150
+  "spawnRate": 160
 }

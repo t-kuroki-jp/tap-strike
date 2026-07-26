@@ -2,7 +2,7 @@
   "id": "midnight_porch",
   "name": "ミッドナイト・ポーチ・ライト",
   "difficulty": "EASY",
-  "description": "夜の静けさとチルなビートに乗って、ゆったりリラックス気分で遊べるEASYバリエーション",
+  "description": "素直な敵とたくさんの回復ポッド！夜の静けさとチルなビートで癒やされる超やさしいEASYバリエーション",
   "bgm": "bgm/Midnight_Porch_Light.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -16,5 +16,5 @@
     { "id": "CHASER", "weight": 0.7 },
     { "id": "HEAL", "weight": 0.3 }
   ],
-  "spawnRate": 220
+  "spawnRate": 240
 }

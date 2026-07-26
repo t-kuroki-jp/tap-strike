@@ -2,7 +2,7 @@
   "id": "sharp_suits",
   "name": "シャープ・スーツ・アベニュー",
   "difficulty": "EASY",
-  "description": "スタイリッシュなビートに乗ってテンポよく撃破していくノリノリのEASYバリエーション",
+  "description": "素直な敵と回復ポッドのみ！スタイリッシュなビートに乗ってノリノリで遊べるEASYバリエーション",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "createdAt": "2026-07-26",
   "updatedAt": "2026-07-26",
@@ -13,9 +13,8 @@
     "playerColor": "#ffaa00"
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 0.6 },
-    { "id": "CURVE", "weight": 0.2 },
+    { "id": "CHASER", "weight": 0.8 },
     { "id": "HEAL", "weight": 0.2 }
   ],
-  "spawnRate": 210
+  "spawnRate": 230
 }
