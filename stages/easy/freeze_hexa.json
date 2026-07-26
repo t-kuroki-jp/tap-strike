@@ -1,0 +1,17 @@
+{
+  "id": "freeze_hexa",
+  "name": "フリーズ・ヘキサ！",
+  "difficulty": "EASY",
+  "description": "シアンの六角形ノーツ！判定手前で「ピタッ」と1秒停止してからロケットダッシュ！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 450,
+  "params": {
+    "gameSpeed": 0.85,
+    "spawnInterval": 1500,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "HEXAGON", "behavior": "freeze" }
+  ]
+}

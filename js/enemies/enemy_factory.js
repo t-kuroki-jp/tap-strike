@@ -13,6 +13,11 @@ class EnemyFactory {
             case 'GLITCH': enemy = new GlitchEnemy(canvas, gameSpeed, stage); break;
             case 'CURVE': enemy = new CurveEnemy(canvas, gameSpeed, stage); break;
             case 'SINE_WAVE': enemy = new SineWaveEnemy(canvas, gameSpeed, stage); break;
+            case 'CROSS': enemy = new CrossEnemy(canvas, gameSpeed, stage); break;
+            case 'GHOST': enemy = new GhostEnemy(canvas, gameSpeed, stage); break;
+            case 'HEXAGON': enemy = new HexagonEnemy(canvas, gameSpeed, stage); break;
+            case 'RING_NOTE': enemy = new RingEnemy(canvas, gameSpeed, stage); break;
+            case 'PENTAGON': enemy = new PentagonEnemy(canvas, gameSpeed, stage); break;
             case 'SHIELD': enemy = new ShieldEnemy(canvas, gameSpeed, stage); break;
             case 'BIG_BOSS': enemy = new BigBossEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;

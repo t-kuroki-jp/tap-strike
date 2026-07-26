@@ -1,0 +1,17 @@
+{
+  "id": "boomerang_cross",
+  "name": "ブーメラン・クロス！",
+  "difficulty": "EASY",
+  "description": "ピンク十字のブーメランノーツ！一度手前で引き返してから直後に加速して向かってくる！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 450,
+  "params": {
+    "gameSpeed": 0.85,
+    "spawnInterval": 1500,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "CROSS", "behavior": "boomerang" }
+  ]
+}

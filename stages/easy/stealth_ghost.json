@@ -1,0 +1,17 @@
+{
+  "id": "stealth_ghost",
+  "name": "ステルス・ゴースト！",
+  "difficulty": "EASY",
+  "description": "ライム輪郭のゴーストノーツ！途中で姿を消し、判定リング直前でパッと一気に現れる！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 450,
+  "params": {
+    "gameSpeed": 0.85,
+    "spawnInterval": 1500,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "GHOST", "behavior": "stealth" }
+  ]
+}

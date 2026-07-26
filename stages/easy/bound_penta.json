@@ -1,0 +1,17 @@
+{
+  "id": "bound_penta",
+  "name": "バウンド・ペンタ！",
+  "difficulty": "EASY",
+  "description": "グリーン五角形ノーツ！画面の壁でポンと弾けて軌道を変えてから中心へ突入！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 450,
+  "params": {
+    "gameSpeed": 0.85,
+    "spawnInterval": 1500,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "PENTAGON", "behavior": "bound" }
+  ]
+}
