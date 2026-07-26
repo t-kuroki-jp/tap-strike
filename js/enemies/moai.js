@@ -1,21 +1,41 @@
 /**
- * ジャイアント・モアイ (画面覆い尽くし超巨大モアイ・岩石ドゴォォン重低音SE)
+ * ジャイアント・モアイ (近づくにつれて画面全体へドアップ超巨大化！・岩石ドゴォォン重低音SE)
  */
 class MoaiEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'MOAI', name: 'ジャイアント・モアイ', color: '#8899aa', shape: 'moai', speedRatio: 0.65, size: 85, hp: 1
+            id: 'MOAI', name: 'ジャイアント・モアイ', color: '#8899aa', shape: 'moai', speedRatio: 0.65, size: 12, hp: 1
         });
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        this.maxDistance = Math.hypot(centerX - this.x, centerY - this.y);
+    }
+
+    update(playerTargetRadius) {
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const dx = centerX - this.x;
+        const dy = centerY - this.y;
+        const dist = Math.hypot(dx, dy);
+
+        this.x += (dx / dist) * this.speed;
+        this.y += (dy / dist) * this.speed;
+
+        // ★近づくにつれて顔面が超ドアップ（12px ➔ 最大95px）に巨大化！
+        const progress = Math.min(1.0, Math.max(0.0, 1.0 - (dist / (this.maxDistance || 300))));
+        this.size = 12 + progress * 85;
+
+        return dist;
     }
 
     draw(ctx) {
         ctx.save();
         const s = this.size / 28; // スケール倍率
 
-        // 1. モアイベース顔影 (画面を覆う大迫力)
+        // 1. モアイベース顔影
         ctx.fillStyle = '#556677';
         ctx.shadowColor = '#8899aa';
-        ctx.shadowBlur = 20;
+        ctx.shadowBlur = 10 * s;
         ctx.beginPath();
         ctx.roundRect(this.x - 18 * s, this.y - 28 * s, 36 * s, 56 * s, 10 * s);
         ctx.fill();
@@ -51,7 +71,7 @@ class MoaiEnemy extends Enemy {
 
         // 6. 一文字の固い無表情口元
         ctx.strokeStyle = '#112233';
-        ctx.lineWidth = 3.5 * s;
+        ctx.lineWidth = Math.max(1, 3.5 * s);
         ctx.beginPath();
         ctx.moveTo(this.x - 10 * s, this.y + 17 * s);
         ctx.lineTo(this.x + 10 * s, this.y + 17 * s);
@@ -70,7 +90,6 @@ class MoaiEnemy extends Enemy {
         if (!audioEngine.audioCtx) return;
         const ctx = audioEngine.audioCtx;
 
-        // 1. 岩石が破壊される強烈な重低音ドゴォォン！
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sawtooth';
@@ -85,7 +104,6 @@ class MoaiEnemy extends Enemy {
         osc.start();
         osc.stop(ctx.currentTime + 0.4);
 
-        // 2. 地地鳴りの残響音 (サブベース)
         const subOsc = ctx.createOscillator();
         const subGain = ctx.createGain();
         subOsc.type = 'sine';
