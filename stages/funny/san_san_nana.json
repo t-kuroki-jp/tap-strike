@@ -16,5 +16,5 @@
     { "id": "CHASER", "weight": 1.0 }
   ],
   "spawnPattern": "san_san_nana",
-  "spawnRate": 190
+  "spawnRate": 280
 }

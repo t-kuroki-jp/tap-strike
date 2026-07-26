@@ -283,11 +283,11 @@ class Game {
             this.beatPulse = 5;
 
             if (this.currentStage?.spawnPattern === 'san_san_nana') {
-                const step = this.bgmStep % 16;
-                // サン(0,1,2)・サン(4,5,6)・ナナ(8,9,10,11,12,13,14)
+                const step = this.bgmStep % 20;
+                // サン(0,1,2)・サン(4,5,6)・ナナ(9..15)
                 const isSan1 = step >= 0 && step <= 2;
                 const isSan2 = step >= 4 && step <= 6;
-                const isNana = step >= 8 && step <= 14;
+                const isNana = step >= 9 && step <= 15;
 
                 if (isSan1 || isSan2 || isNana) {
                     this.enemies.push(new Enemy(this.canvas, this.gameSpeed, this.currentStage, dataLoader.enemiesMaster));
