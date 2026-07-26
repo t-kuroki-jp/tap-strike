@@ -1,5 +1,5 @@
 /**
- * ぴよぴよヒヨコ (ふっくら2段モチモチボディ・パタパタ翼・立体くちばし・チョコン尾羽・アホ毛)
+ * ぴよぴよヒヨコ (100%確実に安全描画されるふっくら2段モチモチボディ・パタパタ翼・立体くちばし)
  */
 class ChickenEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -15,6 +15,8 @@ class ChickenEnemy extends Enemy {
         const dx = centerX - this.x;
         const dy = centerY - this.y;
         const dist = Math.hypot(dx, dy);
+
+        if (dist === 0) return 0;
 
         const perpX = -dy / dist;
         const perpY = dx / dist;
@@ -34,23 +36,30 @@ class ChickenEnemy extends Enemy {
         // 1. おしりのチョコンとした尾羽 (ぴょこん)
         ctx.fillStyle = '#ffd700';
         ctx.beginPath();
-        ctx.ellipse(this.x, this.y + 13, 4, 6, 0, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y + 13, 4, 0, Math.PI * 2);
         ctx.fill();
 
         // 2. チョコンとついた小さな翼 (パタパタアニメーション)
         const wingYOffset = Math.sin(this.wingAngle) * 2.5;
         ctx.fillStyle = '#ffdb1a';
-        ctx.shadowColor = 'rgba(255, 230, 0, 0.4)';
-        ctx.shadowBlur = 6;
 
         // 左羽
+        ctx.save();
+        ctx.translate(this.x - 12, this.y + 2 + wingYOffset);
+        ctx.rotate(Math.PI / 4);
         ctx.beginPath();
-        ctx.ellipse(this.x - 13, this.y + 3 + wingYOffset, 4, 7, Math.PI / 4, 0, Math.PI * 2);
+        ctx.arc(0, 0, 4, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
+
         // 右羽
+        ctx.save();
+        ctx.translate(this.x + 12, this.y + 2 + wingYOffset);
+        ctx.rotate(-Math.PI / 4);
         ctx.beginPath();
-        ctx.ellipse(this.x + 13, this.y + 3 + wingYOffset, 4, 7, -Math.PI / 4, 0, Math.PI * 2);
+        ctx.arc(0, 0, 4, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
 
         // 3. オレンジの小さなちょこん足 (2本)
         ctx.strokeStyle = '#ff6600';
@@ -64,8 +73,6 @@ class ChickenEnemy extends Enemy {
         // 4. ひよこモチモチ2段体型 (下部ふっくらおなか ＋ 上部まるまるお顔)
         // 胴体 (ふっくらおなか)
         ctx.fillStyle = '#ffe600';
-        ctx.shadowColor = '#ffe600';
-        ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.arc(this.x, this.y + 4, 13, 0, Math.PI * 2);
         ctx.fill();
@@ -109,7 +116,6 @@ class ChickenEnemy extends Enemy {
 
         // 8. ぽっこり立体三角形のくちばし (上くちばし ＋ 下くちばし)
         ctx.fillStyle = '#ff6600';
-        ctx.shadowBlur = 0;
         ctx.beginPath();
         // 上くちばし
         ctx.moveTo(this.x - 4, this.y - 3);
