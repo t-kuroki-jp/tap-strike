@@ -99,8 +99,11 @@ class Game {
             const elem = document.getElementById(id);
             if (elem) elem.style.display = 'none';
         });
-        const uiElem = document.getElementById('ui');
-        if (uiElem) uiElem.style.display = 'none';
+    hideAllModals() {
+        ['modal-mode-select', 'modal-stage-select', 'modal-game-over', 'modal-pause'].forEach(id => {
+            const elem = document.getElementById(id);
+            if (elem) elem.style.display = 'none';
+        });
     }
 
     showModal(modalId) {
@@ -108,6 +111,10 @@ class Game {
         if (modalId) {
             const elem = document.getElementById(modalId);
             if (elem) elem.style.display = 'block';
+        }
+        if (modalId === 'modal-mode-select' || modalId === 'modal-stage-select') {
+            const uiElem = document.getElementById('ui');
+            if (uiElem) uiElem.style.display = 'none';
         }
     }
 
@@ -121,9 +128,14 @@ class Game {
                 try { this.bgmAudio.pause(); } catch (e) {}
             }
             this.showModal('modal-pause');
+            const uiElem = document.getElementById('ui');
+            if (uiElem) uiElem.style.display = 'block'; // ポーズ中もHUD維持
         } else {
             const pauseElem = document.getElementById('modal-pause');
             if (pauseElem) pauseElem.style.display = 'none';
+
+            const uiElem = document.getElementById('ui');
+            if (uiElem) uiElem.style.display = 'block'; // 再開時もHUD確定表示！
 
             if (this.bgmAudio) {
                 try { this.bgmAudio.play(); } catch (e) {}
