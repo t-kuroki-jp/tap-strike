@@ -270,10 +270,11 @@ class OrbitAttractBehavior extends Behavior {
     }
 }
 
-// 🦘 10. バウンド・反射 Behavior (画面枠で跳ねてから入る)
+// 🦘 10. バウンド・反射 Behavior (一度画面内に入ったあと壁で1回バウンド)
 class BoundBehavior extends Behavior {
     constructor(config = {}) {
         super();
+        this.enteredScreen = false;
         this.bounced = false;
         this.vx = null;
         this.vy = null;
@@ -294,8 +295,14 @@ class BoundBehavior extends Behavior {
         enemy.x += this.vx;
         enemy.y += this.vy;
 
-        // 端で1回だけバウンド！
-        if (!this.bounced) {
+        // 1. まず一回画面の中に入るのを待つ
+        if (!this.enteredScreen) {
+            if (enemy.x >= 20 && enemy.x <= enemy.canvas.width - 20 &&
+                enemy.y >= 20 && enemy.y <= enemy.canvas.height - 20) {
+                this.enteredScreen = true;
+            }
+        } else if (!this.bounced) {
+            // 2. 画面内に入ったあとに壁の端に触れたらバウンド！
             if (enemy.x < 15 || enemy.x > enemy.canvas.width - 15) {
                 this.vx *= -1;
                 this.bounced = true;
@@ -303,15 +310,6 @@ class BoundBehavior extends Behavior {
             if (enemy.y < 15 || enemy.y > enemy.canvas.height - 15) {
                 this.vy *= -1;
                 this.bounced = true;
-            }
-        } else {
-            // バウンド後は中心へ向かう補正
-            const dx = centerX - enemy.x;
-            const dy = centerY - enemy.y;
-            const dist = Math.hypot(dx, dy);
-            if (dist > 0) {
-                enemy.x += (dx / dist) * (enemy.speed * 0.8);
-                enemy.y += (dy / dist) * (enemy.speed * 0.8);
             }
         }
 
