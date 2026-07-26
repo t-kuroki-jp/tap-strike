@@ -1,10 +1,10 @@
 [
-  "variations/neon_standard.json",
-  "variations/cyber_speed.json",
-  "variations/purple_trick.json",
-  "variations/sharp_suits.json",
-  "variations/midnight_porch.json",
-  "variations/easy_shield.json",
-  "variations/easy_glitch.json",
-  "variations/easy_speeder.json"
+  "variations/easy/chaser.json",
+  "variations/easy/curve.json",
+  "variations/easy/shield.json",
+  "variations/easy/glitch.json",
+  "variations/easy/speeder.json",
+  "variations/normal/standard.json",
+  "variations/normal/trick.json",
+  "variations/hard/overdrive.json"
 ]

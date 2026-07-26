@@ -4,23 +4,15 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 完全モジュール化（CSS/JS分離）× 3フラットモーダルUI（v2.0.0）× 2層パラメータデータ駆動アーキテクチャ
+- **特徴**: 完全モジュール化 × 3フラットモーダルUI × モード別サブディレクトリバリエーション構造 (`v2.5.0`)
 
 ---
 
-## 2. モーダルUI構造 (v2.0.0)
-
-1. **`#modal-mode-select`** (モード選択)
-2. **`#modal-variation-select`** (バリエーション選択)
-3. **`#modal-game-over`** (ゲームオーバー)
-
----
-
-## 3. ディレクトリ & モジュール構造
+## 2. ディレクトリ & モジュール構造
 
 ```text
 tap-strike/
-├── index.html           # 3フラットモーダルコンテナを含むクリーンなエントリーポイント
+├── index.html           # 3フラットモーダルコンテナを含むエントリーポイント
 ├── css/
 │   └── style.css        # モーダル・ネオンアニメーションCSS
 ├── js/
@@ -28,18 +20,20 @@ tap-strike/
 │   ├── loader.js        # 各種JSONフェッチ・パラメータ合成 (DataLoader)
 │   ├── entities.js      # Enemy / Particle / Shockwave クラス定義
 │   └── game.js          # メインゲームエンジン・一元モーダル管理 (Game)
-├── variations/          # 純粋なバリエーションJSONファイル
-│   ├── neon_standard.json
-│   ├── cyber_speed.json
-│   ├── purple_trick.json
-│   ├── sharp_suits.json
-│   └── midnight_porch.json # 新規追加: ミッドナイト・ポーチ・ライト (EASY)
+├── variations/          # モードごとに分類されたバリエーションJSON
+│   ├── easy/            # EASYモード用（単一エネミー練習・入門特化）
+│   │   ├── chaser.json  # 直進敵 100%
+│   │   ├── curve.json   # ウネウネ軌道敵 100%
+│   │   ├── shield.json  # 2回タップ重装甲敵 100%
+│   │   ├── glitch.json  # 減速フェイント敵 100%
+│   │   └── speeder.json # 高速敵 100%
+│   ├── normal/          # NORMALモード用（ギミック複合）
+│   │   ├── standard.json
+│   │   └── trick.json
+│   └── hard/            # HARDモード用（激ムズ高密度）
+│       └── overdrive.json
 ├── bgm/                 # BGM音源 (.mp3)
-│   ├── Cyan_Square_Error.mp3
-│   ├── Magenta_Pulse.mp3
-│   ├── Sharp_Suits_on_the_Avenue.mp3
-│   └── Midnight_Porch_Light.mp3
-├── variations.json      # 全バリエーション一覧リスト
+├── variations.json      # 全バリエーション相対パス一覧
 ├── enemies.json         # 敵マスタ定義
 ├── difficulties.json    # 難易度マスタ定義
 ├── SPECIFICATION.md
@@ -48,7 +42,7 @@ tap-strike/
 
 ---
 
-## 4. 難易度マスタ仕様 (`difficulties.json`)
+## 3. 難易度マスタ仕様 (`difficulties.json`)
 
 - `EASY`: HP 3 / リング径 70 / クールダウン 120ms
 - `NORMAL`: HP 2 / リング径 60 / クールダウン 150ms
