@@ -1,5 +1,5 @@
 /**
- * ぴよぴよヒヨコ (パタパタ羽ばたき・頭のアホ毛・ピンクのチーク・立体くちばし・ピヨッSE)
+ * ぴよぴよヒヨコ (チョコンと小さなプチ羽・アホ毛・ピンクのチーク・デフォルメ可愛い仕様)
  */
 class ChickenEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
@@ -30,74 +30,74 @@ class ChickenEnemy extends Enemy {
     draw(ctx) {
         ctx.save();
 
-        // 1. パタパタ羽ばたく翼 (両側)
-        const wingYOffset = Math.sin(this.wingAngle) * 3;
+        // 1. チョコンとついた小さなプチ羽 (デフォルメ可愛いパタパタ)
+        const wingYOffset = Math.sin(this.wingAngle) * 2;
         ctx.fillStyle = '#ffd700';
         ctx.shadowColor = '#ffe600';
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 4;
 
-        // 左翼
+        // 左翼 (チョコン)
         ctx.beginPath();
-        ctx.ellipse(this.x - 14, this.y + wingYOffset, 6, 9, Math.PI / 4, 0, Math.PI * 2);
+        ctx.ellipse(this.x - 11, this.y + wingYOffset, 3.5, 5.5, Math.PI / 4, 0, Math.PI * 2);
         ctx.fill();
-        // 右翼
+        // 右翼 (チョコン)
         ctx.beginPath();
-        ctx.ellipse(this.x + 14, this.y + wingYOffset, 6, 9, -Math.PI / 4, 0, Math.PI * 2);
+        ctx.ellipse(this.x + 11, this.y + wingYOffset, 3.5, 5.5, -Math.PI / 4, 0, Math.PI * 2);
         ctx.fill();
 
-        // 2. 小さなオレンジの足 (2本)
+        // 2. 小さなオレンジのチョン足 (2本)
         ctx.strokeStyle = '#ff6600';
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 2.0;
         ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.moveTo(this.x - 5, this.y + 12); ctx.lineTo(this.x - 7, this.y + 18);
-        ctx.moveTo(this.x + 5, this.y + 12); ctx.lineTo(this.x + 7, this.y + 18);
+        ctx.moveTo(this.x - 4, this.y + 13); ctx.lineTo(this.x - 5, this.y + 17);
+        ctx.moveTo(this.x + 4, this.y + 13); ctx.lineTo(this.x + 5, this.y + 17);
         ctx.stroke();
 
-        // 3. ひよこ本体 (ふわふわイエローの丸)
+        // 3. ひよこ本体 (まんまるボディ)
         ctx.fillStyle = '#ffe600';
         ctx.shadowColor = '#ffe600';
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
 
-        // 4. 頭の上のピヨンと立つ可愛いアホ毛 (2本)
+        // 4. 頭の上のピヨンと立つアホ毛 (2本)
         ctx.strokeStyle = '#ffcc00';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
         ctx.moveTo(this.x - 2, this.y - this.size);
-        ctx.quadraticCurveTo(this.x - 6, this.y - this.size - 8, this.x - 4, this.y - this.size - 10);
+        ctx.quadraticCurveTo(this.x - 5, this.y - this.size - 6, this.x - 3, this.y - this.size - 8);
         ctx.moveTo(this.x + 1, this.y - this.size);
-        ctx.quadraticCurveTo(this.x + 4, this.y - this.size - 8, this.x + 5, this.y - this.size - 9);
+        ctx.quadraticCurveTo(this.x + 4, this.y - this.size - 6, this.x + 4, this.y - this.size - 7);
         ctx.stroke();
 
         // 5. ほんのりピンクのチーク (ほっぺた 💕)
         ctx.fillStyle = 'rgba(255, 102, 153, 0.4)';
         ctx.beginPath();
-        ctx.arc(this.x - 9, this.y + 2, 3.5, 0, Math.PI * 2);
-        ctx.arc(this.x + 9, this.y + 2, 3.5, 0, Math.PI * 2);
+        ctx.arc(this.x - 8, this.y + 2, 3.0, 0, Math.PI * 2);
+        ctx.arc(this.x + 8, this.y + 2, 3.0, 0, Math.PI * 2);
         ctx.fill();
 
         // 6. つぶらな黒目 + キラキラ白目ハイライト
         ctx.fillStyle = '#05070e';
         ctx.beginPath();
-        ctx.arc(this.x - 5, this.y - 3, 2.3, 0, Math.PI * 2);
-        ctx.arc(this.x + 5, this.y - 3, 2.3, 0, Math.PI * 2);
+        ctx.arc(this.x - 4.5, this.y - 3, 2.2, 0, Math.PI * 2);
+        ctx.arc(this.x + 4.5, this.y - 3, 2.2, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(this.x - 6, this.y - 4, 0.8, 0, Math.PI * 2);
-        ctx.arc(this.x + 4, this.y - 4, 0.8, 0, Math.PI * 2);
+        ctx.arc(this.x - 5.5, this.y - 4, 0.8, 0, Math.PI * 2);
+        ctx.arc(this.x + 3.5, this.y - 4, 0.8, 0, Math.PI * 2);
         ctx.fill();
 
         // 7. ぷっくり立体オレンジくちばし
         ctx.fillStyle = '#ff6600';
         ctx.beginPath();
-        ctx.moveTo(this.x - 3.5, this.y);
-        ctx.lineTo(this.x + 3.5, this.y);
-        ctx.lineTo(this.x, this.y + 5.5);
+        ctx.moveTo(this.x - 3, this.y);
+        ctx.lineTo(this.x + 3, this.y);
+        ctx.lineTo(this.x, this.y + 5);
         ctx.closePath();
         ctx.fill();
 
