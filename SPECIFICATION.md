@@ -4,7 +4,7 @@
 - **タイトル**: Tap Strike (秒殺！1ボタンアクション)
 - **ジャンル**: 1ボタン・ハイスピード・タイミングアクション
 - **プラットフォーム**: Webブラウザ (PC / スマートフォン対応)
-- **特徴**: 完全JSクラス自立型オブジェクト指向アーキテクチャ ＆ FUNNY 6大ステージ搭載 (`v7.1.0`)
+- **特徴**: 1敵1ファイル完全モジュール化アーキテクチャ ＆ FUNNY 6大ステージ搭載 (`v8.0.0`)
 
 ---
 
@@ -18,8 +18,23 @@ tap-strike/
 ├── js/
 │   ├── audio.js                # Web Audio API / SE・BGM再生管理
 │   ├── loader.js               # ステージ・難易度JSONフェッチおよびパラメータ合成
-│   ├── entities.js             # 自立型Enemyクラス群 (全12種) / EnemyFactory / Particle
-│   └── game.js                 # メインゲームエンジン・一元モーダル管理
+│   ├── entities.js             # Particle, Shockwave, FloatingText 視覚演出
+│   ├── game.js                 # メインゲームエンジン・一元モーダル管理
+│   └── enemies/                # 敵クラス専門ディレクトリ (1敵1ファイル構造)
+│       ├── enemy.js            # 基底 Enemy クラス
+│       ├── enemy_factory.js    # EnemyFactory 生成管理
+│       ├── chaser.js           # クリムゾン・チェイサー
+│       ├── speeder.js          # ボルト・スピーダー
+│       ├── glitch.js           # ファントム・グリッチ
+│       ├── curve.js            # スパイラル・スピナー
+│       ├── shield.js           # シールド・クラッシャー
+│       ├── big_boss.js         # ビッグ・ボス
+│       ├── heal.js             # ライフ・ポッド
+│       ├── dont_tap.js         # スルー・ファントム
+│       ├── chicken.js          # 🐥 ぴよぴよヒヨコ
+│       ├── cat.js              # 🐱 にゃんこフェスティバル
+│       ├── sushi.js            # 🍣 回転マグロ寿司
+│       └── bomb.js             # 💥 メガ・ボム
 ├── stages/                     # モードごとに分類されたステージJSON
 │   ├── easy/                   # EASYモード用
 │   │   ├── normal_chaser.json
