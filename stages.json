@@ -6,7 +6,6 @@
   "stages/easy/bolt_speeder.json",
   "stages/easy/big_boss.json",
   "stages/easy/dont_tap.json",
-  "stages/easy/behavior_trickster.json",
   "stages/normal/neon_standard.json",
   "stages/normal/purple_trick.json",
   "stages/hard/bolt_overdrive.json",
@@ -16,5 +15,6 @@
   "stages/funny/cat_festival.json",
   "stages/funny/real_cats.json",
   "stages/funny/rotating_sushi.json",
-  "stages/funny/summer_fireworks.json"
+  "stages/funny/summer_fireworks.json",
+  "stages/funny/trick_festival.json"
 ]
