@@ -32,8 +32,8 @@ class StraightBehavior extends Behavior {
 class WaveBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.frequency = config.frequency || 0.35; // 揺れピッチ
-        this.amplitude = config.amplitude || 2.2;  // 揺れ幅
+        this.frequency = config.frequency || 0.035; // ギザギザにならないゆったりS字ピッチ
+        this.amplitude = config.amplitude || 4.5;   // 大きく優雅なS字横幅
     }
 
     update(enemy, playerTargetRadius) {

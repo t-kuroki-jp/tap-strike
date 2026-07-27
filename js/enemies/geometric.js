@@ -121,7 +121,7 @@ class SineWaveEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'SINE_WAVE', name: 'サイン・ウェイバー', color: '#00ffcc', shape: 'diamond', speedRatio: 1.0, size: 13, hp: 1,
-            behavior: 'wave', behaviorConfig: { frequency: 0.25, amplitude: 2.8 }
+            behavior: 'wave', behaviorConfig: { frequency: 0.035, amplitude: 4.5 }
         });
     }
 
