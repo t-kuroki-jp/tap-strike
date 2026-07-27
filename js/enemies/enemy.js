@@ -24,10 +24,6 @@ class Enemy {
         this.hp = config.hp || 1;
         this.maxHp = this.hp;
 
-        // 流星トレイル (Cyber Neon Trail) 座標履歴 (長さを伸ばしてくっきり化)
-        this.trail = [];
-        this.maxTrailLength = 16;
-
         // 行動コンポーネント (Behavior) の設定
         if (config.behavior) {
             this.behavior = typeof config.behavior === 'string' 
@@ -39,59 +35,25 @@ class Enemy {
     }
 
     update(playerTargetRadius) {
-        let dist = 0;
         if (this.behavior) {
-            dist = this.behavior.update(this, playerTargetRadius);
-        } else {
-            const centerX = this.canvas.width / 2;
-            const centerY = this.canvas.height / 2;
-            const dx = centerX - this.x;
-            const dy = centerY - this.y;
-            dist = Math.hypot(dx, dy);
-
-            if (dist > 0) {
-                this.x += (dx / dist) * this.speed;
-                this.y += (dy / dist) * this.speed;
-            }
+            return this.behavior.update(this, playerTargetRadius);
         }
 
-        // トレイル履歴の更新
-        this.trail.unshift({ x: this.x, y: this.y });
-        if (this.trail.length > this.maxTrailLength) {
-            this.trail.pop();
-        }
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const dx = centerX - this.x;
+        const dy = centerY - this.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist === 0) return 0;
+
+        this.x += (dx / dist) * this.speed;
+        this.y += (dy / dist) * this.speed;
 
         return dist;
     }
 
-    drawTrail(ctx) {
-        if (!this.trail || this.trail.length < 2) return;
-        ctx.save();
-        ctx.strokeStyle = this.color;
-        ctx.shadowColor = this.color;
-        ctx.shadowBlur = 14;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-
-        const baseAlpha = this.alpha !== undefined ? this.alpha : 1.0;
-        for (let i = 0; i < this.trail.length - 1; i++) {
-            const p1 = this.trail[i];
-            const p2 = this.trail[i + 1];
-            const ratio = 1 - (i / this.trail.length);
-            
-            ctx.globalAlpha = baseAlpha * (ratio ** 1.2) * 0.85; // クッキリ鮮やかな発光！
-            ctx.lineWidth = (this.size || 14) * (ratio ** 0.8) * 1.3; // しっかり太い流星の尾！
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-        }
-        ctx.restore();
-    }
-
     draw(ctx) {
-        this.drawTrail(ctx);
-
         ctx.save();
         if (this.alpha !== undefined) {
             ctx.globalAlpha = this.alpha;
