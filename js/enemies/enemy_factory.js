@@ -18,7 +18,6 @@ class EnemyFactory {
             case 'HEXAGON': enemy = new HexagonEnemy(canvas, gameSpeed, stage); break;
             case 'RING_NOTE': enemy = new RingEnemy(canvas, gameSpeed, stage); break;
             case 'PENTAGON': enemy = new PentagonEnemy(canvas, gameSpeed, stage); break;
-            case 'SHIELD': enemy = new ShieldEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;
             case 'CAT': enemy = new CatEnemy(canvas, gameSpeed, stage); break;
             case 'CHICKEN': enemy = new ChickenEnemy(canvas, gameSpeed, stage); break;
