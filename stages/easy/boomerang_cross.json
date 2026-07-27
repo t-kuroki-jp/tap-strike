@@ -3,7 +3,7 @@
   "name": "5. ブーメラン・クロス",
   "difficulty": "EASY",
   "description": "🪃 ピンクのL字ノーツ！高速自転しながら近づき、手前で1度バックしてから突撃してくる！",
-  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
+  "bgm": "bgm/Under_The_Hammer.mp3",
   "targetScore": 450,
   "spawnRate": 230,
   "theme": {
