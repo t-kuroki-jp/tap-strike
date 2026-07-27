@@ -15,7 +15,6 @@ class Game {
         this.particles = [];
         this.shockwaves = [];
         this.comboPopups = [];
-        this.coreFlash = 0;
         this.gameSpeed = 1.0;
 
         this.ringPulse = 0;
@@ -447,7 +446,6 @@ class Game {
         const now = Date.now();
         if (now - this.lastTapTime < this.params.tapCooldown || this.missPenaltyTimer > 0) return;
         this.lastTapTime = now;
-        this.coreFlash = 1.0; // ⚡ タップフラッシュ発生！
 
         const rect = this.canvas.getBoundingClientRect();
         let touchX = this.canvas.width / 2;
@@ -591,33 +589,14 @@ class Game {
             if (this.ringPulse < 0.1) this.ringPulse = 0;
         }
 
-        // 💓 自機コアのビート鼓動 & ⚡ タップフラッシュ描画 (Beat Pulse Core)
-        const pulseOffset = (this.beatPulse * 0.6);
-        const flashOffset = (this.coreFlash * 4.5);
-        const currentCoreRadius = this.player.radius + pulseOffset + flashOffset;
-        const baseColor = this.missPenaltyTimer > 0 ? '#ff0055' : this.player.color;
-
+        // 自機描画
         this.ctx.save();
-        this.ctx.fillStyle = baseColor;
-        this.ctx.shadowColor = baseColor;
-        this.ctx.shadowBlur = 15 + (this.coreFlash * 12);
+        this.ctx.fillStyle = this.missPenaltyTimer > 0 ? '#ff0055' : this.player.color;
+        this.ctx.shadowColor = this.missPenaltyTimer > 0 ? '#ff0055' : this.player.color;
+        this.ctx.shadowBlur = 15;
         this.ctx.beginPath();
-        this.ctx.arc(centerX, centerY, currentCoreRadius, 0, Math.PI * 2);
+        this.ctx.arc(centerX, centerY, this.player.radius, 0, Math.PI * 2);
         this.ctx.fill();
-
-        // ⚡ タップフラッシュ時の中央白熱コア (#ffffff)
-        if (this.coreFlash > 0.05) {
-            this.ctx.fillStyle = '#ffffff';
-            this.ctx.shadowColor = '#ffffff';
-            this.ctx.shadowBlur = 20;
-            this.ctx.globalAlpha = this.coreFlash;
-            this.ctx.beginPath();
-            this.ctx.arc(centerX, centerY, currentCoreRadius * 0.65, 0, Math.PI * 2);
-            this.ctx.fill();
-
-            this.coreFlash *= 0.82;
-            if (this.coreFlash < 0.05) this.coreFlash = 0;
-        }
 
         // 判定リング描画
         const currentRadius = this.player.targetRadius + this.ringPulse + this.beatPulse;
