@@ -1,0 +1,21 @@
+{
+  "id": "animal_parade",
+  "name": "どうぶつ大行進♪",
+  "difficulty": "FUNNY",
+  "description": "にゃんこ、ヒヨコ、柴犬、みつばち、カエル！可愛いどうぶつ達が総出演する賑やかお祭りパレード！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "targetScore": 600,
+  "params": {
+    "gameSpeed": 0.85,
+    "spawnInterval": 1400,
+    "speedIncrement": 0.008,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "CAT", "weight": 2 },
+    { "id": "CHICKEN", "weight": 2 },
+    { "id": "DOG", "weight": 2 },
+    { "id": "BEE", "weight": 2 },
+    { "id": "FROG", "weight": 2 }
+  ]
+}
