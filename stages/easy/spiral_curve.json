@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "📐 オレンジの正三角形！片側に綺麗なカーブ（変化球）を描いてすーっと曲がり込んでくる！",
   "bgm": "bgm/Cyan_Square_Error.mp3",
-  "targetScore": 450,
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",

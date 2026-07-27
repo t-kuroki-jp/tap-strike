@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "⬢ 水色の正六角形！判定の手前に来るとピタッと1秒停止！『だるまさんが転んだ』ノーツ！",
   "bgm": "bgm/Under_The_Lanterns.mp3",
-  "targetScore": 450,
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",

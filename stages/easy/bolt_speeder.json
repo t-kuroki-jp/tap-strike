@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "⚡ 黄色の稲妻ノーツ！まっすぐ向かってくるが、1.5倍のハイスピードで突進してくる！",
   "bgm": "bgm/Under_The_Hammer.mp3",
-  "targetScore": 450,
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",

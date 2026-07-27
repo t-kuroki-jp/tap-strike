@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "🔷 シアンのひし形！ゆったりとS字の波（サイン波）を描きながら流れるように迫ってくる！",
   "bgm": "bgm/Petals_on_the_Controller.mp3",
-  "targetScore": 450,
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",

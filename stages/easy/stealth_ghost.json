@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "🌟 ライムの4角手裏剣！途中で『ドロン』と透明に消え、判定の直前で再び姿を現す！",
   "bgm": "bgm/Midnight_Porch_Light.mp3",
-  "targetScore": 450,
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",

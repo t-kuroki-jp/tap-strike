@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "🔴 赤色の真円ノーツ！中心へまっすぐ進む1番基本のノーツ。リズムに乗ってタップしよう！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
-  "targetScore": 450,
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
