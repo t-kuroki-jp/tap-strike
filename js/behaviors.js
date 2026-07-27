@@ -265,12 +265,13 @@ class OrbitAttractBehavior extends Behavior {
     }
 }
 
-// 🦘 10. バウンド・反射 Behavior (判定リング手前で1回だけカクッと跳ねて屈折バウンド)
+// 🦘 10. バウンド・屈折 Behavior (全工程を「カクッカクッ」とジグザグステップで接近)
 class BoundBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.bounced = false;
-        this.bounceDist = config.bounceDist || 130;
+        this.stepTimer = 0;
+        this.stepInterval = config.stepInterval || 14; // 何フレームごとにカクッと曲がるか
+        this.zigzagSide = Math.random() < 0.5 ? 1 : -1;
     }
 
     update(enemy, playerTargetRadius) {
@@ -282,20 +283,24 @@ class BoundBehavior extends Behavior {
 
         if (dist === 0) return 0;
 
-        // 判定の手前に近づいたら1回だけ壁跳ね（屈折バウンド）発動！
-        if (!this.bounced && dist < playerTargetRadius + this.bounceDist) {
-            this.bounced = true;
-            const side = (Math.random() < 0.5 ? 1 : -1);
-            const perpX = -dy / dist;
-            const perpY = dx / dist;
-            enemy.x += perpX * 45 * side;
-            enemy.y += perpY * 45 * side;
+        // 定期的に「カクッ」と屈折方向を切り替えるステップタイマー
+        this.stepTimer++;
+        if (this.stepTimer >= this.stepInterval) {
+            this.stepTimer = 0;
+            this.zigzagSide *= -1; // 左右交互にカクッと反転！
         }
 
-        // バウンド後は急加速で中心へ突入！
-        const mult = this.bounced ? 1.6 : 1.0;
-        enemy.x += (dx / dist) * (enemy.speed * mult);
-        enemy.y += (dy / dist) * (enemy.speed * mult);
+        // 中心へ近づくメインベクトル
+        const forwardX = (dx / dist) * enemy.speed;
+        const forwardY = (dy / dist) * enemy.speed;
+
+        // 直交する「カクカク横揺れ」オフセットベクトル
+        const perpX = (-dy / dist) * (enemy.speed * 0.85) * this.zigzagSide;
+        const perpY = (dx / dist) * (enemy.speed * 0.85) * this.zigzagSide;
+
+        // 座標更新 (カクッカクッとステップしながら進行)
+        enemy.x += forwardX + perpX;
+        enemy.y += forwardY + perpY;
 
         return Math.hypot(centerX - enemy.x, centerY - enemy.y);
     }
