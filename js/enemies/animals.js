@@ -200,11 +200,11 @@ class BeeEnemy extends Enemy {
     }
 }
 
-// 3. カエル (Frog / フリーズ一瞬停止 ＋ ゲコッとプク〜ッと膨らむ鳴き袋 ＆ ピョンピョン跳躍)
+// 3. カエル (Frog / フリーズ一瞬停止 ＋ ゲコッとプク〜ッと膨らむ鳴き袋 ＆ ピョンピョン跳躍・気持ち小ぶりサイズ)
 class FrogEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'FROG', name: 'かえるさん', color: '#00ff66', shape: 'frog', speedRatio: 0.95, size: 15, hp: 1,
+            id: 'FROG', name: 'かえるさん', color: '#00ff66', shape: 'frog', speedRatio: 0.95, size: 13.5, hp: 1,
             behavior: 'freeze'
         });
         this.pouchScale = 0;
@@ -217,7 +217,7 @@ class FrogEnemy extends Enemy {
         this.pouchScale = Math.max(0, Math.sin(Date.now() / 130)) * 0.55;
 
         // 2. ぴょんぴょん跳躍ステップ
-        this.hopOffset = Math.abs(Math.sin(Date.now() / 90)) * 6;
+        this.hopOffset = Math.abs(Math.sin(Date.now() / 90)) * 5;
         return dist;
     }
 
