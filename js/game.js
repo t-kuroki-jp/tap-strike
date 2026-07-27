@@ -498,10 +498,11 @@ class Game {
         this.updateUI();
     }
 
-    createParticles(x, y, color) {
-        const count = this.params.particleCount || 12;
+    createParticles(x, y, color, isStar = false) {
+        const baseCount = this.params.particleCount || 12;
+        const count = isStar ? Math.round(baseCount * 2.5) : baseCount;
         for (let i = 0; i < count; i++) {
-            this.particles.push(new Particle(x, y, color));
+            this.particles.push(new Particle(x, y, color, isStar && Math.random() < 0.6));
         }
     }
 

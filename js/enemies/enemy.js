@@ -89,13 +89,15 @@ class Enemy {
 
         if (isPerfect) {
             audioEngine.playPerfectSound();
-            game.createParticles(this.x, this.y, '#ffcc00');
-            game.createParticles(this.x, this.y, '#ffffff');
-            game.ringPulse = 22;
+            game.createParticles(this.x, this.y, '#ffcc00', true); // 🌟 黄金の星花火エフェクト！
+            game.createParticles(this.x, this.y, '#ffffff', true);
+            game.shockwaves.push(new Shockwave(this.x, this.y, '#ffcc00'));
+            game.shockwaves.push(new Shockwave(this.x, this.y, '#ffffff'));
+            game.ringPulse = 28;
             game.ringColor = '#ffcc00';
         } else {
             audioEngine.playHitSound();
-            game.createParticles(this.x, this.y, hadShield ? '#00bbff' : this.color);
+            game.createParticles(this.x, this.y, hadShield ? '#00bbff' : this.color, false);
             game.ringPulse = 14;
             game.ringColor = game.currentStage?.theme?.ringColor || '#00f0ff';
         }
