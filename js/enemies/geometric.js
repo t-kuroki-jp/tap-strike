@@ -13,6 +13,7 @@ class ChaserEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
@@ -36,6 +37,7 @@ class SpeederEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         ctx.translate(this.x, this.y);
 
@@ -70,6 +72,7 @@ class GlitchEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
