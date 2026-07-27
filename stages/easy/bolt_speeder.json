@@ -1,8 +1,8 @@
 {
-  "id": "sine_wave",
-  "name": "4. サイン・ウェイバー！",
+  "id": "bolt_speeder",
+  "name": "10. ボルト・スピーダー！",
   "difficulty": "EASY",
-  "description": "🔷 シアンのひし形！ゆったりとS字の波（サイン波）を描きながら流れるように迫ってくる！",
+  "description": "⚡ 黄色の稲妻ノーツ！まっすぐ進むが、1.5倍のハイスピードで突進してくる！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
   "spawnRate": 230,
@@ -14,6 +14,6 @@
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "SINE_WAVE", "behavior": "wave" }
+    { "id": "SPEEDER", "behavior": "straight" }
   ]
 }

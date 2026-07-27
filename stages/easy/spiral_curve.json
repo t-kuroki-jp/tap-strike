@@ -1,19 +1,19 @@
 {
   "id": "spiral_curve",
-  "name": "スパイラル・カーブ",
+  "name": "2. スピナー・カーブ！",
   "difficulty": "EASY",
-  "description": "ウネウネ波打つ敵のみ！チルなビートに乗って軌道をマスターする練習ステージ",
-  "bgm": "bgm/Midnight_Porch_Light.mp3",
-  "createdAt": "2026-07-26",
-  "updatedAt": "2026-07-26",
-  "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
+  "description": "📐 オレンジの正三角形！大きな渦を巻いてぐるぐる旋回しながら中心へアプローチ！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
+  "targetScore": 450,
+  "spawnRate": 230,
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
   },
   "enemyPool": [
-    { "id": "CURVE", "weight": 1.0 }
-  ],
-  "spawnRate": 240
+    { "id": "CURVE", "behavior": "spiral" }
+  ]
 }

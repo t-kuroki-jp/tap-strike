@@ -1,14 +1,16 @@
 {
   "id": "orbit_ring",
-  "name": "オービット・リング！",
+  "name": "8. オービット・サターン！",
   "difficulty": "EASY",
-  "description": "黄色いリングノーツ登場！判定リングの周りをくるりと一周公転ダンスしてから突入！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "🪐 金色の土星ノーツ！画面外から大きな円弧を描いて優雅に旋回しながら中心へ吸い込まれる！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
+  "spawnRate": 230,
   "params": {
     "gameSpeed": 0.85,
-    "spawnInterval": 1500,
-    "speedIncrement": 0.008,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
     "baseScore": 10
   },
   "enemyPool": [

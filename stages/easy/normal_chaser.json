@@ -1,19 +1,19 @@
 {
   "id": "normal_chaser",
-  "name": "ノーマル・チェイサー",
+  "name": "1. ノーマル・チェイサー",
   "difficulty": "EASY",
-  "description": "まっすぐ進む基本敵のみ！リズムに乗ってシンプルに楽しめる入門ステージ",
+  "description": "🔴 赤色の丸ノーツ！中心へまっすぐ進む一番基本のノーツ。リズムに乗ってタップしよう！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
-  "createdAt": "2026-07-26",
-  "updatedAt": "2026-07-26",
-  "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
+  "targetScore": 450,
+  "spawnRate": 230,
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 1.0 }
-  ],
-  "spawnRate": 230
+    { "id": "CHASER", "behavior": "straight" }
+  ]
 }

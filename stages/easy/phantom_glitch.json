@@ -1,19 +1,19 @@
 {
   "id": "phantom_glitch",
-  "name": "ファントム・グリッチ",
+  "name": "3. ファントム・グリッチ！",
   "difficulty": "EASY",
-  "description": "減速フェイント敵のみ！直前の緩急を見極めるタイミング練習ステージ",
-  "bgm": "bgm/Cyan_Square_Error.mp3",
-  "createdAt": "2026-07-26",
-  "updatedAt": "2026-07-26",
-  "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
+  "description": "👾 紫色の正方形！判定リングの手前に来るとフッと一瞬だけ減速してタイミングを惑わせる！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
+  "targetScore": 450,
+  "spawnRate": 230,
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
   },
   "enemyPool": [
-    { "id": "GLITCH", "weight": 1.0 }
-  ],
-  "spawnRate": 240
+    { "id": "GLITCH", "behavior": "glitch" }
+  ]
 }

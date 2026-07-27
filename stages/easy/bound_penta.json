@@ -1,14 +1,16 @@
 {
   "id": "bound_penta",
-  "name": "バウンド・ペンタ！",
+  "name": "9. バウンド・ペンタ！",
   "difficulty": "EASY",
-  "description": "グリーン五角形ノーツ！画面の壁でポンと弾けて軌道を変えてから中心へ突入！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "⬠ 緑色の正五角形！判定の手前に来ると壁で跳ね返るように「カクッ」と屈折バウンドして突入！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
+  "spawnRate": 230,
   "params": {
     "gameSpeed": 0.85,
-    "spawnInterval": 1500,
-    "speedIncrement": 0.008,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
     "baseScore": 10
   },
   "enemyPool": [

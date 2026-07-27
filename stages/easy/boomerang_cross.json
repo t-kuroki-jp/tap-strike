@@ -1,14 +1,16 @@
 {
   "id": "boomerang_cross",
-  "name": "ブーメラン・クロス！",
+  "name": "5. ブーメラン・クロス！",
   "difficulty": "EASY",
-  "description": "ピンク十字のブーメランノーツ！一度手前で引き返してから直後に加速して向かってくる！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "🪃 ピンク色のL字ノーツ！高速回転しながら近づき、一度後ろへ引き返してから倍速で突入！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
+  "spawnRate": 230,
   "params": {
     "gameSpeed": 0.85,
-    "spawnInterval": 1500,
-    "speedIncrement": 0.008,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
     "baseScore": 10
   },
   "enemyPool": [

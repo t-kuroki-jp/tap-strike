@@ -1,14 +1,16 @@
 {
   "id": "freeze_hexa",
-  "name": "フリーズ・ヘキサ！",
+  "name": "7. フリーズ・ヘキサ！",
   "difficulty": "EASY",
-  "description": "シアンの六角形ノーツ！判定手前で「ピタッ」と1秒停止してからロケットダッシュ！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "⬢ 水色の正六角形！判定リングの手前に到達すると、ピタッと1秒停止後「だるまさん」突入！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
+  "spawnRate": 230,
   "params": {
     "gameSpeed": 0.85,
-    "spawnInterval": 1500,
-    "speedIncrement": 0.008,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
     "baseScore": 10
   },
   "enemyPool": [
