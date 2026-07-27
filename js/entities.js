@@ -58,3 +58,36 @@ class Shockwave {
         ctx.restore();
     }
 }
+
+// 3. コンボマイルストーン テキストエフェクト (ノーツの視線・視認性を遮らない上部ポップアップ)
+class ComboPopup {
+    constructor(x, y, comboText, color = '#ffcc00') {
+        this.x = x;
+        this.y = y;
+        this.text = comboText;
+        this.color = color;
+        this.alpha = 1.0;
+        this.scale = 1.6;
+        this.vy = -1.2;
+    }
+
+    update() {
+        this.y += this.vy;
+        this.alpha -= 0.025;
+        if (this.scale > 1.0) {
+            this.scale -= 0.04;
+        }
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.font = `900 ${Math.round(22 * this.scale)}px 'Outfit', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 15;
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.restore();
+    }
+}
