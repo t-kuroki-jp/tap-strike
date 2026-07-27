@@ -3,11 +3,11 @@
  * Canvas ベクター描画による可愛いネオンどうぶつノーツ群
  */
 
-// 1. 柴犬 (Dog / 直進アプローチ)
+// 1. 柴犬わんこ (Dog / 本格麻呂眉 ＆ ふっくら柴犬フェイス)
 class DogEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'DOG', name: '柴犬わんこ', color: '#ffaa33', shape: 'dog', speedRatio: 1.0, size: 16, hp: 1,
+            id: 'DOG', name: '柴犬わんこ', color: '#e67e22', shape: 'dog', speedRatio: 1.0, size: 16, hp: 1,
             behavior: 'straight'
         });
         this.tailAngle = 0;
@@ -16,7 +16,7 @@ class DogEnemy extends Enemy {
     update(playerTargetRadius) {
         const dist = super.update(playerTargetRadius);
         // 嬉しそうにフリフリ振る尻尾アニメーション
-        this.tailAngle = Math.sin(Date.now() / 80) * 0.4;
+        this.tailAngle = Math.sin(Date.now() / 80) * 0.5;
         return dist;
     }
 
@@ -25,52 +25,89 @@ class DogEnemy extends Enemy {
         ctx.translate(this.x, this.y);
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
-        ctx.fillStyle = this.color;
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1.5;
-        ctx.shadowColor = this.color;
-        ctx.shadowBlur = 12;
 
         const s = this.size;
 
-        // 1. 丸い頭
+        // 1. くるりん巻いたフリフリ尾っぽ (後ろ)
+        ctx.save();
+        ctx.translate(0, s * 0.8);
+        ctx.rotate(this.tailAngle);
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 4.5;
+        ctx.lineCap = 'round';
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(0, 0, 9, Math.PI * 0.2, Math.PI * 1.3);
+        ctx.stroke();
+        ctx.restore();
+
+        // 2. 柴犬の頭 (赤柴カラー)
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 12;
         ctx.beginPath();
         ctx.arc(0, 0, s, 0, Math.PI * 2);
         ctx.fill();
 
-        // 2. ピーンと立った左右のピンと立った耳 (三角)
+        // 3. 前傾した厚みのある立ち耳
+        ctx.fillStyle = '#d35400';
+        // 左耳
         ctx.beginPath();
-        ctx.moveTo(-s * 0.8, -s * 0.4);
-        ctx.lineTo(-s * 1.1, -s * 1.3);
-        ctx.lineTo(-s * 0.2, -s * 0.9);
+        ctx.moveTo(-s * 0.75, -s * 0.4);
+        ctx.lineTo(-s * 0.95, -s * 1.25);
+        ctx.lineTo(-s * 0.2, -s * 0.95);
+        ctx.closePath();
+        ctx.fill();
+        // 右耳
+        ctx.beginPath();
+        ctx.moveTo(s * 0.75, -s * 0.4);
+        ctx.lineTo(s * 0.95, -s * 1.25);
+        ctx.lineTo(s * 0.2, -s * 0.95);
         ctx.closePath();
         ctx.fill();
 
+        // 4. 柴犬特有の白毛マズル・頬の毛 (裏白・クリーム色)
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#fff0e6';
         ctx.beginPath();
-        ctx.moveTo(s * 0.8, -s * 0.4);
-        ctx.lineTo(s * 1.1, -s * 1.3);
-        ctx.lineTo(s * 0.2, -s * 0.9);
-        ctx.closePath();
+        ctx.ellipse(0, s * 0.35, s * 0.7, s * 0.55, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // 3. くるりん巻いたフリフリ尾っぽ (後ろ)
-        ctx.save();
-        ctx.translate(0, s * 0.9);
-        ctx.rotate(this.tailAngle);
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = 4;
+        // 5. 柴犬のトレードマーク『麻呂眉 (まろまゆ・白い点)』
         ctx.beginPath();
-        ctx.arc(0, 0, 8, Math.PI * 0.2, Math.PI * 1.3);
+        ctx.arc(-s * 0.4, -s * 0.4, 2.5, 0, Math.PI * 2); // 左まろ眉
+        ctx.arc(s * 0.4, -s * 0.4, 2.5, 0, Math.PI * 2);  // 右まろ眉
+        ctx.fill();
+
+        // 6. つぶらな黒目
+        ctx.fillStyle = '#1a1a1a';
+        ctx.beginPath();
+        ctx.arc(-s * 0.4, -s * 0.05, 2.8, 0, Math.PI * 2); // 左目
+        ctx.arc(s * 0.4, -s * 0.05, 2.8, 0, Math.PI * 2);  // 右目
+        ctx.fill();
+
+        // 目のハイライト
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(-s * 0.45, -s * 0.1, 1.0, 0, Math.PI * 2);
+        ctx.arc(s * 0.35, -s * 0.1, 1.0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 7. 黒いお鼻 ＆ にっこり口元
+        ctx.fillStyle = '#1a1a1a';
+        ctx.beginPath();
+        ctx.arc(0, s * 0.25, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#1a1a1a';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        // w 型の可愛い口元
+        ctx.moveTo(-3, s * 0.45);
+        ctx.quadraticCurveTo(-1.5, s * 0.58, 0, s * 0.45);
+        ctx.quadraticCurveTo(1.5, s * 0.58, 3, s * 0.45);
         ctx.stroke();
-        ctx.restore();
-
-        // 4. つぶらな黒目と鼻
-        ctx.fillStyle = '#000000';
-        ctx.beginPath();
-        ctx.arc(-s * 0.4, -s * 0.1, 2.5, 0, Math.PI * 2); // 左目
-        ctx.arc(s * 0.4, -s * 0.1, 2.5, 0, Math.PI * 2);  // 右目
-        ctx.arc(0, s * 0.3, 3, 0, Math.PI * 2);           // 鼻
-        ctx.fill();
 
         ctx.restore();
     }
