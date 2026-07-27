@@ -4,7 +4,7 @@
   "difficulty": "NORMAL",
   "description": "🌟 NORMALモードの総決算！10大幾何学ノーツと耐久バリアがテンポ良く迫るオールスター！",
   "bgm": "bgm/Under_The_Lanterns.mp3",
-  "spawnRate": 210,
+  "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
     "gridColor": "rgba(0, 240, 255, 0.3)",
@@ -12,14 +12,14 @@
     "playerColor": "#00f0ff"
   },
   "params": {
-    "gameSpeed": 0.95,
+    "gameSpeed": 0.88,
     "targetRadius": 60,
     "maxHp": 3,
     "tapCooldown": 50,
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "CHASER", "weight": 1 },
+    { "id": "CHASER", "weight": 3 },
     { "id": "SPEEDER", "weight": 1 },
     { "id": "CURVE", "weight": 1 },
     { "id": "SINE_WAVE", "weight": 1 },
