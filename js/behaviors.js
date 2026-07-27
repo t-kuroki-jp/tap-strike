@@ -232,9 +232,9 @@ class FreezeBehavior extends Behavior {
 class OrbitAttractBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.angle = Math.random() * Math.PI * 2;
-        this.orbitCompleted = false;
-        this.orbitDegrees = 0;
+        this.phase = 0; // 0: アプローチ, 1: 360度優雅な円周周回, 2: 中心へ吸い込み突入
+        this.orbitAngle = 0;
+        this.baseAngle = 0;
     }
 
     update(enemy, playerTargetRadius) {
@@ -244,34 +244,40 @@ class OrbitAttractBehavior extends Behavior {
         const dy = centerY - enemy.y;
         const dist = Math.hypot(dx, dy);
 
-        // 判定リングの手前に来たら、スムーズな「渦巻きスパイラル吸い込み」へ移行！
-        const targetStartRadius = playerTargetRadius + 65;
+        if (dist === 0) return 0;
 
-        if (dist <= targetStartRadius) {
-            // 初回突入時の角度と現在半径をスムーズに保持
-            if (this.angle === undefined) {
-                this.angle = Math.atan2(enemy.y - centerY, enemy.x - centerX);
-                this.currentRadius = dist;
+        const orbitRadius = playerTargetRadius + 50;
+
+        // Phase 0: 判定手前までまっすぐアプローチ
+        if (this.phase === 0) {
+            if (dist <= orbitRadius) {
+                this.phase = 1;
+                this.baseAngle = Math.atan2(enemy.y - centerY, enemy.x - centerX);
+                this.orbitAngle = 0;
+            } else {
+                enemy.x += (dx / dist) * enemy.speed;
+                enemy.y += (dy / dist) * enemy.speed;
+                return dist;
             }
-
-            // 1. 公転角度を進める
-            this.angle += 0.05;
-
-            // 2. 半径を中心（0）に向かって滑らかに縮めていく（理不尽な方向転換ナシ！）
-            const shrinkSpeed = enemy.speed * 0.85;
-            this.currentRadius = Math.max(0, this.currentRadius - shrinkSpeed);
-
-            // 3. 渦巻きスパイラル軌道で完璧に滑らかな座標計算
-            enemy.x = centerX + Math.cos(this.angle) * this.currentRadius;
-            enemy.y = centerY + Math.sin(this.angle) * this.currentRadius;
-
-            return this.currentRadius;
         }
 
-        // 通常の直線アプローチ（判定手前まで）
-        enemy.x += (dx / dist) * enemy.speed;
-        enemy.y += (dy / dist) * enemy.speed;
+        // Phase 1: 判定リングの周りを滑らかに360度くるりと一周周回！
+        if (this.phase === 1) {
+            this.orbitAngle += 0.06;
+            const currentAngle = this.baseAngle + this.orbitAngle;
 
+            enemy.x = centerX + Math.cos(currentAngle) * orbitRadius;
+            enemy.y = centerY + Math.sin(currentAngle) * orbitRadius;
+
+            if (this.orbitAngle >= Math.PI * 1.5) {
+                this.phase = 2; // 一周完了、最終突入へ
+            }
+            return orbitRadius;
+        }
+
+        // Phase 2: 周回完了後、スムーズに中心へ吸い込み突入
+        enemy.x += (dx / dist) * (enemy.speed * 1.1);
+        enemy.y += (dy / dist) * (enemy.speed * 1.1);
         return dist;
     }
 }
