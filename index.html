@@ -32,7 +32,7 @@
     <!-- モーダル1: モード（難易度）選択画面 -->
     <div id="modal-mode-select" class="modal-box">
         <h1>TAP STRIKE</h1>
-        <div class="btn-container" style="margin-top: 25px;">
+        <div class="btn-container" style="margin-top: 20px;">
             <button id="btn-mode-easy" class="btn-mode btn-mode-easy" onclick="window.game.showStageSelect('EASY')">
                 <span>EASY</span>
             </button>
@@ -45,6 +45,23 @@
             <button id="btn-mode-funny" class="btn-mode btn-mode-funny" onclick="window.game.showStageSelect('FUNNY')">
                 <span>FUNNY</span>
             </button>
+
+            <!-- キャラクター図鑑ボタン -->
+            <button class="btn-action btn-encylopedia" onclick="window.game.showCharacterList()">
+                📖 キャラクター図鑑
+            </button>
+        </div>
+    </div>
+
+    <!-- モーダル1.5: キャラクター図鑑画面 -->
+    <div id="modal-character-list" class="modal-box" style="display: none;">
+        <div style="text-align: left;">
+            <button class="btn-back" onclick="window.game.showModeSelect()">タイトルに戻る</button>
+        </div>
+        <h1 class="diff-title" style="color: #00f0ff;">CHARACTER ENCYCLOPEDIA</h1>
+        <p class="subtitle">登場する全エネミーと固有動作（Behavior）の図鑑</p>
+        <div id="character-grid" class="character-grid">
+            <div class="loading-text">図鑑読込中...</div>
         </div>
     </div>
 
@@ -102,26 +119,26 @@
     <canvas id="gameCanvas"></canvas>
 
     <!-- モジュールスクリプト -->
-    <script src="js/audio.js?v=67.0.0"></script>
-    <script src="js/loader.js?v=67.0.0"></script>
-    <script src="js/entities.js?v=67.0.0"></script>
-    <script src="js/behaviors.js?v=67.0.0"></script>
+    <script src="js/audio.js?v=68.0.0"></script>
+    <script src="js/loader.js?v=68.0.0"></script>
+    <script src="js/entities.js?v=68.0.0"></script>
+    <script src="js/behaviors.js?v=68.0.0"></script>
 
     <!-- エネミーモジュール群 (1カテゴリ1ファイル・サウンドカプセル化) -->
-    <script src="js/enemies/enemy.js?v=67.0.0"></script>
-    <script src="js/enemies/geometric.js?v=67.0.0"></script>
-    <script src="js/enemies/shield.js?v=67.0.0"></script>
-    <script src="js/enemies/big_boss.js?v=67.0.0"></script>
-    <script src="js/enemies/heal.js?v=67.0.0"></script>
-    <script src="js/enemies/dont_tap.js?v=67.0.0"></script>
-    <script src="js/enemies/chicken.js?v=67.0.0"></script>
-    <script src="js/enemies/cat.js?v=67.0.0"></script>
-    <script src="js/enemies/sushi.js?v=67.0.0"></script>
-    <script src="js/enemies/bomb.js?v=67.0.0"></script>
-    <script src="js/enemies/firework.js?v=67.0.0"></script>
-    <script src="js/enemies/enemy_factory.js?v=67.0.0"></script>
+    <script src="js/enemies/enemy.js?v=68.0.0"></script>
+    <script src="js/enemies/geometric.js?v=68.0.0"></script>
+    <script src="js/enemies/shield.js?v=68.0.0"></script>
+    <script src="js/enemies/big_boss.js?v=68.0.0"></script>
+    <script src="js/enemies/heal.js?v=68.0.0"></script>
+    <script src="js/enemies/dont_tap.js?v=68.0.0"></script>
+    <script src="js/enemies/chicken.js?v=68.0.0"></script>
+    <script src="js/enemies/cat.js?v=68.0.0"></script>
+    <script src="js/enemies/sushi.js?v=68.0.0"></script>
+    <script src="js/enemies/bomb.js?v=68.0.0"></script>
+    <script src="js/enemies/firework.js?v=68.0.0"></script>
+    <script src="js/enemies/enemy_factory.js?v=68.0.0"></script>
 
-    <script src="js/game.js?v=67.0.0"></script>
+    <script src="js/game.js?v=68.0.0"></script>
 </body>
 
 </html>

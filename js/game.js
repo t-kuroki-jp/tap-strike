@@ -94,7 +94,7 @@ class Game {
 
     // --- 画面モーダル切替ロジック ---
     hideAllModals() {
-        ['modal-mode-select', 'modal-stage-select', 'modal-game-over', 'modal-pause'].forEach(id => {
+        ['modal-mode-select', 'modal-stage-select', 'modal-game-over', 'modal-pause', 'modal-character-list'].forEach(id => {
             const elem = document.getElementById(id);
             if (elem) elem.style.display = 'none';
         });
@@ -106,10 +106,90 @@ class Game {
             const elem = document.getElementById(modalId);
             if (elem) elem.style.display = 'block';
         }
-        if (modalId === 'modal-mode-select' || modalId === 'modal-stage-select') {
+        if (modalId === 'modal-mode-select' || modalId === 'modal-stage-select' || modalId === 'modal-character-list') {
             const uiElem = document.getElementById('ui');
             if (uiElem) uiElem.style.display = 'none';
         }
+    }
+
+    showCharacterList() {
+        this.hideAllModals();
+        this.renderCharacterList();
+        this.showModal('modal-character-list');
+    }
+
+    renderCharacterList() {
+        const container = document.getElementById('character-grid');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const characterData = [
+            { id: 'CHASER', name: 'チェイサー', tag: '直進', desc: '赤色のネオン円形ノーツ。中心へ一直線にアプローチ！', color: '#ff3366' },
+            { id: 'SPEEDER', name: 'スピーダー', tag: '高速直進', desc: '黄色のネオン稲妻ノーツ。1.5倍のハイスピードで突進！', color: '#ffff33' },
+            { id: 'GLITCH', name: 'ファントム・グリッチ', tag: '直前減速', desc: '紫色のネオン正方形。判定手前でフッと一瞬減速する！', color: '#cc00ff' },
+            { id: 'CURVE', name: 'スピナー', tag: '旋回', desc: 'オレンジ色の三角形。渦を巻くようにグルグルアプローチ！', color: '#ff9900' },
+            { id: 'SINE_WAVE', name: 'サイン・ウェイバー', tag: '波状運動', desc: 'シアン色のダイアモンド。S字サイン波でゆったり優雅に流れる！', color: '#00ffcc' },
+            { id: 'CROSS', name: 'ブーメラン・クロス', tag: '引き返し回転', desc: 'ピンク色のL字ノーツ。自転回転しながら手前で引き返す！', color: '#ff0077' },
+            { id: 'GHOST', name: 'ステルス・ゴースト', tag: '隠密・透明化', desc: 'ライム色の円形輪郭。途中で消えて判定直前に現れる！', color: '#aaff66' },
+            { id: 'HEXAGON', name: 'フリーズ・ヘキサ', tag: '一瞬停止', desc: '水色の正六角形。手前でピタッと1秒停止後ダッシュ！', color: '#00ccff' },
+            { id: 'RING_NOTE', name: 'オービット・リング', tag: '360度公転', desc: '金色のリング。判定リングの周りをくるりと一周ダンス！', color: '#ffea00' },
+            { id: 'PENTAGON', name: 'バウンド・ペンタ', tag: '屈折バウンド', desc: '緑色の正五角形。手前で1回カクッと跳ねて屈折突入！', color: '#00ff66' },
+            { id: 'SHIELD', name: 'シールド', tag: 'HP: 2 耐久', desc: '青色の耐久ノーツ。壊すのに2回タップが必要！', color: '#0088ff' },
+            { id: 'BIG_BOSS', name: 'ビッグボス', tag: 'HP: 5 ボス', desc: '巨大な紫ボスノーツ。到達前に5回連打して撃破せよ！', color: '#cc00ff' },
+            { id: 'DONT_TAP', name: 'ドントタップ', tag: '⚠️ タップ禁止', desc: '危険なドントタップ！叩くと即ダメージ。見送り必須！', color: '#ff0000' },
+            { id: 'CAT', name: 'にゃんこファミリー', tag: 'トコトコ歩行', desc: '白猫・茶トラ・ハチワレ。しっぽを振って気まぐれ散歩！', color: '#ffccaa' },
+            { id: 'CHICKEN', name: 'ぴよぴよヒヨコ', tag: 'チョコチョコ歩行', desc: '羽をはためかせてトコトコ進む可愛い黄色いヒヨコ！', color: '#ffee33' },
+            { id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633' },
+            { id: 'FIREWORK', name: '打上花火', tag: '大輪演出', desc: 'タップすると夜空へ大輪の花火が打ち上がる！', color: '#ff00aa' }
+        ];
+
+        characterData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'character-card';
+
+            const canvas = document.createElement('canvas');
+            canvas.className = 'char-canvas';
+            canvas.width = 60;
+            canvas.height = 60;
+
+            card.appendChild(canvas);
+
+            const nameElem = document.createElement('div');
+            nameElem.className = 'char-name';
+            nameElem.innerText = item.name;
+            card.appendChild(nameElem);
+
+            const tagElem = document.createElement('div');
+            tagElem.className = 'char-behavior-tag';
+            tagElem.innerText = `⚙️ ${item.tag}`;
+            card.appendChild(tagElem);
+
+            const descElem = document.createElement('div');
+            descElem.className = 'char-desc';
+            descElem.innerText = item.desc;
+            card.appendChild(descElem);
+
+            container.appendChild(card);
+
+            setTimeout(() => {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, 60, 60);
+                try {
+                    const dummyEnemy = EnemyFactory.create(this.canvas, 1.0, { enemyPool: [{ id: item.id }] });
+                    dummyEnemy.x = 30;
+                    dummyEnemy.y = 30;
+                    dummyEnemy.size = 12;
+                    dummyEnemy.draw(ctx);
+                } catch (e) {
+                    ctx.fillStyle = item.color;
+                    ctx.shadowColor = item.color;
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.arc(30, 30, 12, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }, 20);
+        });
     }
 
     togglePause() {
