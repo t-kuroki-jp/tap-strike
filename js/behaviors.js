@@ -234,7 +234,7 @@ class OrbitAttractBehavior extends Behavior {
         super();
         this.angle = undefined;
         this.currentRadius = undefined;
-        this.spiralSpeed = config.spiralSpeed || 0.038; // 優雅な大円弧旋回スピード
+        this.spiralSpeed = config.spiralSpeed || 0.028; // ゆったり優雅な大円弧旋回スピード
     }
 
     update(enemy, playerTargetRadius) {
@@ -249,11 +249,11 @@ class OrbitAttractBehavior extends Behavior {
             this.currentRadius = Math.hypot(dx, dy);
         }
 
-        // 1. 大きな円弧を描いて旋回を進める
+        // 1. 大きな円弧を描いてゆったり旋回を進める
         this.angle += this.spiralSpeed;
 
-        // 2. 半径を中心（0）に向かって滑らかに縮める（大円弧で近づく）
-        this.currentRadius -= enemy.speed * 0.9;
+        // 2. 半径を中心（0）に向かってゆったり滑らかに縮める（速度を 0.55 倍にマイルド化）
+        this.currentRadius -= enemy.speed * 0.55;
 
         if (this.currentRadius < 0) this.currentRadius = 0;
 
