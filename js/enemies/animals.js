@@ -200,18 +200,31 @@ class BeeEnemy extends Enemy {
     }
 }
 
-// 3. カエル (Frog / フリーズ一瞬停止)
+// 3. カエル (Frog / フリーズ一瞬停止 ＋ ゲコッとプク〜ッと膨らむ鳴き袋 ＆ ピョンピョン跳躍)
 class FrogEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'FROG', name: 'かえるさん', color: '#00ff66', shape: 'frog', speedRatio: 0.95, size: 15, hp: 1,
             behavior: 'freeze'
         });
+        this.pouchScale = 0;
+        this.hopOffset = 0;
+    }
+
+    update(playerTargetRadius) {
+        const dist = super.update(playerTargetRadius);
+        // 1. ゲコゲコッと息に合わせてプク〜ッと膨らむ喉の鳴き袋アニメーション
+        this.pouchScale = Math.max(0, Math.sin(Date.now() / 130)) * 0.55;
+
+        // 2. ぴょんぴょん跳躍ステップ
+        this.hopOffset = Math.abs(Math.sin(Date.now() / 90)) * 6;
+        return dist;
     }
 
     draw(ctx) {
         ctx.save();
-        ctx.translate(this.x, this.y);
+        // ぴょんぴょん跳ねる跳躍オフセット
+        ctx.translate(this.x, this.y - this.hopOffset);
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
@@ -220,35 +233,54 @@ class FrogEnemy extends Enemy {
 
         const s = this.size;
 
-        // 1. 体の丸
+        // 1. カエルの折りたたんだ可愛い後ろ足 (左右)
+        ctx.fillStyle = '#00cc55';
         ctx.beginPath();
-        ctx.arc(0, 2, s * 0.9, 0, Math.PI * 2);
+        ctx.ellipse(-s * 0.95, s * 0.3, s * 0.4, s * 0.65, -0.6, 0, Math.PI * 2);
+        ctx.ellipse(s * 0.95, s * 0.3, s * 0.4, s * 0.65, 0.6, 0, Math.PI * 2);
         ctx.fill();
 
-        // 2. ぽっこり飛び出た二つの大きなお目め (上部)
+        // 2. 体の丸 (緑)
+        ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(-s * 0.6, -s * 0.6, s * 0.5, 0, Math.PI * 2);
-        ctx.arc(s * 0.6, -s * 0.6, s * 0.5, 0, Math.PI * 2);
+        ctx.arc(0, 1, s * 0.95, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 3. ゲコッとプク〜ッと膨らむ喉の鳴き袋 (クリームイエロー)
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#ffffee';
+        ctx.beginPath();
+        const pouchR = s * (0.45 + this.pouchScale);
+        ctx.arc(0, s * 0.4, pouchR, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 4. ぽっこり飛び出た二つの大きなお目め (上部)
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(-s * 0.6, -s * 0.6, s * 0.52, 0, Math.PI * 2);
+        ctx.arc(s * 0.6, -s * 0.6, s * 0.52, 0, Math.PI * 2);
         ctx.fill();
 
         // 白目と黒目
+        ctx.shadowBlur = 0;
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(-s * 0.6, -s * 0.6, s * 0.3, 0, Math.PI * 2);
-        ctx.arc(s * 0.6, -s * 0.6, s * 0.3, 0, Math.PI * 2);
+        ctx.arc(-s * 0.6, -s * 0.6, s * 0.32, 0, Math.PI * 2);
+        ctx.arc(s * 0.6, -s * 0.6, s * 0.32, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = '#000000';
+        ctx.fillStyle = '#111111';
         ctx.beginPath();
-        ctx.arc(-s * 0.6, -s * 0.6, s * 0.15, 0, Math.PI * 2);
-        ctx.arc(s * 0.6, -s * 0.6, s * 0.15, 0, Math.PI * 2);
+        ctx.arc(-s * 0.6, -s * 0.6, s * 0.16, 0, Math.PI * 2);
+        ctx.arc(s * 0.6, -s * 0.6, s * 0.16, 0, Math.PI * 2);
         ctx.fill();
 
-        // 3. にっこり口元
-        ctx.strokeStyle = '#005522';
-        ctx.lineWidth = 2;
+        // 5. にっこり口元
+        ctx.strokeStyle = '#004411';
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
-        ctx.arc(0, s * 0.1, s * 0.4, 0.1 * Math.PI, 0.9 * Math.PI);
+        ctx.arc(0, 0, s * 0.45, 0.1 * Math.PI, 0.9 * Math.PI);
         ctx.stroke();
 
         ctx.restore();
