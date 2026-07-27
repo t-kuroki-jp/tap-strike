@@ -248,19 +248,23 @@ class OrbitAttractBehavior extends Behavior {
 
         const targetOrbitRadius = playerTargetRadius + 60;
 
-        if (!this.orbitCompleted && Math.abs(dist - targetOrbitRadius) < 30) {
-            // 優雅で滑らかな公転運動（スピードを 0.065 に落ち着かせ、うるささを解消）
-            this.orbitDegrees += 0.065;
-            this.angle += 0.065;
+        if (!this.orbitCompleted && Math.abs(dist - targetOrbitRadius) < 35) {
+            // 初回突入時の角度をノーツの現在位置からスムーズに検出（瞬間移動を100%防止！）
+            if (this.angle === undefined) {
+                this.angle = Math.atan2(enemy.y - centerY, enemy.x - centerX);
+            }
+
+            // 優雅で滑らかな公転運動
+            this.orbitDegrees += 0.06;
+            this.angle += 0.06;
             
             const targetX = centerX + Math.cos(this.angle) * targetOrbitRadius;
             const targetY = centerY + Math.sin(this.angle) * targetOrbitRadius;
             
-            // ガタつきを防ぐスムーズ補間 (イージング)
-            enemy.x += (targetX - enemy.x) * 0.35;
-            enemy.y += (targetY - enemy.y) * 0.35;
+            enemy.x += (targetX - enemy.x) * 0.25;
+            enemy.y += (targetY - enemy.y) * 0.25;
 
-            if (this.orbitDegrees >= Math.PI * 1.4) {
+            if (this.orbitDegrees >= Math.PI * 1.3) {
                 this.orbitCompleted = true;
             }
             return targetOrbitRadius;
