@@ -139,6 +139,9 @@ class Game {
             { id: 'DONT_TAP', name: 'ドントタップ', tag: '⚠️ タップ禁止', desc: '危険なドントタップ！叩くと即ダメージ。見送り必須！', color: '#ff0000' },
             { id: 'CAT', name: 'にゃんこファミリー', tag: 'トコトコ歩行', desc: '白猫・茶トラ・ハチワレ。しっぽを振って気まぐれ散歩！', color: '#ffccaa' },
             { id: 'CHICKEN', name: 'ぴよぴよヒヨコ', tag: 'チョコチョコ歩行', desc: '羽をはためかせてトコトコ進む可愛い黄色いヒヨコ！', color: '#ffee33' },
+            { id: 'DOG', name: '柴犬わんこ', tag: '直進ダッシュ', desc: 'くるりん尾っぽを振って元気いっぱいに駆けてくる柴犬！', color: '#ffaa33' },
+            { id: 'BEE', name: 'みつばち', tag: '旋回飛翔', desc: '羽をパタパタさせながら大きな円を描いて飛んでくる！', color: '#ffcc00' },
+            { id: 'FROG', name: 'かえるさん', tag: '一瞬停止', desc: '手前でピタッと1秒止まって「だるまさんが転んだ」！', color: '#00ff66' },
             { id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633' },
             { id: 'FIREWORK', name: '打上花火', tag: '大輪演出', desc: 'タップすると夜空へ大輪の花火が打ち上がる！', color: '#ff00aa' }
         ];

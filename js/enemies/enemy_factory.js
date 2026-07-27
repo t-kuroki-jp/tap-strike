@@ -22,8 +22,11 @@ class EnemyFactory {
             case 'BIG_BOSS': enemy = new BigBossEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;
             case 'DONT_TAP': enemy = new DontTapEnemy(canvas, gameSpeed, stage); break;
-            case 'CHICKEN': enemy = new ChickenEnemy(canvas, gameSpeed, stage); break;
             case 'CAT': enemy = new CatEnemy(canvas, gameSpeed, stage); break;
+            case 'CHICKEN': enemy = new ChickenEnemy(canvas, gameSpeed, stage); break;
+            case 'DOG': enemy = new DogEnemy(canvas, gameSpeed, stage); break;
+            case 'BEE': enemy = new BeeEnemy(canvas, gameSpeed, stage); break;
+            case 'FROG': enemy = new FrogEnemy(canvas, gameSpeed, stage); break;
             case 'CAT_KIJITORA': enemy = new KijitoraCatEnemy(canvas, gameSpeed, stage); break;
             case 'CAT_HACHIWARE': enemy = new HachiwareCatEnemy(canvas, gameSpeed, stage); break;
             case 'SUSHI': enemy = new SushiEnemy(canvas, gameSpeed, stage); break;
