@@ -1,8 +1,8 @@
 {
   "id": "orbit_ring",
-  "name": "8. オービット・サターン！",
+  "name": "8. オービット・サターン",
   "difficulty": "EASY",
-  "description": "🪐 金色の土星ノーツ！画面外から大きな円弧を描いて優雅に旋回しながら中心へ吸い込まれる！",
+  "description": "🪐 金色の土星ノーツ！画面外から大きな円弧を描いて優雅に旋回しながら吸い込まれてくる！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
   "spawnRate": 230,

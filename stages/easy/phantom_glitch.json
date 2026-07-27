@@ -1,8 +1,8 @@
 {
   "id": "phantom_glitch",
-  "name": "3. ファントム・グリッチ！",
+  "name": "3. ファントム・グリッチ",
   "difficulty": "EASY",
-  "description": "👾 紫色の正方形！判定リングの手前に来るとフッと一瞬だけ減速してタイミングを惑わせる！",
+  "description": "👾 紫色の正方形！判定の手前に来ると『フッ』と一瞬減速してタイミングをずらしてくる！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
   "spawnRate": 230,

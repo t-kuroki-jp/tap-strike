@@ -1,8 +1,8 @@
 {
   "id": "bolt_speeder",
-  "name": "10. ボルト・スピーダー！",
+  "name": "10. ボルト・スピーダー",
   "difficulty": "EASY",
-  "description": "⚡ 黄色の稲妻ノーツ！まっすぐ進むが、1.5倍のハイスピードで突進してくる！",
+  "description": "⚡ 黄色の稲妻ノーツ！まっすぐ向かってくるが、1.5倍のハイスピードで突進してくる！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
   "spawnRate": 230,

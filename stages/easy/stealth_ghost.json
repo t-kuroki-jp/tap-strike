@@ -1,8 +1,8 @@
 {
   "id": "stealth_ghost",
-  "name": "6. ステルス・クロス！",
+  "name": "6. ステルス・クロス",
   "difficulty": "EASY",
-  "description": "🌟 ライム色の4角手裏剣！移動の途中でドロンと透明になり、判定直前に再び姿を現す！",
+  "description": "🌟 ライムの4角手裏剣！途中で『ドロン』と透明に消え、判定の直前で再び姿を現す！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
   "spawnRate": 230,

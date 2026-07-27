@@ -1,8 +1,8 @@
 {
   "id": "freeze_hexa",
-  "name": "7. フリーズ・ヘキサ！",
+  "name": "7. フリーズ・ヘキサ",
   "difficulty": "EASY",
-  "description": "⬢ 水色の正六角形！判定リングの手前に到達すると、ピタッと1秒停止後「だるまさん」突入！",
+  "description": "⬢ 水色の正六角形！判定の手前に来るとピタッと1秒停止！『だるまさんが転んだ』ノーツ！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
   "spawnRate": 230,

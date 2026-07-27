@@ -1,8 +1,8 @@
 {
   "id": "boomerang_cross",
-  "name": "5. ブーメラン・クロス！",
+  "name": "5. ブーメラン・クロス",
   "difficulty": "EASY",
-  "description": "🪃 ピンク色のL字ノーツ！高速回転しながら近づき、一度後ろへ引き返してから倍速で突入！",
+  "description": "🪃 ピンクのL字ノーツ！高速自転しながら近づき、手前で1度バックしてから突撃してくる！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "targetScore": 450,
   "spawnRate": 230,
