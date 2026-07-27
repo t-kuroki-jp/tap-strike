@@ -181,14 +181,15 @@ class Game {
                     const dummyEnemy = EnemyFactory.create(this.canvas, 1.0, { enemyPool: [{ id: item.id }] });
                     dummyEnemy.x = 30;
                     dummyEnemy.y = 30;
-                    dummyEnemy.size = 12;
+                    // 実ゲーム本編のスケールと100%同一に調整！
+                    dummyEnemy.size = dummyEnemy.size || 15;
                     dummyEnemy.draw(ctx);
                 } catch (e) {
                     ctx.fillStyle = item.color;
                     ctx.shadowColor = item.color;
                     ctx.shadowBlur = 8;
                     ctx.beginPath();
-                    ctx.arc(30, 30, 12, 0, Math.PI * 2);
+                    ctx.arc(30, 30, 14, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }, 20);

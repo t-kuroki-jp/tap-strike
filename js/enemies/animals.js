@@ -30,7 +30,7 @@ class DogEnemy extends Enemy {
 
         // 1. くるりん巻いたフリフリ尾っぽ (後ろ)
         ctx.save();
-        ctx.translate(0, s * 0.8);
+        ctx.translate(0, s * 0.85);
         ctx.rotate(this.tailAngle);
         ctx.strokeStyle = this.color;
         ctx.lineWidth = 4.5;
@@ -71,42 +71,42 @@ class DogEnemy extends Enemy {
         ctx.shadowBlur = 0;
         ctx.fillStyle = '#fff0e6';
         ctx.beginPath();
-        ctx.ellipse(0, s * 0.35, s * 0.7, s * 0.55, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.25, s * 0.7, s * 0.55, 0, 0, Math.PI * 2);
         ctx.fill();
 
         // 5. 柴犬のトレードマーク『麻呂眉 (まろまゆ・白い点)』
         ctx.beginPath();
-        ctx.arc(-s * 0.4, -s * 0.4, 2.5, 0, Math.PI * 2); // 左まろ眉
-        ctx.arc(s * 0.4, -s * 0.4, 2.5, 0, Math.PI * 2);  // 右まろ眉
+        ctx.arc(-s * 0.4, -s * 0.45, 2.8, 0, Math.PI * 2); // 左まろ眉
+        ctx.arc(s * 0.4, -s * 0.45, 2.8, 0, Math.PI * 2);  // 右まろ眉
         ctx.fill();
 
         // 6. つぶらな黒目
         ctx.fillStyle = '#1a1a1a';
         ctx.beginPath();
-        ctx.arc(-s * 0.4, -s * 0.05, 2.8, 0, Math.PI * 2); // 左目
-        ctx.arc(s * 0.4, -s * 0.05, 2.8, 0, Math.PI * 2);  // 右目
+        ctx.arc(-s * 0.4, -s * 0.1, 2.8, 0, Math.PI * 2); // 左目
+        ctx.arc(s * 0.4, -s * 0.1, 2.8, 0, Math.PI * 2);  // 右目
         ctx.fill();
 
         // 目のハイライト
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(-s * 0.45, -s * 0.1, 1.0, 0, Math.PI * 2);
-        ctx.arc(s * 0.35, -s * 0.1, 1.0, 0, Math.PI * 2);
+        ctx.arc(-s * 0.45, -s * 0.15, 1.0, 0, Math.PI * 2);
+        ctx.arc(s * 0.35, -s * 0.15, 1.0, 0, Math.PI * 2);
         ctx.fill();
 
         // 7. 黒いお鼻 ＆ にっこり口元
         ctx.fillStyle = '#1a1a1a';
         ctx.beginPath();
-        ctx.arc(0, s * 0.25, 3.2, 0, Math.PI * 2);
+        ctx.arc(0, s * 0.15, 3.2, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.strokeStyle = '#1a1a1a';
         ctx.lineWidth = 1.6;
         ctx.beginPath();
         // w 型の可愛い口元
-        ctx.moveTo(-3, s * 0.45);
-        ctx.quadraticCurveTo(-1.5, s * 0.58, 0, s * 0.45);
-        ctx.quadraticCurveTo(1.5, s * 0.58, 3, s * 0.45);
+        ctx.moveTo(-3.2, s * 0.38);
+        ctx.quadraticCurveTo(-1.6, s * 0.52, 0, s * 0.38);
+        ctx.quadraticCurveTo(1.6, s * 0.52, 3.2, s * 0.38);
         ctx.stroke();
 
         ctx.restore();
@@ -148,13 +148,13 @@ class BeeEnemy extends Enemy {
 
         // 左翼
         ctx.beginPath();
-        ctx.ellipse(-s * 0.9, -s * 0.3, s * 0.8, s * 0.4, -0.4 + this.wingAngle, 0, Math.PI * 2);
+        ctx.ellipse(-s * 0.85, -s * 0.3, s * 0.75, s * 0.4, -0.4 + this.wingAngle, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
         // 右翼
         ctx.beginPath();
-        ctx.ellipse(s * 0.9, -s * 0.3, s * 0.8, s * 0.4, 0.4 - this.wingAngle, 0, Math.PI * 2);
+        ctx.ellipse(s * 0.85, -s * 0.3, s * 0.75, s * 0.4, 0.4 - this.wingAngle, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
         ctx.restore();
@@ -165,25 +165,35 @@ class BeeEnemy extends Enemy {
         ctx.fillStyle = this.color;
 
         ctx.beginPath();
-        ctx.ellipse(0, 0, s * 0.9, s * 1.1, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, s * 0.85, s * 1.05, 0, 0, Math.PI * 2);
         ctx.fill();
 
         // 黒いしましま模様 (2本)
         ctx.fillStyle = '#111111';
-        ctx.fillRect(-s * 0.85, -s * 0.3, s * 1.7, s * 0.25);
-        ctx.fillRect(-s * 0.8, s * 0.2, s * 1.6, s * 0.25);
+        ctx.fillRect(-s * 0.8, -s * 0.25, s * 1.6, s * 0.25);
+        ctx.fillRect(-s * 0.75, s * 0.2, s * 1.5, s * 0.25);
 
-        // 3. 可愛いつぶらな目
+        // 3. 触角 ( Antennae )
+        ctx.strokeStyle = '#111111';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(-s * 0.3, -s * 0.9);
+        ctx.quadraticCurveTo(-s * 0.5, -s * 1.4, -s * 0.6, -s * 1.3);
+        ctx.moveTo(s * 0.3, -s * 0.9);
+        ctx.quadraticCurveTo(s * 0.5, -s * 1.4, s * 0.6, -s * 1.3);
+        ctx.stroke();
+
+        // 4. 可愛いつぶらな目
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(-s * 0.35, -s * 0.4, 3, 0, Math.PI * 2);
-        ctx.arc(s * 0.35, -s * 0.4, 3, 0, Math.PI * 2);
+        ctx.arc(-s * 0.35, -s * 0.45, 3.2, 0, Math.PI * 2);
+        ctx.arc(s * 0.35, -s * 0.45, 3.2, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = '#000000';
         ctx.beginPath();
-        ctx.arc(-s * 0.35, -s * 0.4, 1.5, 0, Math.PI * 2);
-        ctx.arc(s * 0.35, -s * 0.4, 1.5, 0, Math.PI * 2);
+        ctx.arc(-s * 0.35, -s * 0.45, 1.6, 0, Math.PI * 2);
+        ctx.arc(s * 0.35, -s * 0.45, 1.6, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.restore();
