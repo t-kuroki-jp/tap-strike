@@ -111,3 +111,80 @@ class ComboPopup {
         ctx.restore();
     }
 }
+
+// 1. コンボ波紋リング (Combo Ripple Pulse)
+class ComboRipple {
+    constructor(centerX, centerY, startRadius = 60, color = '#ffcc00') {
+        this.x = centerX;
+        this.y = centerY;
+        this.radius = startRadius;
+        this.maxRadius = startRadius + 180;
+        this.alpha = 0.85;
+        this.color = color;
+    }
+
+    update() {
+        this.radius += (this.maxRadius - this.radius) * 0.12;
+        this.alpha -= 0.035;
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 3;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 15;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+    }
+}
+
+// 3. PERFECTスコア吸い込み流星 (Score Spark Absorber)
+class ScoreAbsorbSpark {
+    constructor(startX, startY, targetX = 65, targetY = 32, color = '#ffcc00') {
+        this.x = startX;
+        this.y = startY;
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.color = color;
+        this.alpha = 1.0;
+        this.speedRatio = 0.0;
+        this.size = 4;
+        this.rotation = Math.random() * Math.PI * 2;
+    }
+
+    update() {
+        this.speedRatio = Math.min(1.0, this.speedRatio + 0.08);
+        const ease = this.speedRatio * this.speedRatio;
+        this.x += (this.targetX - this.x) * ease * 0.25;
+        this.y += (this.targetY - this.y) * ease * 0.25;
+        this.rotation += 0.2;
+        
+        const dist = Math.hypot(this.targetX - this.x, this.targetY - this.y);
+        if (dist < 25) {
+            this.alpha -= 0.2;
+        }
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 12;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        ctx.beginPath();
+        for (let i = 0; i < 5; i++) {
+            ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * this.size, -Math.sin((18 + i * 72) * Math.PI / 180) * this.size);
+            ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (this.size / 2), -Math.sin((54 + i * 72) * Math.PI / 180) * (this.size / 2));
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+}

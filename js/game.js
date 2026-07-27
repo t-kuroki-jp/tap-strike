@@ -15,6 +15,8 @@ class Game {
         this.particles = [];
         this.shockwaves = [];
         this.comboPopups = [];
+        this.comboRipples = [];
+        this.scoreSparks = [];
         this.gameSpeed = 1.0;
 
         this.ringPulse = 0;
@@ -472,15 +474,20 @@ class Game {
                 hit = true;
                 const isPerfect = diff <= 8;
 
+                if (isPerfect) {
+                    // 🌟 3. PERFECTスコア吸い込み流星エフェクト発生！
+                    this.scoreSparks.push(new ScoreAbsorbSpark(touchX, touchY, 65, 32, '#ffcc00'));
+                }
+
                 enemy.onHit(this, touchX, touchY, isPerfect);
 
                 if (enemy.hp <= 0) {
                     this.enemies.splice(i, 1);
                 }
 
-                // 10, 20, 30... コンボマイルストーン発生！
+                // 💫 1. コンボ波紋リング (10, 20, 30... コンボ到達時)
                 if (this.combo > 0 && this.combo % 10 === 0) {
-                    this.comboPopups.push(new ComboPopup(centerX, centerY - 85, `🔥 ${this.combo} COMBO!`, '#ffea00'));
+                    this.comboRipples.push(new ComboRipple(centerX, centerY, this.player.targetRadius, '#ffea00'));
                 }
                 break;
             }
@@ -640,12 +647,20 @@ class Game {
             if (p.alpha <= 0) this.particles.splice(i, 1);
         }
 
-        // 💥 コンボマイルストーン (Combo Milestones) ポップアップ更新・描画
-        for (let i = this.comboPopups.length - 1; i >= 0; i--) {
-            const cp = this.comboPopups[i];
-            cp.update();
-            cp.draw(this.ctx);
-            if (cp.alpha <= 0) this.comboPopups.splice(i, 1);
+        // 💫 1. コンボ波紋リング (Combo Ripple Pulse) 更新・描画
+        for (let i = this.comboRipples.length - 1; i >= 0; i--) {
+            const cr = this.comboRipples[i];
+            cr.update();
+            cr.draw(this.ctx);
+            if (cr.alpha <= 0) this.comboRipples.splice(i, 1);
+        }
+
+        // 🌟 3. PERFECTスコア吸い込み流星 (Score Spark Absorber) 更新・描画
+        for (let i = this.scoreSparks.length - 1; i >= 0; i--) {
+            const ss = this.scoreSparks[i];
+            ss.update();
+            ss.draw(this.ctx);
+            if (ss.alpha <= 0) this.scoreSparks.splice(i, 1);
         }
 
         requestAnimationFrame(() => this.gameLoop());
