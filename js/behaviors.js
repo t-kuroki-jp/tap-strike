@@ -246,23 +246,28 @@ class OrbitAttractBehavior extends Behavior {
 
         if (dist === 0) return 0;
 
-        const targetOrbitRadius = playerTargetRadius + 70;
+        const targetOrbitRadius = playerTargetRadius + 60;
 
-        if (!this.orbitCompleted && Math.abs(dist - targetOrbitRadius) < 25) {
-            // 周回運動！
-            this.orbitDegrees += 0.12;
-            this.angle += 0.12;
-            enemy.x = centerX + Math.cos(this.angle) * targetOrbitRadius;
-            enemy.y = centerY + Math.sin(this.angle) * targetOrbitRadius;
+        if (!this.orbitCompleted && Math.abs(dist - targetOrbitRadius) < 30) {
+            // 優雅で滑らかな公転運動（スピードを 0.065 に落ち着かせ、うるささを解消）
+            this.orbitDegrees += 0.065;
+            this.angle += 0.065;
+            
+            const targetX = centerX + Math.cos(this.angle) * targetOrbitRadius;
+            const targetY = centerY + Math.sin(this.angle) * targetOrbitRadius;
+            
+            // ガタつきを防ぐスムーズ補間 (イージング)
+            enemy.x += (targetX - enemy.x) * 0.35;
+            enemy.y += (targetY - enemy.y) * 0.35;
 
-            if (this.orbitDegrees >= Math.PI * 1.8) {
+            if (this.orbitDegrees >= Math.PI * 1.4) {
                 this.orbitCompleted = true;
             }
             return targetOrbitRadius;
         }
 
-        // 通常移動 & 周回後の突入
-        const mult = this.orbitCompleted ? 1.8 : 1.0;
+        // 通常移動 & 周回後の滑らかな突入
+        const mult = this.orbitCompleted ? 1.4 : 1.0;
         enemy.x += (dx / dist) * (enemy.speed * mult);
         enemy.y += (dy / dist) * (enemy.speed * mult);
 
