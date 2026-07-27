@@ -83,7 +83,7 @@ class CurveEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'CURVE', name: 'スピナー', color: '#ff9900', shape: 'triangle', speedRatio: 0.95, size: 14, hp: 1,
-            behavior: 'spiral'
+            behavior: 'spiral', behaviorConfig: { orbitFrequency: 0.12, orbitRadius: 6.5 }
         });
         this.rotationAngle = Math.random() * Math.PI * 2;
     }
@@ -121,7 +121,7 @@ class SineWaveEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'SINE_WAVE', name: 'サイン・ウェイバー', color: '#00ffcc', shape: 'diamond', speedRatio: 1.0, size: 13, hp: 1,
-            behavior: 'wave', behaviorConfig: { frequency: 0.035, amplitude: 4.5 }
+            behavior: 'wave', behaviorConfig: { frequency: 0.025, amplitude: 7.5 }
         });
     }
 

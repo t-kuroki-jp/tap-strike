@@ -28,12 +28,12 @@ class StraightBehavior extends Behavior {
     }
 }
 
-// 3. 波状・トコトコ歩行 Behavior (垂直方向にサイン波で揺れながら進む)
+// 3. 波状・トコトコ歩行 Behavior (ダイナミックな大波S字を描いて揺れながら進む)
 class WaveBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.frequency = config.frequency || 0.035; // ギザギザにならないゆったりS字ピッチ
-        this.amplitude = config.amplitude || 4.5;   // 大きく優雅なS字横幅
+        this.frequency = config.frequency || 0.025; // 大きくゆったりとしたS字波ピッチ
+        this.amplitude = config.amplitude || 7.5;   // ダイナミックな大波の横幅
     }
 
     update(enemy, playerTargetRadius) {
@@ -56,12 +56,12 @@ class WaveBehavior extends Behavior {
     }
 }
 
-// 4. 渦巻き・公転 Behavior (中心の周りを円を描きながら吸い込まれる)
+// 4. 渦巻き・ドリル旋回 Behavior (キュキュッと小さな円を旋回しながら突進)
 class SpiralBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.orbitFrequency = config.orbitFrequency || 0.05;
-        this.orbitRadius = config.orbitRadius || 4.0;
+        this.orbitFrequency = config.orbitFrequency || 0.12; // 小さく速い旋回ピッチ
+        this.orbitRadius = config.orbitRadius || 6.5;         // ドリル旋回幅
     }
 
     update(enemy, playerTargetRadius) {
@@ -75,7 +75,7 @@ class SpiralBehavior extends Behavior {
 
         const perpX = -dy / dist;
         const perpY = dx / dist;
-        const orbit = Math.sin(dist * this.orbitFrequency) * this.orbitRadius;
+        const orbit = Math.cos(dist * this.orbitFrequency) * this.orbitRadius;
 
         enemy.x += (dx / dist) * enemy.speed + perpX * orbit;
         enemy.y += (dy / dist) * enemy.speed + perpY * orbit;
