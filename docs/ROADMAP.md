@@ -8,20 +8,37 @@
 
 ---
 
-## 🚀 CrazyGames 掲載必須チェックリスト (CrazyGames Requirements)
+## 🚀 CrazyGames パブリッシング・申請プロセスの流れ (Publishing Flow)
 
-CrazyGames の掲載審査を通過し、収益化とプレイヤー体験を最大化するための必須実装項目です。
+CrazyGames の正式公開は、**「まずゲーム単体のクオリティを高めて一次審査（Basic Launch）をクリアし、承認後に SDK（広告・収益化）を組み込む」** という正しいステップで進行します！
 
+```
+【Step 1: ゲームクオリティ向上 & Basic Launch 申請】 
+      ↓ (審査通過・一次承認！)
+【Step 2: CrazyGames SDK 組み込み (広告・広告ミュート・イベント連携)】 
+      ↓ 
+【Step 3: フル公開 (Monetized Full Launch)】
+```
+
+---
+
+## 📋 CrazyGames 必須チェックリスト (CrazyGames Requirements)
+
+### 🔴 【Step 1】 Basic Launch 審査通過に必要な項目 (広告なし・ゲーム単体)
+- [ ] **高クオリティな視覚演出・ゲームプレイ体験** (Juiciness, コンボ感, リズム同期)
+- [ ] **英語対応 (Localization)**
+  - [ ] 英語 (English) ↔ 日本語 (Japanese) の言語切り替え対応
+- [ ] **マルチデバイス / レスポンシブ最適化**
+  - [ ] PC（キーボード/マウス）および モバイル（タッチ）の完全スムーズ対応
+  - [ ] 画面リサイズ・全画面表示（Full Screen）時のアスペクト比追従
+
+### 🔵 【Step 2】 Basic Launch 承認後に導入する項目 (CrazyGames SDK)
 - [ ] **CrazyGames SDK (v2/v3) の導入**
   - [ ] ゲーム開始 / 終了 / ポーズ時の `gameplayStart()`, `gameplayStop()` イベント呼び出し
   - [ ] ステージクリア時・リトライ時のミッドロール広告 (`ad.requestAd`) 実装
   - [ ] コンティニュー（復活）用のリワード動画広告連携
   - [ ] 広告再生中の BGM / SE 自動ミュート連動
-- [ ] **多言語対応 (Localization)**
-  - [ ] 英語 (English) ↔ 日本語 (Japanese) の言語切り替えボタン＆テキスト全翻訳
-- [ ] **マルチデバイス / レスポンシブ最適化**
-  - [ ] PC（キーボード/マウス）および モバイル（タッチ）の完全スムーズ対応
-  - [ ] 画面リサイズ・全画面表示（Full Screen）時のアスペクト比追従
+
 
 ---
 
