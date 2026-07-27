@@ -3,7 +3,7 @@
  * Canvas ベクター描画による可愛いネオンどうぶつノーツ群
  */
 
-// 1. 柴犬わんこ (Dog / 本格麻呂眉 ＆ ふっくら柴犬フェイス)
+// 1. 柴犬わんこ (Dog / 本格麻呂眉 ＆ 左側にくるりん巻き尾っぽ)
 class DogEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
@@ -16,7 +16,7 @@ class DogEnemy extends Enemy {
     update(playerTargetRadius) {
         const dist = super.update(playerTargetRadius);
         // 嬉しそうにフリフリ振る尻尾アニメーション
-        this.tailAngle = Math.sin(Date.now() / 80) * 0.5;
+        this.tailAngle = Math.sin(Date.now() / 80) * 0.4;
         return dist;
     }
 
@@ -28,17 +28,17 @@ class DogEnemy extends Enemy {
 
         const s = this.size;
 
-        // 1. くるりん巻いたフリフリ尾っぽ (後ろ)
+        // 1. くるりん巻いたフリフリ尾っぽ (左後ろ側配置)
         ctx.save();
-        ctx.translate(0, s * 0.85);
-        ctx.rotate(this.tailAngle);
+        ctx.translate(-s * 0.65, s * 0.3);
+        ctx.rotate(-0.8 + this.tailAngle);
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = 4.5;
+        ctx.lineWidth = 5.0;
         ctx.lineCap = 'round';
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 10;
         ctx.beginPath();
-        ctx.arc(0, 0, 9, Math.PI * 0.2, Math.PI * 1.3);
+        ctx.arc(0, 0, 10, Math.PI * 0.1, Math.PI * 1.25);
         ctx.stroke();
         ctx.restore();
 
