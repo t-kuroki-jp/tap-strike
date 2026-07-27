@@ -56,12 +56,12 @@ class WaveBehavior extends Behavior {
     }
 }
 
-// 4. 渦巻き・公転 Behavior (中心の周りを円を描きながら吸い込まれる)
+// 4. 渦巻き・片偏向カーブ Behavior (左右往復ではなく、一貫して片側に大きくカーブを描いてアプローチ)
 class SpiralBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.orbitFrequency = config.orbitFrequency || 0.05;
-        this.orbitRadius = config.orbitRadius || 4.0;
+        this.curveSide = Math.random() < 0.5 ? 1 : -1; // 右曲がりか左曲がりかを個体ごとに固定！
+        this.curveFactor = config.curveFactor || 0.65;  // 片偏向カーブの曲がり度合い
     }
 
     update(enemy, playerTargetRadius) {
@@ -73,14 +73,19 @@ class SpiralBehavior extends Behavior {
 
         if (dist === 0) return 0;
 
-        const perpX = -dy / dist;
-        const perpY = dx / dist;
-        const orbit = Math.sin(dist * this.orbitFrequency) * this.orbitRadius;
+        // 中心へ向かう直進成分
+        const forwardX = (dx / dist) * enemy.speed;
+        const forwardY = (dy / dist) * enemy.speed;
 
-        enemy.x += (dx / dist) * enemy.speed + perpX * orbit;
-        enemy.y += (dy / dist) * enemy.speed + perpY * orbit;
+        // 左右往復 (Math.sin) は一切使わず、一貫して「片側」へカーブさせる旋回成分！
+        const perpX = (-dy / dist) * (enemy.speed * this.curveFactor) * this.curveSide;
+        const perpY = (dx / dist) * (enemy.speed * this.curveFactor) * this.curveSide;
 
-        return dist;
+        // 座標更新 (一貫した片曲がりカーブ)
+        enemy.x += forwardX + perpX;
+        enemy.y += forwardY + perpY;
+
+        return Math.hypot(centerX - enemy.x, centerY - enemy.y);
     }
 }
 
