@@ -113,7 +113,7 @@ class DogEnemy extends Enemy {
     }
 }
 
-// 2. みつばち (Bee / 旋回アプローチ)
+// 2. みつばち (Bee / 旋回アプローチ / つぶらな黒目 ＋ ハイライト)
 class BeeEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
@@ -140,7 +140,7 @@ class BeeEnemy extends Enemy {
 
         // 1. 左右のパタパタ透明ツイン翼 (Back)
         ctx.save();
-        ctx.fillStyle = 'rgba(200, 240, 255, 0.7)';
+        ctx.fillStyle = 'rgba(200, 240, 255, 0.75)';
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 1;
         ctx.shadowColor = '#00ffff';
@@ -183,24 +183,25 @@ class BeeEnemy extends Enemy {
         ctx.quadraticCurveTo(s * 0.5, -s * 1.4, s * 0.6, -s * 1.3);
         ctx.stroke();
 
-        // 4. 可愛いつぶらな目
-        ctx.fillStyle = '#ffffff';
+        // 4. 柴犬・ひよことお揃いの「愛くるしいつぶらな黒目 ＋ ハイライト」
+        ctx.fillStyle = '#1a1a1a';
         ctx.beginPath();
-        ctx.arc(-s * 0.35, -s * 0.45, 3.2, 0, Math.PI * 2);
-        ctx.arc(s * 0.35, -s * 0.45, 3.2, 0, Math.PI * 2);
+        ctx.arc(-s * 0.38, -s * 0.45, 3.2, 0, Math.PI * 2);
+        ctx.arc(s * 0.38, -s * 0.45, 3.2, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = '#000000';
+        // 目の白いハイライト
+        ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(-s * 0.35, -s * 0.45, 1.6, 0, Math.PI * 2);
-        ctx.arc(s * 0.35, -s * 0.45, 1.6, 0, Math.PI * 2);
+        ctx.arc(-s * 0.43, -s * 0.52, 1.1, 0, Math.PI * 2);
+        ctx.arc(s * 0.33, -s * 0.52, 1.1, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.restore();
     }
 }
 
-// 3. カエル (Frog / フリーズ一瞬停止 ＋ ゲコッとプク〜ッと膨らむ鳴き袋 ＆ ピョンピョン跳躍・気持ち小ぶりサイズ)
+// 3. カエル (Frog / つぶらな黒目 ＋ ハイライト ＋ ゲコッと鳴き袋 ＆ 跳躍)
 class FrogEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
@@ -262,18 +263,26 @@ class FrogEnemy extends Enemy {
         ctx.arc(s * 0.6, -s * 0.6, s * 0.52, 0, Math.PI * 2);
         ctx.fill();
 
-        // 白目と黒目
+        // 白目とつぶらな黒目 ＋ ハイライト (柴犬・ひよことお揃いデザイン)
         ctx.shadowBlur = 0;
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(-s * 0.6, -s * 0.6, s * 0.32, 0, Math.PI * 2);
-        ctx.arc(s * 0.6, -s * 0.6, s * 0.32, 0, Math.PI * 2);
+        ctx.arc(-s * 0.6, -s * 0.6, s * 0.35, 0, Math.PI * 2);
+        ctx.arc(s * 0.6, -s * 0.6, s * 0.35, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = '#111111';
+        // つぶらな黒目
+        ctx.fillStyle = '#1a1a1a';
         ctx.beginPath();
-        ctx.arc(-s * 0.6, -s * 0.6, s * 0.16, 0, Math.PI * 2);
-        ctx.arc(s * 0.6, -s * 0.6, s * 0.16, 0, Math.PI * 2);
+        ctx.arc(-s * 0.6, -s * 0.6, 2.6, 0, Math.PI * 2);
+        ctx.arc(s * 0.6, -s * 0.6, 2.6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 目の白いハイライト
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(-s * 0.65, -s * 0.65, 1.0, 0, Math.PI * 2);
+        ctx.arc(s * 0.55, -s * 0.65, 1.0, 0, Math.PI * 2);
         ctx.fill();
 
         // 5. にっこり口元
