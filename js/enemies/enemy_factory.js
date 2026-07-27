@@ -20,7 +20,6 @@ class EnemyFactory {
             case 'PENTAGON': enemy = new PentagonEnemy(canvas, gameSpeed, stage); break;
             case 'SHIELD': enemy = new ShieldEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;
-            case 'DONT_TAP': enemy = new DontTapEnemy(canvas, gameSpeed, stage); break;
             case 'CAT': enemy = new CatEnemy(canvas, gameSpeed, stage); break;
             case 'CHICKEN': enemy = new ChickenEnemy(canvas, gameSpeed, stage); break;
             case 'DOG': enemy = new DogEnemy(canvas, gameSpeed, stage); break;
