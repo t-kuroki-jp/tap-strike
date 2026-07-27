@@ -19,7 +19,6 @@ class EnemyFactory {
             case 'RING_NOTE': enemy = new RingEnemy(canvas, gameSpeed, stage); break;
             case 'PENTAGON': enemy = new PentagonEnemy(canvas, gameSpeed, stage); break;
             case 'SHIELD': enemy = new ShieldEnemy(canvas, gameSpeed, stage); break;
-            case 'BIG_BOSS': enemy = new BigBossEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;
             case 'DONT_TAP': enemy = new DontTapEnemy(canvas, gameSpeed, stage); break;
             case 'CAT': enemy = new CatEnemy(canvas, gameSpeed, stage); break;
