@@ -474,7 +474,7 @@ class Game {
                 const isPerfect = diff <= 8;
 
                 if (isPerfect) {
-                    this.screenShake = Math.max(this.screenShake, 8);
+                    this.screenShake = Math.max(this.screenShake, 18); // ガツンと大迫力シェイク！
                 }
 
                 enemy.onHit(this, touchX, touchY, isPerfect);
@@ -486,7 +486,7 @@ class Game {
                 // 10, 20, 30... コンボマイルストーン発生！
                 if (this.combo > 0 && this.combo % 10 === 0) {
                     this.comboPopups.push(new ComboPopup(centerX, centerY - 85, `🔥 ${this.combo} COMBO!`, '#ffea00'));
-                    this.screenShake = Math.max(this.screenShake, 10);
+                    this.screenShake = Math.max(this.screenShake, 22);
                 }
                 break;
             }
@@ -497,7 +497,7 @@ class Game {
             this.combo = 0;
             this.ringPulse = 8;
             this.ringColor = '#ff0055';
-            this.screenShake = 14; // ミスダメージ時のガツンと画面震動！
+            this.screenShake = 28; // ミスダメージ時の強烈画面震動！
             this.missPenaltyTimer = this.params.missPenaltyDuration;
             this.shockwaves.push(new Shockwave(touchX, touchY, '#ff0055'));
         }
@@ -563,13 +563,13 @@ class Game {
 
         this.ctx.save();
 
-        // 🫨 画面シェイク (Screen Shake) 振動演出
+        // 🫨 画面シェイク (Screen Shake) 振動演出 (誰が見ても一目で分かる大迫力衝撃)
         if (this.screenShake > 0) {
             const shakeX = (Math.random() - 0.5) * this.screenShake;
             const shakeY = (Math.random() - 0.5) * this.screenShake;
             this.ctx.translate(shakeX, shakeY);
-            this.screenShake *= 0.82;
-            if (this.screenShake < 0.3) this.screenShake = 0;
+            this.screenShake *= 0.89; // 減衰をゆっくりにして余韻のある揺れ感に！
+            if (this.screenShake < 0.5) this.screenShake = 0;
         }
 
         const centerX = this.canvas.width / 2;
