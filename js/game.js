@@ -558,21 +558,37 @@ class Game {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
 
-        if (this.currentStage?.theme?.rainbow) {
-            const hue = (Date.now() / 6) % 360;
-            const rainbowColor = `hsl(${hue}, 100%, 50%)`;
-            if (this.missPenaltyTimer <= 0 && this.ringPulse === 0) {
-                this.ringColor = rainbowColor;
+        // 🌈 コンボヒートアップ背景 (Combo Heat-Up Pulse & Color Shift)
+        const bgElem = document.querySelector('.bg-animated');
+        if (bgElem && !this.currentStage?.theme?.rainbow) {
+            let glowColor = this.currentStage?.theme?.bgGlow || 'rgba(0, 240, 255, 0.25)';
+            let gridColor = this.currentStage?.theme?.gridColor || 'rgba(0, 240, 255, 0.3)';
+
+            if (this.combo >= 50) {
+                // 50コンボ超: HYPER FEVER (虹色ネオンハイパーパルス)
+                const hue = (Date.now() / 8) % 360;
+                glowColor = `hsla(${hue}, 100%, 50%, 0.32)`;
+                gridColor = `hsla(${hue}, 100%, 60%, 0.45)`;
+            } else if (this.combo >= 30) {
+                // 30〜49コンボ: FEVER HEAT (ネオンゴールド)
+                glowColor = 'rgba(255, 170, 0, 0.32)';
+                gridColor = 'rgba(255, 200, 0, 0.45)';
+            } else if (this.combo >= 15) {
+                // 15〜29コンボ: WARM UP (サイバーマゼンタ)
+                glowColor = 'rgba(255, 0, 180, 0.28)';
+                gridColor = 'rgba(255, 0, 220, 0.4)';
             }
-            this.player.color = rainbowColor;
-            const bgElem = document.querySelector('.bg-animated');
-            if (bgElem) {
-                bgElem.style.background = `
-                    radial-gradient(circle, hsl(${hue}, 100%, 25%) 0%, rgba(5, 7, 14, 0.9) 100%),
-                    repeating-linear-gradient(0deg, transparent, transparent 39px, hsl(${hue}, 100%, 40%) 40px),
-                    repeating-linear-gradient(90deg, transparent, transparent 39px, hsl(${hue}, 100%, 40%) 40px)
-                `;
+
+            // BGMビート脈動 (beatPulse) をグリッドに脈動合成！
+            if (this.beatPulse > 0.5) {
+                gridColor = gridColor.replace(/[\d\.]+\)$/, `${Math.min(0.65, 0.35 + this.beatPulse * 0.05)})`);
             }
+
+            bgElem.style.background = `
+                radial-gradient(circle, ${glowColor} 0%, rgba(5, 7, 14, 0.9) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 39px, ${gridColor} 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, ${gridColor} 40px)
+            `;
         }
 
         if (this.beatPulse > 0) this.beatPulse *= 0.85;
