@@ -24,9 +24,9 @@ class Enemy {
         this.hp = config.hp || 1;
         this.maxHp = this.hp;
 
-        // 流星トレイル (Cyber Neon Trail) 座標履歴
+        // 流星トレイル (Cyber Neon Trail) 座標履歴 (長さを伸ばしてくっきり化)
         this.trail = [];
-        this.maxTrailLength = 9;
+        this.maxTrailLength = 16;
 
         // 行動コンポーネント (Behavior) の設定
         if (config.behavior) {
@@ -69,7 +69,7 @@ class Enemy {
         ctx.save();
         ctx.strokeStyle = this.color;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 14;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
@@ -79,8 +79,8 @@ class Enemy {
             const p2 = this.trail[i + 1];
             const ratio = 1 - (i / this.trail.length);
             
-            ctx.globalAlpha = baseAlpha * ratio * 0.45;
-            ctx.lineWidth = (this.size || 12) * ratio * 0.75;
+            ctx.globalAlpha = baseAlpha * (ratio ** 1.2) * 0.85; // クッキリ鮮やかな発光！
+            ctx.lineWidth = (this.size || 14) * (ratio ** 0.8) * 1.3; // しっかり太い流星の尾！
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);

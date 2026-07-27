@@ -101,6 +101,7 @@ class CurveEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotationAngle);
@@ -132,6 +133,7 @@ class SineWaveEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
@@ -167,6 +169,7 @@ class CrossEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotationAngle);
@@ -208,6 +211,7 @@ class GhostEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotationAngle);
@@ -245,6 +249,7 @@ class HexagonEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
@@ -274,6 +279,7 @@ class RingEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         ctx.translate(this.x, this.y);
 
@@ -315,6 +321,7 @@ class PentagonEnemy extends Enemy {
     }
 
     draw(ctx) {
+        this.drawTrail(ctx);
         ctx.save();
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
