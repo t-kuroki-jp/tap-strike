@@ -244,36 +244,33 @@ class OrbitAttractBehavior extends Behavior {
         const dy = centerY - enemy.y;
         const dist = Math.hypot(dx, dy);
 
-        if (dist === 0) return 0;
+        // 判定リングの手前に来たら、スムーズな「渦巻きスパイラル吸い込み」へ移行！
+        const targetStartRadius = playerTargetRadius + 65;
 
-        const targetOrbitRadius = playerTargetRadius + 60;
-
-        if (!this.orbitCompleted && Math.abs(dist - targetOrbitRadius) < 35) {
-            // 初回突入時の角度をノーツの現在位置からスムーズに検出（瞬間移動を100%防止！）
+        if (dist <= targetStartRadius) {
+            // 初回突入時の角度と現在半径をスムーズに保持
             if (this.angle === undefined) {
                 this.angle = Math.atan2(enemy.y - centerY, enemy.x - centerX);
+                this.currentRadius = dist;
             }
 
-            // 優雅で滑らかな公転運動
-            this.orbitDegrees += 0.06;
-            this.angle += 0.06;
-            
-            const targetX = centerX + Math.cos(this.angle) * targetOrbitRadius;
-            const targetY = centerY + Math.sin(this.angle) * targetOrbitRadius;
-            
-            enemy.x += (targetX - enemy.x) * 0.25;
-            enemy.y += (targetY - enemy.y) * 0.25;
+            // 1. 公転角度を進める
+            this.angle += 0.05;
 
-            if (this.orbitDegrees >= Math.PI * 1.3) {
-                this.orbitCompleted = true;
-            }
-            return targetOrbitRadius;
+            // 2. 半径を中心（0）に向かって滑らかに縮めていく（理不尽な方向転換ナシ！）
+            const shrinkSpeed = enemy.speed * 0.85;
+            this.currentRadius = Math.max(0, this.currentRadius - shrinkSpeed);
+
+            // 3. 渦巻きスパイラル軌道で完璧に滑らかな座標計算
+            enemy.x = centerX + Math.cos(this.angle) * this.currentRadius;
+            enemy.y = centerY + Math.sin(this.angle) * this.currentRadius;
+
+            return this.currentRadius;
         }
 
-        // 通常移動 & 周回後の滑らかな突入
-        const mult = this.orbitCompleted ? 1.4 : 1.0;
-        enemy.x += (dx / dist) * (enemy.speed * mult);
-        enemy.y += (dy / dist) * (enemy.speed * mult);
+        // 通常の直線アプローチ（判定手前まで）
+        enemy.x += (dx / dist) * enemy.speed;
+        enemy.y += (dy / dist) * enemy.speed;
 
         return dist;
     }
