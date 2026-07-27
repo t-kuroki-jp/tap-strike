@@ -329,7 +329,7 @@ class Game {
         const spawnInterval = this.currentStage?.spawnRate || 187;
 
         this.bgmInterval = setInterval(() => {
-            if (this.isGameOver || !this.isGameStarted) return;
+            if (this.isGameOver || !this.isGameStarted || this.isPaused) return;
             this.beatPulse = 5;
 
             if (this.currentStage?.spawnPattern === 'san_san_nana') {
