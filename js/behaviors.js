@@ -228,57 +228,40 @@ class FreezeBehavior extends Behavior {
     }
 }
 
-// 🧲 9. オービット公転 Behavior (リング周りを360度周回してから中心へ)
+// 🧲 9. オービット公転 Behavior (画面外から大きな円弧を描いて優雅に中心へ接近する大円弧公転)
 class OrbitAttractBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.phase = 0; // 0: アプローチ, 1: 360度優雅な円周周回, 2: 中心へ吸い込み突入
-        this.orbitAngle = 0;
-        this.baseAngle = 0;
+        this.angle = undefined;
+        this.currentRadius = undefined;
+        this.spiralSpeed = config.spiralSpeed || 0.038; // 優雅な大円弧旋回スピード
     }
 
     update(enemy, playerTargetRadius) {
         const centerX = enemy.canvas.width / 2;
         const centerY = enemy.canvas.height / 2;
-        const dx = centerX - enemy.x;
-        const dy = centerY - enemy.y;
-        const dist = Math.hypot(dx, dy);
 
-        if (dist === 0) return 0;
-
-        const orbitRadius = playerTargetRadius + 50;
-
-        // Phase 0: 判定手前までまっすぐアプローチ
-        if (this.phase === 0) {
-            if (dist <= orbitRadius) {
-                this.phase = 1;
-                this.baseAngle = Math.atan2(enemy.y - centerY, enemy.x - centerX);
-                this.orbitAngle = 0;
-            } else {
-                enemy.x += (dx / dist) * enemy.speed;
-                enemy.y += (dy / dist) * enemy.speed;
-                return dist;
-            }
+        // 初回発生時に初期角度と画面外からの初期半径を自動設定
+        if (this.angle === undefined) {
+            const dx = enemy.x - centerX;
+            const dy = enemy.y - centerY;
+            this.angle = Math.atan2(dy, dx);
+            this.currentRadius = Math.hypot(dx, dy);
         }
 
-        // Phase 1: 判定リングの周りを滑らかに360度くるりと一周周回！
-        if (this.phase === 1) {
-            this.orbitAngle += 0.06;
-            const currentAngle = this.baseAngle + this.orbitAngle;
+        // 1. 大きな円弧を描いて旋回を進める
+        this.angle += this.spiralSpeed;
 
-            enemy.x = centerX + Math.cos(currentAngle) * orbitRadius;
-            enemy.y = centerY + Math.sin(currentAngle) * orbitRadius;
+        // 2. 半径を中心（0）に向かって滑らかに縮める（大円弧で近づく）
+        this.currentRadius -= enemy.speed * 0.9;
 
-            if (this.orbitAngle >= Math.PI * 1.5) {
-                this.phase = 2; // 一周完了、最終突入へ
-            }
-            return orbitRadius;
-        }
+        if (this.currentRadius < 0) this.currentRadius = 0;
 
-        // Phase 2: 周回完了後、スムーズに中心へ吸い込み突入
-        enemy.x += (dx / dist) * (enemy.speed * 1.1);
-        enemy.y += (dy / dist) * (enemy.speed * 1.1);
-        return dist;
+        // 3. 大円弧を描く連続座標計算
+        enemy.x = centerX + Math.cos(this.angle) * this.currentRadius;
+        enemy.y = centerY + Math.sin(this.angle) * this.currentRadius;
+
+        return this.currentRadius;
     }
 }
 
