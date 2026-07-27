@@ -1,0 +1,33 @@
+{
+  "id": "allstar_normal",
+  "name": "6. オールスター・ノーマル",
+  "difficulty": "NORMAL",
+  "description": "🌟 NORMALモードの総決算！10大幾何学ノーツと耐久バリアがテンポ良く迫るオールスター！",
+  "bgm": "bgm/Under_The_Lanterns.mp3",
+  "spawnRate": 210,
+  "theme": {
+    "bgGlow": "rgba(0, 240, 255, 0.25)",
+    "gridColor": "rgba(0, 240, 255, 0.3)",
+    "ringColor": "#00f0ff",
+    "playerColor": "#00f0ff"
+  },
+  "params": {
+    "gameSpeed": 0.95,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
+  },
+  "enemyPool": [
+    { "id": "CHASER", "weight": 1 },
+    { "id": "SPEEDER", "weight": 1 },
+    { "id": "CURVE", "weight": 1 },
+    { "id": "SINE_WAVE", "weight": 1 },
+    { "id": "CROSS", "weight": 1 },
+    { "id": "GHOST", "weight": 1 },
+    { "id": "HEXAGON", "weight": 1 },
+    { "id": "RING_NOTE", "weight": 1 },
+    { "id": "PENTAGON", "weight": 1 },
+    { "id": "CHASER", "hp": 2, "weight": 1 }
+  ]
+}

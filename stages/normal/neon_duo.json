@@ -1,9 +1,9 @@
 {
-  "id": "shield_break",
-  "name": "3. シールド・ブレイク",
+  "id": "neon_duo",
+  "name": "1. ネオン・デュオ",
   "difficulty": "NORMAL",
-  "description": "🛡️ 初のダブルタップバリアノーツ登場！1回叩いてバリアを砕き、2回目で仕留めろ！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "🔴 赤丸チェイサー ＋ ⚡ 稲妻スピーダー！基本アプローチとハイスピードが交錯する複合ステージ！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "spawnRate": 210,
   "theme": {
     "bgGlow": "rgba(0, 240, 255, 0.25)",
@@ -20,6 +20,6 @@
   },
   "enemyPool": [
     { "id": "CHASER", "weight": 2 },
-    { "id": "CHASER", "hp": 2, "weight": 1 }
+    { "id": "SPEEDER", "weight": 1 }
   ]
 }

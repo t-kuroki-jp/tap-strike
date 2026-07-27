@@ -32,9 +32,15 @@ class EnemyFactory {
             default: enemy = new ChaserEnemy(canvas, gameSpeed, stage); break;
         }
 
-        // ★ ステージデータ(JSON)の enemyPool で指定された behavior を動的に適用！
-        if (pickedItem && typeof pickedItem === 'object' && pickedItem.behavior) {
-            enemy.behavior = BehaviorFactory.create(pickedItem.behavior, pickedItem.behaviorConfig || {});
+        // ★ ステージデータ(JSON)の enemyPool で指定された behavior や hp などの属性を動的に適用！
+        if (pickedItem && typeof pickedItem === 'object') {
+            if (pickedItem.behavior) {
+                enemy.behavior = BehaviorFactory.create(pickedItem.behavior, pickedItem.behaviorConfig || {});
+            }
+            if (pickedItem.hp) {
+                enemy.hp = pickedItem.hp;
+                enemy.maxHp = pickedItem.hp;
+            }
         }
 
         return enemy;

@@ -65,10 +65,28 @@ class Enemy {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+
+        this.drawShieldLayer(ctx);
         ctx.restore();
     }
 
+    drawShieldLayer(ctx) {
+        if (this.hp > 1) {
+            ctx.save();
+            ctx.strokeStyle = '#00bbff';
+            ctx.shadowColor = '#00bbff';
+            ctx.shadowBlur = 14;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, (this.size || 14) * 1.5, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+
     onHit(game, touchX, touchY, isPerfect) {
+        const hadShield = this.hp > 1;
+
         if (isPerfect) {
             audioEngine.playPerfectSound();
             game.createParticles(this.x, this.y, '#ffcc00');
@@ -77,13 +95,19 @@ class Enemy {
             game.ringColor = '#ffcc00';
         } else {
             audioEngine.playHitSound();
-            game.createParticles(this.x, this.y, this.color);
+            game.createParticles(this.x, this.y, hadShield ? '#00bbff' : this.color);
             game.ringPulse = 14;
             game.ringColor = game.currentStage?.theme?.ringColor || '#00f0ff';
         }
 
         const scoreMultiplier = isPerfect ? 2 : 1;
         this.hp--;
+
+        // 1打目でシールドバリア破壊時の「パリンッ」演出！
+        if (hadShield && this.hp === 1) {
+            game.createParticles(this.x, this.y, '#00ffff');
+            game.shockwaves.push(new Shockwave(this.x, this.y, '#00ffff'));
+        }
 
         if (this.hp <= 0) {
             game.combo++;
