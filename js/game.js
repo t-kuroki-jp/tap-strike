@@ -42,11 +42,11 @@ class Game {
         this.player = {
             x: 0,
             y: 0,
-            radius: 20,
-            targetRadius: 60,
-            hp: 3,
-            maxHp: 3,
-            color: '#00f0ff'
+            radius: CONFIG.PLAYER.DEFAULT_RADIUS,
+            targetRadius: CONFIG.PLAYER.DEFAULT_TARGET_RADIUS,
+            hp: CONFIG.PLAYER.DEFAULT_MAX_HP,
+            maxHp: CONFIG.PLAYER.DEFAULT_MAX_HP,
+            color: CONFIG.PLAYER.DEFAULT_COLOR
         };
 
         this.initEventListeners();
@@ -108,7 +108,7 @@ class Game {
     }
 
     resize() {
-        this.canvas.width = Math.min(window.innerWidth, 500);
+        this.canvas.width = Math.min(window.innerWidth, CONFIG.GAME.CANVAS_MAX_WIDTH);
         this.canvas.height = window.innerHeight;
     }
 
@@ -340,7 +340,7 @@ class Game {
 
             if (diff < this.params.hitWindow) {
                 hit = true;
-                const isPerfect = diff <= 8;
+                const isPerfect = diff <= CONFIG.HIT.PERFECT_WINDOW_PX;
 
                 enemy.onHit(this, touchX, touchY, isPerfect);
 

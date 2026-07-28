@@ -63,15 +63,15 @@ class DataLoader {
         const v = difficulty.visuals || {};
 
         return {
-            targetRadius: stage.targetRadius ?? g.targetRadius ?? 65,
-            maxHp: stage.maxHp ?? p.maxHp ?? 3,
-            baseScore: stage.baseScore ?? g.baseScore ?? 100,
-            speedIncrement: stage.speedIncrement ?? g.speedIncrement ?? 0.01,
-            hitWindow: stage.hitWindow ?? g.hitWindow ?? 25,
-            missPenaltyDuration: stage.missPenaltyDuration ?? p.missPenaltyDuration ?? 10,
-            particleCount: stage.particleCount ?? v.particleCount ?? 18,
-            tapCooldown: stage.tapCooldown ?? g.tapCooldown ?? 80,
-            bgScrollSpeed: stage.bgScrollSpeed ?? v.bgScrollSpeed ?? '3s'
+            targetRadius: stage.targetRadius ?? g.targetRadius ?? CONFIG.PLAYER.DEFAULT_TARGET_RADIUS,
+            maxHp: stage.maxHp ?? p.maxHp ?? CONFIG.PLAYER.DEFAULT_MAX_HP,
+            baseScore: stage.baseScore ?? g.baseScore ?? CONFIG.GAME.DEFAULT_BASE_SCORE,
+            speedIncrement: stage.speedIncrement ?? g.speedIncrement ?? CONFIG.GAME.DEFAULT_SPEED_INCREMENT,
+            hitWindow: stage.hitWindow ?? g.hitWindow ?? CONFIG.HIT.DEFAULT_HIT_WINDOW_PX,
+            missPenaltyDuration: stage.missPenaltyDuration ?? p.missPenaltyDuration ?? CONFIG.HIT.DEFAULT_MISS_PENALTY_TICKS,
+            particleCount: stage.particleCount ?? v.particleCount ?? CONFIG.GAME.DEFAULT_PARTICLE_COUNT,
+            tapCooldown: stage.tapCooldown ?? g.tapCooldown ?? CONFIG.HIT.DEFAULT_TAP_COOLDOWN_MS,
+            bgScrollSpeed: stage.bgScrollSpeed ?? v.bgScrollSpeed ?? CONFIG.GAME.DEFAULT_BG_SCROLL_SPEED
         };
     }
 
@@ -83,15 +83,15 @@ class DataLoader {
 
     getDefaultParams() {
         return {
-            targetRadius: 65,
-            maxHp: 3,
-            baseScore: 100,
-            speedIncrement: 0.01,
-            hitWindow: 25,
-            missPenaltyDuration: 10,
-            particleCount: 18,
-            tapCooldown: 80,
-            bgScrollSpeed: '3s'
+            targetRadius: CONFIG.PLAYER.DEFAULT_TARGET_RADIUS,
+            maxHp: CONFIG.PLAYER.DEFAULT_MAX_HP,
+            baseScore: CONFIG.GAME.DEFAULT_BASE_SCORE,
+            speedIncrement: CONFIG.GAME.DEFAULT_SPEED_INCREMENT,
+            hitWindow: CONFIG.HIT.DEFAULT_HIT_WINDOW_PX,
+            missPenaltyDuration: CONFIG.HIT.DEFAULT_MISS_PENALTY_TICKS,
+            particleCount: CONFIG.GAME.DEFAULT_PARTICLE_COUNT,
+            tapCooldown: CONFIG.HIT.DEFAULT_TAP_COOLDOWN_MS,
+            bgScrollSpeed: CONFIG.GAME.DEFAULT_BG_SCROLL_SPEED
         };
     }
 }
