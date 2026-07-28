@@ -27,7 +27,9 @@ class BombEnemy extends Enemy {
     }
 
     playBombSound() {
-        audioEngine.playTone({ type: 'sawtooth', startFreq: 300, endFreq: 40, duration: 0.35, volume: 0.6 });
+        if (window.audioEngine) {
+            audioEngine.playTone({ type: 'sawtooth', startFreq: 300, endFreq: 40, duration: 0.35, volume: 0.6 });
+        }
     }
 
     onHit(game, touchX, touchY, isPerfect) {

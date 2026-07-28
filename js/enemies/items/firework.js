@@ -60,39 +60,75 @@ class FireworkEnemy extends Enemy {
         const theme = this.fireworkTheme;
         const currentColor = theme.isRainbow ? `hsl(${(Date.now() / 3) % 360}, 100%, 60%)` : theme.main;
 
-        // 1. テール火花
-        const angle = Math.atan2(this.dirY, this.dirX);
-        const tailX = this.x - Math.cos(angle) * 26;
-        const tailY = this.y - Math.sin(angle) * 26;
-
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = theme.isRainbow ? 5.0 : 4.0;
+        // 1. 本物クラフト和紙貼り花火玉 (写真再現)
         ctx.shadowColor = currentColor;
-        ctx.shadowBlur = 14;
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(tailX + (Math.random() - 0.5) * 3, tailY + (Math.random() - 0.5) * 3);
-        ctx.stroke();
+        ctx.shadowBlur = 12;
 
-        // 2. 花火玉本体
-        ctx.fillStyle = currentColor;
-        ctx.shadowColor = currentColor;
-        ctx.shadowBlur = 18;
+        // 球体ベース (クラフトブラウン和紙)
+        ctx.fillStyle = '#d9a066';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2.5;
+        // クラフト紙の貼り合わせ帯ライン (縦横の和紙貼りスジ)
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = '#a67238';
+        ctx.lineWidth = 1.2;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.size * 0.95, -Math.PI / 4, Math.PI / 4);
+        ctx.arc(this.x, this.y, this.size * 0.95, (3 * Math.PI) / 4, (5 * Math.PI) / 4);
         ctx.stroke();
+
+        // 2. 帯紙 ＆ ネオン発光ラベル (何色の花火玉か判別できる和風帯)
+        ctx.fillStyle = currentColor;
+        ctx.shadowColor = currentColor;
+        ctx.shadowBlur = 10;
+        ctx.fillRect(this.x - this.size, this.y - 3, this.size * 2, 6);
+
+        // 3. 上部の導火線 (点火コード)
+        const fuseAngle = -Math.PI / 2; // 上向き
+        const fuseStartX = this.x;
+        const fuseStartY = this.y - this.size;
+        const fuseEndX = fuseStartX + Math.sin(Date.now() * 0.01) * 2;
+        const fuseEndY = fuseStartY - 10;
+
+        ctx.strokeStyle = '#8c5828';
+        ctx.lineWidth = 2.8;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(fuseStartX, fuseStartY);
+        ctx.lineTo(fuseEndX, fuseEndY);
+        ctx.stroke();
+
+        // 4. 「チッチッチッ」導火線パチパチ火花アニメーション (リアルスパーク！)
+        ctx.shadowColor = '#ffea00';
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(fuseEndX, fuseEndY, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // パチパチ飛び散る橘火花 4〜6本
+        const sparkCount = 5;
+        ctx.strokeStyle = Math.random() < 0.5 ? '#ff9900' : '#ffe600';
+        ctx.lineWidth = 1.4;
+        for (let i = 0; i < sparkCount; i++) {
+            const sparkAngle = Math.random() * Math.PI * 2;
+            const sparkLen = 4 + Math.random() * 8;
+            const sx = fuseEndX + Math.cos(sparkAngle) * sparkLen;
+            const sy = fuseEndY + Math.sin(sparkAngle) * sparkLen;
+
+            ctx.beginPath();
+            ctx.moveTo(fuseEndX, fuseEndY);
+            ctx.lineTo(sx, sy);
+            ctx.stroke();
+        }
 
         ctx.restore();
     }
 
     playLaunchWhistleSound() {
-        if (!audioEngine.audioCtx) return;
+        if (!audioEngine || !audioEngine.audioCtx) return;
         const ctx = audioEngine.audioCtx;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -110,7 +146,7 @@ class FireworkEnemy extends Enemy {
     }
 
     playExplosionSound() {
-        if (!audioEngine.audioCtx) return;
+        if (!audioEngine || !audioEngine.audioCtx) return;
         const ctx = audioEngine.audioCtx;
 
         const osc = ctx.createOscillator();
@@ -170,7 +206,6 @@ class FireworkEnemy extends Enemy {
         for (let i = 0; i < outerCount; i++) {
             const angle = (i / outerCount) * Math.PI * 2;
             const speed = 7.5 + Math.random() * 3.5;
-            // レインボーの場合は円周角度に応じて綺麗な虹色グラデーション！
             const color = theme.isRainbow ? `hsl(${Math.floor((i / outerCount) * 360)}, 100%, 60%)` : (i % 2 === 0 ? theme.main : theme.sub);
             game.particles.push(new FireworkBloomParticle(x, y, angle, speed, color, 4.5));
         }

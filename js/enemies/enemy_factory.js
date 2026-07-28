@@ -19,14 +19,36 @@ class EnemyFactory {
             case 'RING_NOTE': enemy = new RingEnemy(canvas, gameSpeed, stage); break;
             case 'PENTAGON': enemy = new PentagonEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;
-            case 'CAT': enemy = new CatEnemy(canvas, gameSpeed, stage); break;
+            case 'CAT_MIKE': enemy = new MikeCatEnemy(canvas, gameSpeed, stage); break;
+            case 'CAT_KIJITORA': enemy = new KijitoraCatEnemy(canvas, gameSpeed, stage); break;
+            case 'CAT_HACHIWARE': enemy = new HachiwareCatEnemy(canvas, gameSpeed, stage); break;
             case 'CHICKEN': enemy = new ChickenEnemy(canvas, gameSpeed, stage); break;
             case 'DOG': enemy = new DogEnemy(canvas, gameSpeed, stage); break;
             case 'BEE': enemy = new BeeEnemy(canvas, gameSpeed, stage); break;
             case 'FROG': enemy = new FrogEnemy(canvas, gameSpeed, stage); break;
-            case 'CAT_KIJITORA': enemy = new KijitoraCatEnemy(canvas, gameSpeed, stage); break;
-            case 'CAT_HACHIWARE': enemy = new HachiwareCatEnemy(canvas, gameSpeed, stage); break;
-            case 'SUSHI': enemy = new SushiEnemy(canvas, gameSpeed, stage); break;
+            case 'CAT': {
+                const catClasses = [MikeCatEnemy, KijitoraCatEnemy, HachiwareCatEnemy];
+                const RandomCatClass = catClasses[Math.floor(Math.random() * catClasses.length)];
+                enemy = new RandomCatClass(canvas, gameSpeed, stage);
+                break;
+            }
+            case 'SUSHI_TUNA': enemy = new TunaSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI_SALMON': enemy = new SalmonSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI_SHRIMP': enemy = new ShrimpSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI_EGG': enemy = new EggSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI_MACKEREL': enemy = new MackerelSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI_OCTOPUS': enemy = new OctopusSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI_SQUID': enemy = new SquidSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI_KAPPA': enemy = new KappaRollSushiEnemy(canvas, gameSpeed, stage); break;
+            case 'SUSHI': {
+                const sushiClasses = [
+                    TunaSushiEnemy, SalmonSushiEnemy, ShrimpSushiEnemy, EggSushiEnemy,
+                    MackerelSushiEnemy, OctopusSushiEnemy, SquidSushiEnemy, KappaRollSushiEnemy
+                ];
+                const RandomSushiClass = sushiClasses[Math.floor(Math.random() * sushiClasses.length)];
+                enemy = new RandomSushiClass(canvas, gameSpeed, stage);
+                break;
+            }
             case 'BOMB': enemy = new BombEnemy(canvas, gameSpeed, stage); break;
             case 'FIREWORK': enemy = new FireworkEnemy(canvas, gameSpeed, stage); break;
             default: enemy = new ChaserEnemy(canvas, gameSpeed, stage); break;

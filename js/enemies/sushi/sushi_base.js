@@ -1,0 +1,91 @@
+/**
+ * 寿司ノーツ基底クラス (SushiEnemy)
+ * お皿描画・回転運動・ヒット演出・サウンド処理などの共通ロジックを一元管理
+ */
+class SushiEnemy extends Enemy {
+    constructor(canvas, gameSpeed, stage, config = {}) {
+        const color = config.color || '#ff2a3b';
+        super(canvas, gameSpeed, stage, {
+            id: config.id || 'SUSHI',
+            name: config.name || '回転すし',
+            color: color,
+            shape: 'sushi',
+            speedRatio: config.speedRatio || 1.1,
+            size: config.size || 18,
+            hp: config.hp || 1,
+            behavior: config.behavior || 'straight'
+        });
+
+        this.sushiType = config.sushiType || 'base';
+        this.rotationAngle = Math.random() * Math.PI * 2;
+    }
+
+    update(playerTargetRadius) {
+        const dist = super.update(playerTargetRadius);
+        this.rotationAngle += 0.07;
+        return dist;
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotationAngle);
+
+        // 1. 和風回転寿司お皿 (共通の陶器皿)
+        this.drawPlate(ctx);
+
+        // 2. 個別寿司ネタの描画 (子クラスでオーバーライド)
+        this.drawNeta(ctx);
+
+        ctx.restore();
+        this.drawShieldLayer(ctx);
+    }
+
+    // 和風回転寿司お皿 (真上から見た丸い陶器皿 ＋ ネタ色の綺麗な和風縁ライン)
+    drawPlate(ctx) {
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
+        ctx.shadowBlur = 8;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(0, 0, 19, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.arc(0, 0, 16.8, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#ffaa00';
+        ctx.lineWidth = 1.0;
+        ctx.beginPath();
+        ctx.arc(0, 0, 14.2, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    // 子クラスでオーバーライドするネタ描画
+    drawNeta(ctx) {
+        // 各ネタの独自描画
+    }
+
+    playSushiSound() {
+        if (window.audioEngine) {
+            audioEngine.playTone({ type: 'square', startFreq: 440, endFreq: 880, duration: 0.12, volume: 0.3 });
+        }
+    }
+
+    onHit(game, touchX, touchY, isPerfect) {
+        this.playSushiSound();
+        game.createParticles(this.x, this.y, this.color);
+        game.createParticles(this.x, this.y, '#ffffff');
+        game.ringPulse = 16;
+        game.ringColor = this.color;
+        this.hp = 0;
+        game.combo++;
+        game.score += game.params.baseScore * game.combo;
+        game.gameSpeed += game.params.speedIncrement;
+        game.shockwaves.push(new Shockwave(touchX, touchY, this.color));
+        return true;
+    }
+}
