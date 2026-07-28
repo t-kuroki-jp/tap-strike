@@ -1,18 +1,22 @@
 /**
- * ぴよぴよヒヨコ (つるんと滑らかなひよこフォルム・童顔なパッチリ黒目・一本のちょこん産毛)
+ * ぴよぴよヒヨコ (ChickenEnemy / トコトコ歩行 / つぶらな黒目 ＋ ハイライト ＋ パタパタ羽)
  */
 class ChickenEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CHICKEN', name: 'ぴよぴよヒヨコ', color: '#ffe600', shape: 'chick', speedRatio: 1.0, size: 17, hp: 1,
-            behavior: 'wave', behaviorConfig: { frequency: 0.28, amplitude: 3.0 }
+            id: 'CHICKEN', name: 'ぴよぴよヒヨコ', color: '#ffee33', shape: 'chicken', speedRatio: 0.95, size: 14.5, hp: 1,
+            behavior: 'straight'
         });
-        this.wingAngle = Math.random() * Math.PI * 2;
+        this.wingAngle = 0;
+        this.waddleOffset = 0;
     }
 
     update(playerTargetRadius) {
         const dist = super.update(playerTargetRadius);
-        this.wingAngle += 0.3;
+        // パタパタはためく羽アニメーション
+        this.wingAngle = Math.sin(Date.now() / 60) * 0.4;
+        // トコトコチョコチョコ揺れる体
+        this.waddleOffset = Math.sin(Date.now() / 40) * 2;
         return dist;
     }
 
@@ -60,7 +64,7 @@ class ChickenEnemy extends Enemy {
         ctx.fillStyle = '#ffe600';
         ctx.shadowColor = '#ffe600';
         ctx.shadowBlur = 8;
-        
+
         // 胴体 (下部ふっくら)
         ctx.beginPath();
         ctx.arc(this.x, this.y + 2, 14, 0, Math.PI * 2);
