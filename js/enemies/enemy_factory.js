@@ -51,6 +51,24 @@ class EnemyFactory {
             }
             case 'BOMB': enemy = new BombEnemy(canvas, gameSpeed, stage); break;
             case 'FIREWORK': enemy = new FireworkEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_BLUE': enemy = new BlueSeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_JORUNNA': enemy = new JorunnaSeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_PIKACHU': enemy = new PikachuSeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_STRAWBERRY': enemy = new StrawberrySeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_CINDERELLA': enemy = new CinderellaSeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_GLAUCUS': enemy = new GlaucusSeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_MIZORE': enemy = new MizoreSeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG_KOMPEITO': enemy = new KompeitoSeaSlugEnemy(canvas, gameSpeed, stage); break;
+            case 'SEA_SLUG': {
+                const slugClasses = [
+                    BlueSeaSlugEnemy, JorunnaSeaSlugEnemy, PikachuSeaSlugEnemy,
+                    StrawberrySeaSlugEnemy, CinderellaSeaSlugEnemy, GlaucusSeaSlugEnemy,
+                    MizoreSeaSlugEnemy, KompeitoSeaSlugEnemy
+                ];
+                const RandomSlugClass = slugClasses[Math.floor(Math.random() * slugClasses.length)];
+                enemy = new RandomSlugClass(canvas, gameSpeed, stage);
+                break;
+            }
             default: enemy = new ChaserEnemy(canvas, gameSpeed, stage); break;
         }
 

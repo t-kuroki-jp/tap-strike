@@ -79,6 +79,7 @@ class UIManager {
             { id: 'BEE', name: 'みつばち', tag: '旋回飛翔', desc: '羽をパタパタさせながら大きな円を描いて飛んでくる！', color: '#ffcc00' },
             { id: 'FROG', name: 'かえるさん', tag: '一瞬停止', desc: '手前でピタッと1秒止まって「だるまさんが転んだ」！', color: '#00ff66' },
             { id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633' },
+            { id: 'SEA_SLUG', name: '海の宝石ウミウシ', tag: '波打つ水蒸泳', desc: 'アオウミウシ・ゴマちゃん・ピカチュウ！うねうね波打つ海の宝石！', color: '#00ccff' },
             { id: 'FIREWORK', name: '打上花火', tag: '大輪演出', desc: 'タップすると夜空へ大輪の花火が打ち上がる！', color: '#ff00aa' }
         ];
 
@@ -189,10 +190,11 @@ class UIManager {
         const bgElem = document.querySelector('.bg-animated');
         if (bgElem) {
             bgElem.style.background = `
-                radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(5, 7, 14, 0.9) 100%),
+                radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(5, 7, 14, 0.95) 100%),
                 repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px),
                 repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px)
             `;
+            bgElem.style.backgroundColor = '#05070e';
         }
         document.documentElement.style.setProperty('--bg-scroll-speed', '3s');
         const scoreBoard = document.querySelector('.score-board');
@@ -200,6 +202,7 @@ class UIManager {
             scoreBoard.style.color = '#00f0ff';
             scoreBoard.style.textShadow = '0 0 10px #00f0ff';
         }
+        this.toggleBubbleEffect(false);
     }
 
     /** ステージテーマ（背景・テーマカラー）を適用 */
@@ -207,8 +210,10 @@ class UIManager {
         if (!theme) return;
         const bgElem = document.querySelector('.bg-animated');
         if (bgElem) {
+            const baseBg = theme.bgColor || '#05070e';
+            bgElem.style.backgroundColor = baseBg;
             bgElem.style.background = `
-                radial-gradient(circle, ${theme.bgGlow || 'rgba(0, 240, 255, 0.25)'} 0%, rgba(5, 7, 14, 0.9) 100%),
+                radial-gradient(circle at 50% 40%, ${theme.bgGlow || 'rgba(0, 240, 255, 0.25)'} 0%, ${baseBg} 85%),
                 repeating-linear-gradient(0deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px),
                 repeating-linear-gradient(90deg, transparent, transparent 39px, ${theme.gridColor || 'rgba(0, 240, 255, 0.3)'} 40px)
             `;
@@ -220,6 +225,42 @@ class UIManager {
         if (scoreBoard) {
             scoreBoard.style.color = mainColor;
             scoreBoard.style.textShadow = `0 0 12px ${mainColor}`;
+        }
+
+        // 水泡アクアリウムエフェクトのオンオフ
+        this.toggleBubbleEffect(!!theme.bubbleEffect);
+    }
+
+    /** 深海ぷくぷく水泡エフェクトのオンオフ切り替え */
+    toggleBubbleEffect(enable) {
+        let container = document.getElementById('bubble-container');
+        if (enable) {
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'bubble-container';
+                container.className = 'bubble-container';
+                document.body.appendChild(container);
+            }
+            container.innerHTML = '';
+            // 12個のゆらめく水泡をランダム生成
+            for (let i = 0; i < 12; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble-particle';
+                const size = 6 + Math.random() * 14;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 6;
+                const duration = 4 + Math.random() * 5;
+
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+                container.appendChild(bubble);
+            }
+            container.style.display = 'block';
+        } else if (container) {
+            container.style.display = 'none';
         }
     }
 
