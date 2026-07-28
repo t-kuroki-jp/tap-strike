@@ -1,4 +1,16 @@
 /**
+ * ゲーム状態 Enum 定義
+ */
+const GameState = Object.freeze({
+    MODE_SELECT: 'MODE_SELECT',
+    STAGE_SELECT: 'STAGE_SELECT',
+    CHARACTER_LIST: 'CHARACTER_LIST',
+    PLAYING: 'PLAYING',
+    PAUSED: 'PAUSED',
+    GAME_OVER: 'GAME_OVER'
+});
+
+/**
  * タップストライク メインゲームエンジン
  */
 class Game {
@@ -6,11 +18,9 @@ class Game {
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
 
+        this.state = GameState.MODE_SELECT;
         this.score = 0;
         this.combo = 0;
-        this.isGameOver = false;
-        this.isGameStarted = false;
-        this.isPaused = false;
         this.enemies = [];
         this.particles = [];
         this.shockwaves = [];
@@ -41,6 +51,15 @@ class Game {
 
         this.initEventListeners();
         this.resize();
+    }
+
+    // 互換性アクセサー
+    get isGameStarted() { return this.state === GameState.PLAYING || this.state === GameState.PAUSED; }
+    get isGameOver() { return this.state === GameState.GAME_OVER; }
+    get isPaused() { return this.state === GameState.PAUSED; }
+
+    setState(newState) {
+        this.state = newState;
     }
 
     initEventListeners() {
@@ -103,37 +122,37 @@ class Game {
     }
 
     showCharacterList() {
+        this.setState(GameState.CHARACTER_LIST);
         uiManager.showCharacterList();
     }
 
     togglePause() {
-        if (!this.isGameStarted || this.isGameOver) return;
+        if (this.state !== GameState.PLAYING && this.state !== GameState.PAUSED) return;
 
-        this.isPaused = !this.isPaused;
-
-        if (this.isPaused) {
-            if (this.bgmAudio) {
-                try { this.bgmAudio.pause(); } catch (e) {}
+        if (this.state === GameState.PLAYING) {
+            this.setState(GameState.PAUSED);
+            if (audioEngine.bgmAudio) {
+                try { audioEngine.bgmAudio.pause(); } catch (e) {}
             }
             this.showModal('modal-pause');
             const uiElem = document.getElementById('ui');
-            if (uiElem) uiElem.style.display = 'block'; // ポーズ中もHUD維持
+            if (uiElem) uiElem.style.display = 'block';
         } else {
+            this.setState(GameState.PLAYING);
             const pauseElem = document.getElementById('modal-pause');
             if (pauseElem) pauseElem.style.display = 'none';
 
             const uiElem = document.getElementById('ui');
-            if (uiElem) uiElem.style.display = 'block'; // 再開時もHUD確定表示！
+            if (uiElem) uiElem.style.display = 'block';
 
-            if (this.bgmAudio) {
-                try { this.bgmAudio.play(); } catch (e) {}
+            if (audioEngine.bgmAudio) {
+                try { audioEngine.bgmAudio.play(); } catch (e) {}
             }
             requestAnimationFrame(() => this.gameLoop());
         }
     }
 
     restartStage() {
-        this.isPaused = false;
         if (!this.currentStage) {
             this.showModeSelect();
             return;
@@ -149,8 +168,7 @@ class Game {
 
     showModeSelect() {
         audioEngine.init();
-        this.isGameStarted = false;
-        this.isGameOver = false;
+        this.setState(GameState.MODE_SELECT);
         this.stopBGM();
 
         // 描画・エンティティ完全削除
@@ -170,8 +188,7 @@ class Game {
 
     async showStageSelect(diff) {
         audioEngine.init();
-        this.isGameStarted = false;
-        this.isGameOver = false;
+        this.setState(GameState.STAGE_SELECT);
         this.stopBGM();
 
         // 描画完全クリア
@@ -209,9 +226,7 @@ class Game {
         this.params = dataLoader.getResolvedParams(stage);
         this.applyTheme(stage.theme);
 
-        this.isGameStarted = true;
-        this.isGameOver = false;
-        this.isPaused = false;
+        this.setState(GameState.PLAYING);
 
         uiManager.hideAllModals();
         const uiElem = document.getElementById('ui');
@@ -233,6 +248,7 @@ class Game {
     }
 
     resetGame() {
+        this.setState(GameState.PLAYING);
         this.score = 0;
         this.combo = 0;
         this.gameSpeed = 1.0;
@@ -242,7 +258,6 @@ class Game {
         this.ringPulse = 0;
         this.missPenaltyTimer = 0;
         this.lastTapTime = 0;
-        this.isGameOver = false;
 
         this.params = dataLoader.getResolvedParams(this.currentStage) || {};
         this.player.targetRadius = this.params.targetRadius || 60;
@@ -361,7 +376,7 @@ class Game {
     }
 
     gameOver() {
-        this.isGameOver = true;
+        this.setState(GameState.GAME_OVER);
         this.stopBGM();
         audioEngine.playGameOverSound();
 
