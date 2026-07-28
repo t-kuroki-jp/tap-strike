@@ -67,9 +67,10 @@ EASY・NORMAL モードの全ステージおよび基本10大ノーツ動作の�
 
 ## 📋 リファクタリング実施ロードマップ (Action Plan)
 
-1. [ ] **`js/config.js` の作成** (定数集約)
-2. [ ] **`js/ui.js` の作成** (DOM/モーダル操作の切出)
-3. [ ] **`js/game.js` のリファクタリング** (`GameState` 導入 & UI委譲)
-4. [ ] **動作検証 & GitHub Push** (EASY / NORMAL ステージの完全動作確認)
+1. [x] **Phase 1: `js/ui.js` の作成** (DOM / モーダル操作 / HUD制御の完全切り出し)
+2. [x] **Phase 2: `js/game.js` の状態管理一元化** (`GameState` Enum 導入による堅牢なステート遷移)
+3. [x] **Phase 3: `js/config.js` の作成** (判定幅・基本半径・描画最大幅などの定数集約)
+4. [x] **Phase 4: タイマー & バックグラウンド保護堅牢化** (`visibilitychange` 自動ポーズ & 重複破棄)
+5. [x] **全フェーズ動作検証 & GitHub Push** (EASY / NORMAL ステージの完全正常動作確認完了)
 
 ---
