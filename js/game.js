@@ -58,10 +58,6 @@ class Game {
     get isGameOver() { return this.state === GameState.GAME_OVER; }
     get isPaused() { return this.state === GameState.PAUSED; }
 
-    setState(newState) {
-        this.state = newState;
-    }
-
     initEventListeners() {
         window.addEventListener('resize', () => this.resize());
 
@@ -103,6 +99,13 @@ class Game {
                 if (this.isGameStarted || this.isGameOver) {
                     this.restartStage();
                 }
+            }
+        });
+
+        // 🛡️ タブ切り替え/非アクティブ化時の自動ポーズ保護機能
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && this.state === GameState.PLAYING) {
+                this.togglePause();
             }
         });
     }
@@ -270,6 +273,14 @@ class Game {
         requestAnimationFrame(() => this.gameLoop());
     }
 
+    setState(newState) {
+        this.state = newState;
+        // PLAYING または PAUSED 以外への遷移時はタイマーを即時クリア
+        if (newState !== GameState.PLAYING && newState !== GameState.PAUSED) {
+            this.stopBGM();
+        }
+    }
+
     startBGM() {
         this.stopBGM();
 
@@ -278,10 +289,10 @@ class Game {
         }
 
         this.bgmStep = 0;
-        const spawnInterval = this.currentStage?.spawnRate || 187;
+        const spawnInterval = this.currentStage?.spawnRate || CONFIG.GAME.DEFAULT_SPAWN_RATE_MS;
 
         this.bgmInterval = setInterval(() => {
-            if (this.isGameOver || !this.isGameStarted || this.isPaused) return;
+            if (this.state !== GameState.PLAYING) return;
             this.beatPulse = 5;
 
             if (this.currentStage?.spawnPattern === 'san_san_nana') {
