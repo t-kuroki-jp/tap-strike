@@ -349,9 +349,10 @@ class Game {
             const dist = Math.hypot(centerX - enemy.x, centerY - enemy.y);
             const diff = Math.abs(dist - this.player.targetRadius);
 
-            if (diff < this.params.hitWindow) {
+            const hitWin = this.params.hitWindow * (enemy.hitRadiusRatio || 1.0);
+            if (diff < hitWin) {
                 hit = true;
-                const isPerfect = diff <= CONFIG.HIT.PERFECT_WINDOW_PX;
+                const isPerfect = diff <= (CONFIG.HIT.PERFECT_WINDOW_PX * (enemy.hitRadiusRatio || 1.0));
 
                 enemy.onHit(this, touchX, touchY, isPerfect);
 

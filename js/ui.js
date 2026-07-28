@@ -80,7 +80,8 @@ class UIManager {
             { id: 'FROG', name: 'かえるさん', tag: '一瞬停止', desc: '手前でピタッと1秒止まって「だるまさんが転んだ」！', color: '#00ff66' },
             { id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633' },
             { id: 'SEA_SLUG', name: '海の宝石ウミウシ', tag: '波打つ水蒸泳', desc: 'アオウミウシ・ゴマちゃん・ピカチュウ！うねうね波打つ海の宝石！', color: '#00ccff' },
-            { id: 'FIREWORK', name: '打上花火', tag: '大輪演出', desc: 'タップすると夜空へ大輪の花火が打ち上がる！', color: '#ff00aa' }
+            { id: 'FIREWORK', name: '打上花火', tag: '大輪演出', desc: 'タップすると夜空へ大輪の花火が打ち上がる！', color: '#ff00aa' },
+            { id: 'SAKURA_PETAL', name: '桜の花びら', tag: 'ひらひら舞い降り', desc: '上から舞い落ちる花びら。タップすると下に満開の桜が咲き誇る！', color: '#ffb7c5' }
         ];
 
         const dummyCanvas = document.createElement('canvas');
@@ -229,6 +230,29 @@ class UIManager {
 
         // 水泡アクアリウムエフェクトのオンオフ
         this.toggleBubbleEffect(!!theme.bubbleEffect);
+        // 夜桜吹雪エフェクトのオンオフ
+        this.toggleSakuraEffect(!!theme.sakuraEffect);
+    }
+
+    /** 背景テーマをデフォルト状態（シアン）に復元 */
+    resetThemeToDefault() {
+        const bgElem = document.querySelector('.bg-animated');
+        if (bgElem) {
+            bgElem.style.background = `
+                radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(5, 7, 14, 0.95) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 240, 255, 0.3) 40px)
+            `;
+            bgElem.style.backgroundColor = '#05070e';
+        }
+        document.documentElement.style.setProperty('--bg-scroll-speed', '3s');
+        const scoreBoard = document.querySelector('.score-board');
+        if (scoreBoard) {
+            scoreBoard.style.color = '#00f0ff';
+            scoreBoard.style.textShadow = '0 0 10px #00f0ff';
+        }
+        this.toggleBubbleEffect(false);
+        this.toggleSakuraEffect(false);
     }
 
     /** 深海ぷくぷく水泡エフェクトのオンオフ切り替え */
@@ -257,6 +281,39 @@ class UIManager {
                 bubble.style.animationDelay = `${delay}s`;
                 bubble.style.animationDuration = `${duration}s`;
                 container.appendChild(bubble);
+            }
+            container.style.display = 'block';
+        } else if (container) {
+            container.style.display = 'none';
+        }
+    }
+
+    /** ロマンチック夜桜吹雪エフェクトのオンオフ切り替え */
+    toggleSakuraEffect(enable) {
+        let container = document.getElementById('sakura-container');
+        if (enable) {
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'sakura-container';
+                container.className = 'sakura-container';
+                document.body.appendChild(container);
+            }
+            container.innerHTML = '';
+            // 16枚のひらひら舞う桜の花びらを生成
+            for (let i = 0; i < 16; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'sakura-particle';
+                const size = 8 + Math.random() * 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 8;
+                const duration = 5 + Math.random() * 6;
+
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size * 1.3}px`;
+                petal.style.left = `${left}%`;
+                petal.style.animationDelay = `${delay}s`;
+                petal.style.animationDuration = `${duration}s`;
+                container.appendChild(petal);
             }
             container.style.display = 'block';
         } else if (container) {

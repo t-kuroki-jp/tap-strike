@@ -51,6 +51,7 @@ class EnemyFactory {
             }
             case 'BOMB': enemy = new BombEnemy(canvas, gameSpeed, stage); break;
             case 'FIREWORK': enemy = new FireworkEnemy(canvas, gameSpeed, stage); break;
+            case 'SAKURA_PETAL': enemy = new SakuraPetalEnemy(canvas, gameSpeed, stage); break;
             case 'SEA_SLUG_BLUE': enemy = new BlueSeaSlugEnemy(canvas, gameSpeed, stage); break;
             case 'SEA_SLUG_JORUNNA': enemy = new JorunnaSeaSlugEnemy(canvas, gameSpeed, stage); break;
             case 'SEA_SLUG_PIKACHU': enemy = new PikachuSeaSlugEnemy(canvas, gameSpeed, stage); break;
