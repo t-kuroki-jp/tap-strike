@@ -364,6 +364,62 @@ p.subtitle {
     font-size: 11px;
     color: #ffcc00;
     text-align: right;
+    width: 100%;
+}
+
+.stage-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.badge-stage-num,
+.badge-new {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.badge-EASY {
+    background: rgba(0, 255, 136, 0.15);
+    color: #00ff88;
+    border: 1px solid rgba(0, 255, 136, 0.5);
+    text-shadow: 0 0 6px rgba(0, 255, 136, 0.4);
+}
+
+.badge-NORMAL {
+    background: rgba(0, 240, 255, 0.15);
+    color: #00f0ff;
+    border: 1px solid rgba(0, 240, 255, 0.5);
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+
+.badge-HARD {
+    background: rgba(255, 0, 85, 0.15);
+    color: #ff0055;
+    border: 1px solid rgba(255, 0, 85, 0.5);
+    text-shadow: 0 0 6px rgba(255, 0, 85, 0.4);
+}
+
+.badge-FUNNY {
+    background: rgba(255, 204, 0, 0.18);
+    color: #ffcc00;
+    border: 1px solid rgba(255, 204, 0, 0.6);
+    text-shadow: 0 0 6px rgba(255, 204, 0, 0.4);
+}
+
+.badge-new {
+    font-weight: 900;
+    animation: pulseNew 1.5s infinite alternate;
+}
+
+@keyframes pulseNew {
+    0% { box-shadow: 0 0 4px rgba(255, 204, 0, 0.4); }
+    100% { box-shadow: 0 0 10px rgba(255, 204, 0, 0.9); }
 }
 
 .btn-action {

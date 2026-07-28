@@ -140,27 +140,43 @@ class UIManager {
         if (!container) return;
         container.innerHTML = '';
 
-        const items = stages.filter(s => s.difficulty === diff);
+        let items = stages.filter(s => s.difficulty === diff);
         if (items.length === 0) {
             container.innerHTML = '<div class="loading-text" style="color:#aaa;">このモードのステージはまだありません</div>';
             return;
         }
 
-        // 新しい順（日付降順）にソート
-        items.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
+        if (diff === 'FUNNY') {
+            // FUNNYモード: 最新順(日付降順)で並べ替え
+            items.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
+        }
+        // EASY / NORMAL / HARD: stages.json での定義順(コース順 1, 2, 3...)を維持！
 
-        items.forEach(s => {
+        items.forEach((s, index) => {
             const card = document.createElement('div');
             card.className = 'stage-card';
             const best = localStorage.getItem(`bestScore_${s.id}`) || 0;
-            const dateStr = s.updatedAt || s.createdAt || '';
+
+            let badgeHtml = '';
+            if (diff === 'FUNNY') {
+                // 最新3件に NEW! バッジを表示 (ゴールド/イエローカラー)
+                if (index < 3) {
+                    badgeHtml = `<span class="badge-new badge-${diff}">NEW!</span>`;
+                }
+            } else {
+                // コース順の STAGE 01, STAGE 02 ... (モードカラー連動)
+                const stageNum = String(index + 1).padStart(2, '0');
+                badgeHtml = `<span class="badge-stage-num badge-${diff}">STAGE ${stageNum}</span>`;
+            }
 
             card.innerHTML = `
-                <div class="stage-name">${s.name}</div>
+                <div class="stage-card-header">
+                    ${badgeHtml}
+                    <div class="stage-name">${s.name}</div>
+                </div>
                 <div class="stage-desc">${s.description || ''}</div>
                 <div class="stage-stats">
-                    <span>${dateStr ? `📅 ${dateStr}` : ''}</span>
-                    <span class="stage-score">🏆 BEST: ${best}</span>
+                    <span class="stage-score">🏆 BEST: ${Number(best).toLocaleString()}</span>
                 </div>
             `;
             card.onclick = () => onSelectStage(s);

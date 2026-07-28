@@ -1,6 +1,6 @@
 {
   "id": "phantom_glitch",
-  "name": "3. ファントム・グリッチ",
+  "name": "ファントム・グリッチ",
   "difficulty": "EASY",
   "description": "👾 紫色の正方形！判定の手前に来ると『フッ』と一瞬減速してタイミングをずらしてくる！",
   "bgm": "bgm/Magenta_Pulse.mp3",
