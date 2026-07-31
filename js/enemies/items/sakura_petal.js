@@ -15,9 +15,6 @@ class SakuraPetalEnemy extends Enemy {
             behavior: 'straight'
         });
 
-        // 当たり判定のみを甘く(1.5倍)拡張！
-        this.hitRadiusRatio = 1.5;
-
         // 画面上部・上左右のエッジ（絶対画面上半分）からランダム出現
         const side = Math.floor(Math.random() * 3); // 0: 真上, 1: 左上, 2: 右上
         if (side === 0) {

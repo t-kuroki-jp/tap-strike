@@ -349,10 +349,14 @@ class Game {
             const dist = Math.hypot(centerX - enemy.x, centerY - enemy.y);
             const diff = Math.abs(dist - this.player.targetRadius);
 
-            const hitWin = this.params.hitWindow * (enemy.hitRadiusRatio || 1.0);
+            // 体全体カバーのHIT判定幅 (ノーツのサイズ・全長を加味)
+            const bodyCoverage = (enemy.size || 16) * 0.45;
+            const hitWin = (this.params.hitWindow || 24) + bodyCoverage;
+
             if (diff < hitWin) {
                 hit = true;
-                const isPerfect = diff <= (CONFIG.HIT.PERFECT_WINDOW_PX * (enemy.hitRadiusRatio || 1.0));
+                // PERFECT判定はノーツの「中心コア」がターゲットリングと精密に重なった時！
+                const isPerfect = diff <= CONFIG.HIT.PERFECT_WINDOW_PX;
 
                 enemy.onHit(this, touchX, touchY, isPerfect);
 
