@@ -25,12 +25,10 @@ class ChaserEnemy extends Enemy {
         this.drawShieldLayer(ctx);
     }
 }
-
-// 2. スピーダー (黄色・稲妻ノーツ / Speed Straight)
 class SpeederEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'SPEEDER', name: 'スピーダー', color: '#ffff33', shape: 'lightning', speedRatio: 1.45, size: 14, hp: 1,
+            id: 'SPEEDER', name: 'スピーダー', color: '#ffff33', shape: 'star', speedRatio: 1.45, size: 14, hp: 1,
             behavior: 'straight'
         });
     }
@@ -44,17 +42,24 @@ class SpeederEnemy extends Enemy {
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 15;
 
-        const s = this.size;
+        // ネオンイエローの疾走感のある5角星グラフィック
+        const s = this.size * 1.1;
+        const innerRadius = s * 0.45;
         ctx.beginPath();
-        ctx.moveTo(s * 0.2, -s * 1.3);
-        ctx.lineTo(-s * 0.8, -s * 0.1);
-        ctx.lineTo(-s * 0.1, -s * 0.1);
-        ctx.lineTo(-s * 0.4, s * 1.3);
-        ctx.lineTo(s * 0.8, s * 0.1);
-        ctx.lineTo(s * 0.1, s * 0.1);
+        for (let i = 0; i < 5; i++) {
+            const outerAngle = (i * 72 - 90) * Math.PI / 180;
+            const innerAngle = ((i * 72 + 36) - 90) * Math.PI / 180;
+
+            if (i === 0) {
+                ctx.moveTo(Math.cos(outerAngle) * s, Math.sin(outerAngle) * s);
+            } else {
+                ctx.lineTo(Math.cos(outerAngle) * s, Math.sin(outerAngle) * s);
+            }
+            ctx.lineTo(Math.cos(innerAngle) * innerRadius, Math.sin(innerAngle) * innerRadius);
+        }
         ctx.closePath();
-        
         ctx.fill();
+
         ctx.restore();
         this.drawShieldLayer(ctx);
     }
@@ -88,19 +93,11 @@ class CurveEnemy extends Enemy {
             id: 'CURVE', name: 'スピナー', color: '#ff9900', shape: 'triangle', speedRatio: 0.95, size: 14, hp: 1,
             behavior: 'spiral'
         });
-        this.rotationAngle = Math.random() * Math.PI * 2;
-    }
-
-    update(playerTargetRadius) {
-        const dist = super.update(playerTargetRadius);
-        this.rotationAngle += 0.12;
-        return dist;
     }
 
     draw(ctx) {
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotationAngle);
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
@@ -123,7 +120,7 @@ class CurveEnemy extends Enemy {
 class SineWaveEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'SINE_WAVE', name: 'サイン・ウェイバー', color: '#00ffcc', shape: 'diamond', speedRatio: 1.0, size: 13, hp: 1,
+            id: 'SINE_WAVE', name: 'サイン・ウェイバー', color: '#00ffcc', shape: 'diamond', speedRatio: 1.0, size: 14, hp: 1,
             behavior: 'wave', behaviorConfig: { frequency: 0.035, amplitude: 4.5 }
         });
     }
@@ -147,26 +144,18 @@ class SineWaveEnemy extends Enemy {
     }
 }
 
-// 6. ブーメラン・クロス (ピンク・L字幾何学ノーツ ＋ 高速回転 / Boomerang)
+// 6. ブーメラン・クロス (シックな木調ブラウン・L字幾何学ノーツ / Boomerang)
 class CrossEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CROSS', name: 'ブーメラン・クロス', color: '#ff0077', shape: 'boomerang', speedRatio: 0.95, size: 14, hp: 1,
+            id: 'CROSS', name: 'ブーメラン・クロス', color: '#d2691e', shape: 'boomerang', speedRatio: 0.95, size: 14, hp: 1,
             behavior: 'boomerang'
         });
-        this.rotationAngle = Math.random() * Math.PI * 2;
-    }
-
-    update(playerTargetRadius) {
-        const dist = super.update(playerTargetRadius);
-        this.rotationAngle += 0.22;
-        return dist;
     }
 
     draw(ctx) {
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotationAngle);
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
@@ -195,19 +184,11 @@ class GhostEnemy extends Enemy {
             id: 'GHOST', name: 'ステルス・クロス', color: '#aaff66', shape: 'shuriken', speedRatio: 1.0, size: 14, hp: 1,
             behavior: 'stealth'
         });
-        this.rotationAngle = Math.random() * Math.PI * 2;
-    }
-
-    update(playerTargetRadius) {
-        const dist = super.update(playerTargetRadius);
-        this.rotationAngle += 0.15;
-        return dist;
     }
 
     draw(ctx) {
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotationAngle);
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;

@@ -2,7 +2,7 @@
   "id": "boomerang_cross",
   "name": "ブーメラン・クロス",
   "difficulty": "EASY",
-  "description": "🪃 ピンクのL字ノーツ！高速自転しながら近づき、手前で1度バックしてから突撃してくる！",
+  "description": "🪃 シックな木調ブラウンのL字ノーツ！手前で1度外へ引き返してから突撃してくる！",
   "bgm": "bgm/Under_The_Hammer.mp3",
   "spawnRate": 230,
   "theme": {

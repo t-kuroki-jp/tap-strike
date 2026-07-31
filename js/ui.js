@@ -64,11 +64,11 @@ class UIManager {
 
         const characterData = [
             { id: 'CHASER', name: 'チェイサー', tag: '直進', desc: '赤色のネオン円形ノーツ。中心へ一直線にアプローチ！', color: '#ff3366' },
-            { id: 'SPEEDER', name: 'スピーダー', tag: '高速直進', desc: '黄色のネオン稲妻ノーツ。1.5倍のハイスピードで突進！', color: '#ffff33' },
+            { id: 'SPEEDER', name: 'スピーダー', tag: '高速直進', desc: '黄色のネオン★星型ノーツ。1.5倍のハイスピードで突進！', color: '#ffff33' },
             { id: 'GLITCH', name: 'ファントム・グリッチ', tag: '直前減速', desc: '紫色のネオン正方形。判定手前でフッと一瞬減速する！', color: '#cc00ff' },
             { id: 'CURVE', name: 'スピナー', tag: '片曲がりカーブ', desc: 'オレンジ色の正三角形。片側に綺麗なカーブ（変化球）を描いて侵入！', color: '#ff9900' },
             { id: 'SINE_WAVE', name: 'サイン・ウェイバー', tag: '大波S字運動', desc: 'シアン色のダイアモンド。S字サイン波でゆったり優雅に流れる！', color: '#00ffcc' },
-            { id: 'CROSS', name: 'ブーメラン・クロス', tag: '引き返し回転', desc: 'ピンク色のL字ノーツ。自転回転しながら手前で引き返す！', color: '#ff0077' },
+            { id: 'CROSS', name: 'ブーメラン・クロス', tag: '引き返し・Uターン', desc: '木調ブラウンのL字ノーツ。一度外へ引き返してから急速アプローチ！', color: '#d2691e' },
             { id: 'GHOST', name: 'ステルス・クロス', tag: '隠密・透明化', desc: 'ライム色の手裏剣ノーツ。途中で消えて判定直前に現れる！', color: '#aaff66' },
             { id: 'HEXAGON', name: 'フリーズ・ヘキサ', tag: '一瞬停止', desc: '水色の正六角形。手前でピタッと1秒停止後ダッシュ！', color: '#00ccff' },
             { id: 'RING_NOTE', name: 'オービット・サターン', tag: '大円弧公転', desc: '金色の土星ノーツ。画面外から大きな円弧を描いて接近！', color: '#ffea00' },
