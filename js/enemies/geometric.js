@@ -64,8 +64,8 @@ class SpeederEnemy extends Enemy {
 class GlitchEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'GLITCH', name: 'ファントム・グリッチ', color: '#cc00ff', shape: 'square', speedRatio: 1.0, size: 13, hp: 1,
-            behavior: 'glitch', behaviorConfig: { glitchPointRatio: 0.4, slowRatio: 0.15, slowDuration: 450 }
+            id: 'GLITCH', name: 'ファントム・グリッチ', color: '#cc00ff', shape: 'square', speedRatio: 1.0, size: 14, hp: 1,
+            behavior: 'glitch', behaviorConfig: { slowDownMax: 95, slowDownMin: 35, slowDownRatio: 0.55 }
         });
     }
 

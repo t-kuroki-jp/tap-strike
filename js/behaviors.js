@@ -93,9 +93,9 @@ class SpiralBehavior extends Behavior {
 class GlitchBehavior extends Behavior {
     constructor(config = {}) {
         super();
-        this.slowDownMin = config.slowDownMin || 15;
-        this.slowDownMax = config.slowDownMax || 60;
-        this.slowDownRatio = config.slowDownRatio || 0.3;
+        this.slowDownMin = config.slowDownMin || 35;
+        this.slowDownMax = config.slowDownMax || 95;
+        this.slowDownRatio = config.slowDownRatio || 0.55;
     }
 
     update(enemy, playerTargetRadius) {
@@ -108,7 +108,8 @@ class GlitchBehavior extends Behavior {
         if (dist === 0) return 0;
 
         let currentSpeed = enemy.speed;
-        if (dist < playerTargetRadius + this.slowDownMax && dist > playerTargetRadius + this.slowDownMin) {
+        // 判定リングの手前(95px)に入ったら、中心へ到達するまでなめらかな減速スピードを維持！
+        if (dist < playerTargetRadius + this.slowDownMax) {
             currentSpeed *= this.slowDownRatio;
         }
 
