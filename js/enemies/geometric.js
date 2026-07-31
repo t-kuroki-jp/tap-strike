@@ -242,11 +242,11 @@ class HexagonEnemy extends Enemy {
     }
 }
 
-// 9. オービット・サターン (金色・惑星サターン土星輪ノーツ / Orbit)
+// 9. オービット・オクタ (ディープインディゴ・正八角形幾何学ノーツ / Orbit)
 class RingEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'RING_NOTE', name: 'オービット・サターン', color: '#ffea00', shape: 'saturn', speedRatio: 0.9, size: 14, hp: 1,
+            id: 'RING_NOTE', name: 'オービット・オクタ', color: '#3355ff', shape: 'octagon', speedRatio: 0.9, size: 14, hp: 1,
             behavior: 'orbit'
         });
     }
@@ -256,30 +256,24 @@ class RingEnemy extends Enemy {
         ctx.translate(this.x, this.y);
 
         if (this.alpha !== undefined) ctx.globalAlpha = this.alpha;
-
-        const s = this.size;
-
-        // 1. 斜めに傾いた土星の光輪 (Back ring)
-        ctx.save();
-        ctx.rotate(-0.4);
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = 2.5;
-        ctx.shadowColor = this.color;
-        ctx.shadowBlur = 12;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, s * 1.4, s * 0.5, 0, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.restore();
-
-        // 2. 中央のプラネット核 (球体)
         ctx.fillStyle = this.color;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 12;
+
+        // 重厚で美しく見やすいネオン正八角形 (Octagon)
         ctx.beginPath();
-        ctx.arc(0, 0, s * 0.65, 0, Math.PI * 2);
+        for (let i = 0; i < 8; i++) {
+            const angle = (Math.PI / 4) * i + (Math.PI / 8);
+            const px = Math.cos(angle) * this.size * 1.1;
+            const py = Math.sin(angle) * this.size * 1.1;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
         ctx.fill();
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }
 
