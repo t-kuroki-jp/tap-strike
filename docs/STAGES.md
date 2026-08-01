@@ -53,31 +53,17 @@
 
 ## 3. 📐 個別ステージ JSON 標準スキーマ規格 (Standard Stage Schema)
 
-新しいステージを作成・編集する際は、必ず以下の **標準 JSON スキーマ規格（必須プロパティ）** に従って記述します。
+新しいステージを作成・編集する際、個別のステージ JSON が持つべき基本的な標準プロパティは **以下の 6 つのみ** です。共通の物理パラメータ (`params`) やカラーテーマ (`theme`) は `stages/index.json` のマスタから自動補填されるため省略可能です（特殊な演出・色の時のみ指定してオーバーライドします）。
 
 ```json
 {
-  "id": "stage_id",
-  "name": "ステージ表示名",
-  "difficulty": "EASY | NORMAL | HARD | FUNNY",
-  "description": "絵文字 ＋ ステージ特徴説明テキスト",
-  "bgm": "bgm/ファイル名.mp3",
+  "id": "straight_circle",
+  "name": "ストレート・サークル",
+  "difficulty": "EASY",
+  "description": "🔴 赤色のネオン正円ノーツ！画面外から判定リングへ一直線にアプローチ！",
   "spawnRate": 230,
-  "theme": {
-    "bgGlow": "rgba(R, G, B, 0.25)",
-    "gridColor": "rgba(R, G, B, 0.3)",
-    "ringColor": "#HEX",
-    "playerColor": "#HEX"
-  },
-  "params": {
-    "gameSpeed": 0.85,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
-  },
   "enemyPool": [
-    { "id": "ENEMY_ID", "weight": 1.0 }
+    { "id": "CHASER", "behavior": "straight" }
   ]
 }
 ```
@@ -90,17 +76,15 @@
 | **`name`** | `string` | **必須** | UIやモード選択画面に表示されるステージ名。 | `"ストレート・サークル"` |
 | **`difficulty`** | `string` | **必須** | `"EASY"`, `"NORMAL"`, `"HARD"`, `"FUNNY"` のいずれか。 | `"EASY"` |
 | **`description`** | `string` | **必須** | アイコン絵文字から始まるステージ特徴・攻略の解説文。 | `"🔴 ネオン正円ノーツ！..."` |
-| **`bgm`** | `string` | **必須** | ループ再生される BGM ファイル相対パス。 | `"bgm/Sharp_Suits_on_the_Avenue.mp3"` |
 | **`spawnRate`** | `number` | **必須** | ノーツ出撃チェック間隔タイマー（ミリ秒）。値が小さいほど高密度。 | `230` (標準) / `160` (高速) |
-| **`spawnPattern`**| `string` | *任意* | 特殊スポーンパターン指定（例: `"san_san_nana"`）。 | `"san_san_nana"` |
-| **`targetScore`** | `number` | *任意* | ステージクリアの目標スコア（オプショナル）。 | `500` |
-| **`theme`** | `object` | **必須** | ステージ固有のネオンビジュアルカラーテーマ。 | 下記参照 |
-| ↳ **`bgGlow`** | `string` | **必須** | キャンバス中央の背景グロー発光色 (`rgba`)。 | `"rgba(0, 240, 255, 0.25)"` |
-| ↳ **`gridColor`** | `string` | **必須** | 全方位背景グリッドライン描画色 (`rgba`)。 | `"rgba(0, 240, 255, 0.3)"` |
-| ↳ **`ringColor`** | `string` | **必須** | 判定ターゲットリングの発光カラーコード。 | `"#00f0ff"` |
-| ↳ **`playerColor`** | `string` | **必須** | 自機プレイヤー判定リングのメインカラーコード。 | `"#00f0ff"` |
+| **`enemyPool`** | `array` | **必須** | ステージで出撃するエネミーノーツの抽選プール。 | `[{ "id": "CHASER", "weight": 1 }]` |
+| **`theme`** | `object` | *任意* | ステージ固有の特別カラーテーマ（省略時はマスタ定義色を自動適用）。 | 下記参照 |
+| ↳ **`bgGlow`** | `string` | *任意* | キャンバス中央の背景グロー発光色 (`rgba`)。 | `"rgba(0, 240, 255, 0.25)"` |
+| ↳ **`gridColor`** | `string` | *任意* | 全方位背景グリッドライン描画色 (`rgba`)。 | `"rgba(0, 240, 255, 0.3)"` |
+| ↳ **`ringColor`** | `string` | *任意* | 判定ターゲットリングの発光カラーコード。 | `"#00f0ff"` |
+| ↳ **`playerColor`** | `string` | *任意* | 自機プレイヤー判定リングのメインカラーコード。 | `"#00f0ff"` |
 | ↳ **`rainbow`** | `boolean`| *任意* | `true` の場合、画面背景全域が七色レインボーに変色。 | `true` |
-| **`params`** | `object` | **必須** | ゲーム難易度パラメータ調整値（省略時は `index.json` の `defaults` から自動補填）。 | 下記参照 |
+| **`params`** | `object` | *任意* | ステージ固有の特別物理パラメータ（省略時はマスタ定義を自動適用）。 | 下記参照 |
 | ↳ **`gameSpeed`**| `number` | **必須** | ステージ開始時の初期ゲームスクロール速度。 | `0.85` (標準) / `1.1` (高速) |
 | ↳ **`speedIncrement`**| `number`| *任意* | ノーツ 1 体撃破ごとの加速上昇量。 | `0.008` (標準) |
 | ↳ **`targetRadius`**| `number`| **必須** | 判定ターゲットリングの半径（ピクセル）。 | `60` |

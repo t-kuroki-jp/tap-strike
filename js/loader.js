@@ -55,12 +55,26 @@ class DataLoader {
         const diffMaster = this.master[stage.difficulty] || {};
         const defaultParams = diffMaster.params || {};
 
-        // 難易度の基本 params と個別ステージの params を完全対等合成！
         return Object.assign(
             {},
             this.getDefaultParams(),
             defaultParams,
             stage.params || {}
+        );
+    }
+
+    getMergedTheme(stageOrId) {
+        const stage = typeof stageOrId === 'string' 
+            ? (this.stages.find(s => s.id === stageOrId) || {}) 
+            : (stageOrId || {});
+            
+        const diffMaster = this.master[stage.difficulty] || {};
+        const defaultTheme = diffMaster.theme || {};
+
+        return Object.assign(
+            {},
+            defaultTheme,
+            stage.theme || {}
         );
     }
 

@@ -5,12 +5,6 @@
   "description": "👾 グリッチ・テトラ ＋ 🪃 リターン・アングルに、ダブルタップバリアが重なる緊迫のテクニカルステージ！",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "spawnRate": 210,
-  "theme": {
-    "bgGlow": "rgba(0, 240, 255, 0.25)",
-    "gridColor": "rgba(0, 240, 255, 0.3)",
-    "ringColor": "#00f0ff",
-    "playerColor": "#00f0ff"
-  },
   "enemyPool": [
     { "id": "GLITCH", "weight": 1 },
     { "id": "CROSS", "weight": 1 },

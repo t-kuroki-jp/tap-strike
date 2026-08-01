@@ -11,6 +11,12 @@
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
+    "theme": {
+      "bgGlow": "rgba(0, 240, 255, 0.25)",
+      "gridColor": "rgba(0, 240, 255, 0.3)",
+      "ringColor": "#00f0ff",
+      "playerColor": "#00f0ff"
+    },
     "stages": [
       "stages/easy/straight_circle.json",
       "stages/easy/bolt_stellar.json",
@@ -36,6 +42,12 @@
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
+    "theme": {
+      "bgGlow": "rgba(0, 240, 255, 0.25)",
+      "gridColor": "rgba(0, 240, 255, 0.3)",
+      "ringColor": "#00f0ff",
+      "playerColor": "#00f0ff"
+    },
     "stages": [
       "stages/normal/neon_duo.json",
       "stages/normal/wave_curve.json",
@@ -57,6 +69,12 @@
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
+    "theme": {
+      "bgGlow": "rgba(255, 0, 85, 0.25)",
+      "gridColor": "rgba(255, 0, 85, 0.3)",
+      "ringColor": "#ff0055",
+      "playerColor": "#ff0055"
+    },
     "stages": [
       "stages/hard/bolt_overdrive.json"
     ]
@@ -72,6 +90,12 @@
       "baseScore": 10,
       "missPenaltyDuration": 10,
       "particleCount": 18
+    },
+    "theme": {
+      "bgGlow": "rgba(255, 170, 51, 0.25)",
+      "gridColor": "rgba(255, 170, 51, 0.3)",
+      "ringColor": "#ffaa33",
+      "playerColor": "#ffaa33"
     },
     "stages": [
       "stages/funny/sea_slug_paradise.json",

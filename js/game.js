@@ -227,7 +227,8 @@ class Game {
         audioEngine.init();
         this.currentStage = stage;
         this.params = dataLoader.getResolvedParams(stage);
-        this.applyTheme(stage.theme);
+        const mergedTheme = dataLoader.getMergedTheme(stage);
+        this.applyTheme(mergedTheme);
 
         this.setState(GameState.PLAYING);
 
