@@ -1,0 +1,92 @@
+{
+  "EASY": {
+    "params": {
+      "gameSpeed": 0.85,
+      "targetRadius": 65,
+      "maxHp": 3,
+      "hitWindow": 25,
+      "tapCooldown": 120,
+      "speedIncrement": 0.005,
+      "baseScore": 100,
+      "missPenaltyDuration": 10,
+      "particleCount": 20
+    },
+    "stages": [
+      "stages/easy/straight_circle.json",
+      "stages/easy/bolt_stellar.json",
+      "stages/easy/glitch_tetra.json",
+      "stages/easy/curve_tri.json",
+      "stages/easy/wave_dia.json",
+      "stages/easy/return_angle.json",
+      "stages/easy/shadow_cross.json",
+      "stages/easy/freeze_hexa.json",
+      "stages/easy/orbit_octa.json",
+      "stages/easy/bound_penta.json"
+    ]
+  },
+  "NORMAL": {
+    "params": {
+      "gameSpeed": 0.95,
+      "targetRadius": 65,
+      "maxHp": 3,
+      "hitWindow": 25,
+      "tapCooldown": 120,
+      "speedIncrement": 0.008,
+      "baseScore": 150,
+      "missPenaltyDuration": 12,
+      "particleCount": 18
+    },
+    "stages": [
+      "stages/normal/neon_duo.json",
+      "stages/normal/wave_curve.json",
+      "stages/normal/shield_break.json",
+      "stages/normal/barrier_tricks.json",
+      "stages/normal/stealth_orbit.json",
+      "stages/normal/allstar_normal.json"
+    ]
+  },
+  "HARD": {
+    "params": {
+      "gameSpeed": 1.1,
+      "targetRadius": 65,
+      "maxHp": 3,
+      "hitWindow": 25,
+      "tapCooldown": 120,
+      "speedIncrement": 0.012,
+      "baseScore": 200,
+      "missPenaltyDuration": 15,
+      "particleCount": 24
+    },
+    "stages": [
+      "stages/hard/bolt_overdrive.json"
+    ]
+  },
+  "FUNNY": {
+    "params": {
+      "gameSpeed": 0.85,
+      "targetRadius": 60,
+      "maxHp": 3,
+      "hitWindow": 24,
+      "tapCooldown": 50,
+      "speedIncrement": 0.008,
+      "baseScore": 100,
+      "missPenaltyDuration": 10,
+      "particleCount": 18
+    },
+    "stages": [
+      "stages/funny/rotating_sushi.json",
+      "stages/funny/trick_festival.json",
+      "stages/funny/dangerous_survival.json",
+      "stages/funny/sea_slug_paradise.json",
+      "stages/funny/sakura_blossom.json",
+      "stages/funny/summer_fireworks.json",
+      "stages/funny/dog_march.json",
+      "stages/funny/cat_festival.json",
+      "stages/funny/chicken_panic.json",
+      "stages/funny/animal_parade.json",
+      "stages/funny/rainbow_chaser.json",
+      "stages/funny/san_san_nana.json",
+      "stages/funny/real_cats.json"
+    ]
+  }
+}

@@ -6,14 +6,52 @@
 
 本ドキュメントは『Tap Strike』に登場する全ステージの構成リスト、および新しいステージを作成・追加する際の **JSON スキーマ規格（記載ルール標準）** を一元管理する仕様書です。
 
-ステージ設定はデータ駆動（Data-Driven Architecture）となっており、`stages/` ディレクトリ配下に難易度別サブフォルダで 1 ステージ 1 ファイル形式（JSON）で完全分離配置されています。
-
-> 💡 **FUNNY モードの `NEW!` バッジ ＆ 表示順仕様**:
-> マスター登録簿 `stages/stages.json` の `"funny"` 配列に書かれた並び順そのままで画面に表示され、**一番上（先頭 3 ステージ）に自動で金色の `NEW!` バッジ** が付与されます。新しいステージを `stages/stages.json` の `"funny"` 配列の先頭（上）に追加していく運用です。日付等の手書き属性は一切不要です。
+ステージ設定はデータ駆動（Data-Driven Architecture）となっており、マスター登録簿 `stages/index.json` を起点として `stages/` ディレクトリ配下の各ステージ JSON ファイルが読み込まれます。
 
 ---
 
-## 2. 📐 ステージ JSON 標準スキーマ規格 (Standard Stage Schema)
+## 2. 🎛️ 難易度マスター規格 (`stages/index.json`)
+
+全ステージの統合マニフェストファイル `stages/index.json` は、全コースの登録リスト (`stages`) と、各難易度（EASY / NORMAL / HARD / FUNNY）の **標準デフォルトパラメータ (`params`)** を一元管理します。
+
+```json
+{
+  "EASY": {
+    "params": {
+      "gameSpeed": 0.85,          // 初期ゲーム速度
+      "targetRadius": 65,         // 判定リングのデフォルト基本サイズ(px)
+      "maxHp": 3,                 // プレイヤー初期最大HP
+      "hitWindow": 25,            // HIT判定の許容ピクセル幅(px)
+      "tapCooldown": 120,         // 連打防止タップクールダウン(ms)
+      "speedIncrement": 0.005,    // ノーツ撃破ごとの加速量
+      "baseScore": 100,           // 1体撃破あたりの基礎獲得スコア
+      "missPenaltyDuration": 10,  // ミス時の赤発光維持フレーム数
+      "particleCount": 20         // タップ成功時の爆発エフェクト粒子数
+    },
+    "stages": [
+      "stages/easy/straight_circle.json"
+    ]
+  }
+}
+```
+
+### 📌 難易度別標準 `params` 一覧・比較表
+
+個別のステージ JSON 側で属性が省略された場合、本マスターテーブルの規定値が自動適用されます。
+
+| 難易度 | 初期HP (`maxHp`) | 判定リング半径 (`targetRadius`) | 当たり判定幅 (`hitWindow`) | 連打CD (`tapCooldown`) | 撃破加速量 (`speedIncrement`) | 基礎スコア (`baseScore`) | 粒子数 (`particleCount`) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **EASY** | `3` | `65px` | `25px` | `120ms` | `0.005` (ゆるやか) | `100` | `20` |
+| **NORMAL** | `3` | `65px` | `25px` | `120ms` | `0.008` (標準) | `150` | `18` |
+| **HARD** | `3` | `65px` | `25px` | `120ms` | `0.012` (激しい) | `200` | `24` |
+| **FUNNY** | `3` | `60px` | `24px` | `50ms` | `0.008` (標準) | `100` | `18` |
+
+> 💡 **FUNNY モードの `NEW!` バッジ ＆ 表示順仕様**:
+> マスター登録簿 `stages/index.json` の `"FUNNY"` 内 `stages` 配列に書かれた並び順そのままで画面に表示され、**一番上（先頭 3 ステージ）に自動で金色の `NEW!` バッジ** が付与されます。新しいステージを `stages/index.json` の `"FUNNY"` 内 `stages` 配列の先頭（上）に追加していく運用です。日付等の手書き属性は一切不要です。
+
+---
+
+## 3. 📐 個別ステージ JSON 標準スキーマ規格 (Standard Stage Schema)
 
 新しいステージを作成・編集する際は、必ず以下の **標準 JSON スキーマ規格（必須プロパティ）** に従って記述します。
 
@@ -62,7 +100,7 @@
 | ↳ **`ringColor`** | `string` | **必須** | 判定ターゲットリングの発光カラーコード。 | `"#00f0ff"` |
 | ↳ **`playerColor`** | `string` | **必須** | 自機プレイヤー判定リングのメインカラーコード。 | `"#00f0ff"` |
 | ↳ **`rainbow`** | `boolean`| *任意* | `true` の場合、画面背景全域が七色レインボーに変色。 | `true` |
-| **`params`** | `object` | **必須** | ゲーム難易度パラメータ調整値（`difficulties.json` マスターから自動補填）。 | 下記参照 |
+| **`params`** | `object` | **必須** | ゲーム難易度パラメータ調整値（省略時は `index.json` の `defaults` から自動補填）。 | 下記参照 |
 | ↳ **`gameSpeed`**| `number` | **必須** | ステージ開始時の初期ゲームスクロール速度。 | `0.85` (標準) / `1.1` (高速) |
 | ↳ **`speedIncrement`**| `number`| *任意* | ノーツ 1 体撃破ごとの加速上昇量。 | `0.008` (標準) |
 | ↳ **`targetRadius`**| `number`| **必須** | 判定ターゲットリングの半径（ピクセル）。 | `60` |
@@ -74,7 +112,7 @@
 
 ---
 
-## 3. 🟢 EASY モード ステージ全 10 種カタログ
+## 4. 🟢 EASY モード ステージ全 10 種カタログ
 
 幾何学ノーツの全 10 種類の移動 Behavior を 1 ステージずつ安全に学習できる完全チュートリアルコースです。
 
@@ -93,7 +131,7 @@
 
 ---
 
-## 4. 🔵 NORMAL モード ステージ全 6 種カタログ
+## 5. 🔵 NORMAL モード ステージ全 6 種カタログ
 
 複合軌道、シールド（HP2）、ボス（HP5連打）、ドントタップなどの実戦ギミックに挑む標準コースです。
 
@@ -108,7 +146,7 @@
 
 ---
 
-## 5. 🔴 HARD モード ステージカタログ
+## 6. 🔴 HARD モード ステージカタログ
 
 | # | ID | ステージ名 | 出現エネミー Pool | 主な難易度要素・テーマ | テーマカラー | BGM |
 | :---: | :--- | :--- | :--- | :--- | :---: | :--- |
@@ -116,33 +154,33 @@
 
 ---
 
-## 6. 🤪 FUNNY モード ステージ全 12 種カタログ
+## 7. 🤪 FUNNY モード ステージ全 13 種カタログ
 
 賑やかで可愛い動物、回転寿司、満開夜桜、花火、お祭りテーマが目白押しのバラエティコースです。
 
 | # | ID | ステージ名 | 出現エネミー Pool | テーマ・お楽しみ要素 | テーマカラー | BGM |
 | :---: | :--- | :--- | :--- | :--- | :---: | :--- |
-| 1 | `dog_march` | **わんわん大行進！** | `DOG` | 尻尾フリフリ元気な柴犬大行進 🐕 | 橙 | `Under_The_Hammer.mp3` |
-| 2 | `cat_festival` | **ネコ・フェスティバル** | `CAT` | ニャーとトコトコ歩くねこ大集合 🐱 | 桃 | `Petals_on_the_Controller.mp3` |
-| 3 | `chicken_panic` | **ヒヨコ・パニック** | `CHICKEN` | チョコチョコ歩くぴよぴよヒヨコ 🐥 | 黄 | `Petals_on_the_Controller.mp3` |
-| 4 | `animal_parade` | **どうぶつ大行進♪** | `CAT`, `CHICKEN`, `DOG`, `BEE`, `FROG`| ねこ・ヒヨコ・柴犬・蜂・蛙が全員集合 🐾| 橙 | `Under_The_Hammer.mp3` |
-| 5 | `rainbow_chaser` | **レインボー・チェイサー**| `CHASER` | 画面背景全域が七色に変色 🌈 | 紫(レインボー) | `Cyan_Square_Error.mp3` |
-| 6 | `san_san_nana` | **三・三・七拍子** | `CHASER` | 和風手拍子リズムスポーン 👏 (`san_san_nana`)| 橙 | `Blood_and_Bamboo.mp3` |
-| 7 | `real_cats` | **リアルねこ集会** | `CAT` | リアルな茶トラ ＆ ハチワレねこ 🐾 | ブラウン | `Under_The_Lanterns.mp3` |
-| 8 | `rotating_sushi` | **天下無敵の回転寿司** | `SUSHI` | マグロ・サーモン・エビ・たまご回転寿司 🍣 | 朱赤 | `Under_The_Hammer.mp3` |
-| 9 | `sakura_blossom` | **満開の夜桜乱舞** | `SAKURA_PETAL` | 画面下部で本物の桜が満開に咲き乱れる 🌸 | 夜桜紫 | `Petals_on_the_Controller.mp3` |
-| 10 | `sea_slug_paradise`| **海の宝石ウミウシパラダイス**| `SEA_SLUG` | ウミウシ全8種 ✕ 水泡アクアリウム 🐚 | 深海ブルー | `Petals_on_the_Controller.mp3` |
-| 11 | `summer_fireworks`| **たまや〜！夏の大輪花火**| `FIREWORK` | 夜空にドカンと大輪の花火が咲き誇る 🎆 | 黄金 | `Blood_and_Bamboo.mp3` |
-| 12 | `trick_festival` | **トリッキー・フェスティバル！**| `CHASER`, `SPEEDER`, `GLITCH`, `CROSS`, `CHASER(hp:2)`| ドントタップ・バリア・減速・公転カオス 🎪| 紫 | `Magenta_Pulse.mp3` |
-| 13 | `dangerous_survival`| **デンジャラス・サバイバル**| `HEAL`, `BOMB`, `FIREWORK`, `CAT`, `CHASER`| 爆弾 ✕ 回復ハート ✕ 花火サバイバル 💣 | 危険赤 | `Under_The_Lanterns.mp3` |
+| 1 | `rotating_sushi` | **天下無敵の回転寿司** | `SUSHI` | マグロ・サーモン・エビ・たまご回転寿司 🍣 | 朱赤 | `Under_The_Hammer.mp3` |
+| 2 | `trick_festival` | **トリッキー・フェスティバル！**| `CHASER`, `SPEEDER`, `GLITCH`, `CROSS`, `CHASER(hp:2)`| ドントタップ・バリア・減速・公転カオス 🎪| 紫 | `Magenta_Pulse.mp3` |
+| 3 | `dangerous_survival`| **デンジャラス・サバイバル**| `HEAL`, `BOMB`, `FIREWORK`, `CAT`, `CHASER`| 爆弾 ✕ 回復ハート ✕ 花火サバイバル 💣 | 危険赤 | `Under_The_Lanterns.mp3` |
+| 4 | `sea_slug_paradise`| **海の宝石ウミウシパラダイス**| `SEA_SLUG` | ウミウシ全8種 ✕ 水泡アクアリウム 🐚 | 深海ブルー | `Petals_on_the_Controller.mp3` |
+| 5 | `sakura_blossom` | **満開の夜桜乱舞** | `SAKURA_PETAL` | 画面下部で本物の桜が満開に咲き乱れる 🌸 | 夜桜紫 | `Petals_on_the_Controller.mp3` |
+| 6 | `summer_fireworks`| **たまや〜！夏の大輪花火**| `FIREWORK` | 夜空にドカンと大輪の花火が咲き誇る 🎆 | 黄金 | `Blood_and_Bamboo.mp3` |
+| 7 | `dog_march` | **わんわん大行進！** | `DOG` | 尻尾フリフリ元気な柴犬大行進 🐕 | 橙 | `Under_The_Hammer.mp3` |
+| 8 | `cat_festival` | **ネコ・フェスティバル** | `CAT` | ニャーとトコトコ歩くねこ大集合 🐱 | 桃 | `Petals_on_the_Controller.mp3` |
+| 9 | `chicken_panic` | **ヒヨコ・パニック** | `CHICKEN` | チョコチョコ歩くぴよぴよヒヨコ 🐥 | 黄 | `Petals_on_the_Controller.mp3` |
+| 10 | `animal_parade` | **どうぶつ大行進♪** | `CAT`, `CHICKEN`, `DOG`, `BEE`, `FROG`| ねこ・ヒヨコ・柴犬・蜂・蛙が全員集合 🐾| 橙 | `Under_The_Hammer.mp3` |
+| 11 | `rainbow_chaser` | **レインボー・チェイサー**| `CHASER` | 画面背景全域が七色に変色 🌈 | 紫(レインボー) | `Cyan_Square_Error.mp3` |
+| 12 | `san_san_nana` | **三・三・七拍子** | `CHASER` | 和風手拍子リズムスポーン 👏 (`san_san_nana`)| 橙 | `Blood_and_Bamboo.mp3` |
+| 13 | `real_cats` | **リアルねこ集会** | `CAT` | リアルな茶トラ ＆ ハチワレねこ 🐾 | ブラウン | `Under_The_Lanterns.mp3` |
 
 ---
 
-## 7. 新規ステージ追加手順ガイド (How to Add New Stage)
+## 8. 新規ステージ追加手順ガイド (How to Add New Stage)
 
 新しいステージを作成してゲームに組み込む手順は以下の **2 ステップ** です。
 
 1. **ステージ JSON ファイルの作成**:
-   - `stages/[難易度フォルダ]/[stage_id].json` を作成し、本ドキュメント第2項の標準 JSON スキーマに従って保存します。
-2. **マスターリスト (`stages/stages.json`) への登録**:
-   - `stages/stages.json` の該当難易度配列（例: `"funny"`）に、作成したファイルの相対パス（例: `"stages/funny/my_new_stage.json"`）を追加します。
+   - `stages/[難易度フォルダ]/[stage_id].json` を作成し、本ドキュメント第3項の標準 JSON スキーマに従って保存します。
+2. **マスターリスト (`stages/index.json`) への登録**:
+   - `stages/index.json` の該当難易度（例: `"FUNNY"`）の `stages` 配列に、作成したファイルの相対パス（例: `"stages/funny/my_new_stage.json"`）を追加します。
