@@ -7,12 +7,12 @@ const I18N_DICTIONARY = {
         // ヘッダー・メインメニュー
         title: "秒殺！1ボタンアクション Tap Strike",
         subtitle: "1ボタンで決めるサイバー快感リズムアクション！",
-        btn_mode_select: "🎮 ゲーム開始",
-        btn_encyclopedia: "📖 キャラクター図鑑",
-        btn_settings: "⚙️ 設定",
+        btn_mode_select: "ゲーム開始",
+        btn_encyclopedia: "キャラクター図鑑",
+        btn_settings: "設定",
 
         // モード選択
-        mode_select_title: "🎮 モード選択",
+        mode_select_title: "モード選択",
         btn_easy: "EASY (初心者向け)",
         btn_normal: "NORMAL (標準)",
         btn_hard: "HARD (上級者向け)",
@@ -26,10 +26,10 @@ const I18N_DICTIONARY = {
         btn_title_return: "タイトルへ戻る",
         game_over_title: "GAME OVER",
         score_label: "SCORE",
-        high_score_label: "★ NEW HIGH SCORE! ★",
+        high_score_label: "NEW HIGH SCORE!",
 
         // キャラクター図鑑
-        encyclopedia_title: "📖 キャラクター図鑑",
+        encyclopedia_title: "キャラクター図鑑",
         encyclopedia_subtitle: "登場する全エネミーとノーツのコレクション",
         btn_close: "閉じる"
     },
@@ -37,12 +37,12 @@ const I18N_DICTIONARY = {
         // Header & Main Menu
         title: "Tap Strike - One Button Action",
         subtitle: "Satisfying Cyber Rhythm Action with 1 Button!",
-        btn_mode_select: "🎮 Start Game",
-        btn_encyclopedia: "📖 Character Book",
-        btn_settings: "⚙️ Settings",
+        btn_mode_select: "Start Game",
+        btn_encyclopedia: "Character Book",
+        btn_settings: "Settings",
 
         // Mode Select
-        mode_select_title: "🎮 Select Mode",
+        mode_select_title: "Select Mode",
         btn_easy: "EASY (Casual)",
         btn_normal: "NORMAL (Standard)",
         btn_hard: "HARD (Expert)",
@@ -56,10 +56,10 @@ const I18N_DICTIONARY = {
         btn_title_return: "Back to Title",
         game_over_title: "GAME OVER",
         score_label: "SCORE",
-        high_score_label: "★ NEW HIGH SCORE! ★",
+        high_score_label: "NEW HIGH SCORE!",
 
         // Character Book
-        encyclopedia_title: "📖 Character Collection",
+        encyclopedia_title: "Character Collection",
         encyclopedia_subtitle: "Collection of all Notes & Enemies",
         btn_close: "Close"
     }

@@ -135,9 +135,9 @@ class UIManager {
 
             let badgeHtml = '';
             if (diff === 'FUNNY') {
-                // stages.json の上(先頭 3件)に金色の NEW! バッジを表示！
+                // stages.json の上(先頭 3件)に金色の NEW バッジを表示！
                 if (index < 3) {
-                    badgeHtml = `<span class="badge-new badge-${diff}">NEW!</span>`;
+                    badgeHtml = `<span class="badge-new badge-${diff}">NEW</span>`;
                 }
             } else {
                 // コース順の STAGE 01, STAGE 02 ... (モードカラー連動)
