@@ -11,13 +11,6 @@
     "ringColor": "#00f0ff",
     "playerColor": "#00f0ff"
   },
-  "params": {
-    "gameSpeed": 0.95,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
-  },
   "enemyPool": [
     { "id": "CHASER", "weight": 2 },
     { "id": "SPEEDER", "weight": 1 }
