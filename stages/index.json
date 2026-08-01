@@ -8,7 +8,7 @@
       "hitWindow": 24,
       "tapCooldown": 50,
       "speedIncrement": 0.008,
-      "baseScore": 10,
+      "baseScore": 100,
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
@@ -40,7 +40,7 @@
       "hitWindow": 24,
       "tapCooldown": 50,
       "speedIncrement": 0.008,
-      "baseScore": 10,
+      "baseScore": 100,
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
@@ -68,7 +68,7 @@
       "hitWindow": 24,
       "tapCooldown": 50,
       "speedIncrement": 0.008,
-      "baseScore": 10,
+      "baseScore": 100,
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
@@ -91,7 +91,7 @@
       "hitWindow": 24,
       "tapCooldown": 50,
       "speedIncrement": 0.008,
-      "baseScore": 10,
+      "baseScore": 100,
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
