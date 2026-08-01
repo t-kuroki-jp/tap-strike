@@ -8,8 +8,10 @@
   "description": "曲がり軌道の三角ノーツや五角形ノーツに耐久シールドバリアがついて襲いかかる！",
   "description_en": "Curved Triangles and Pentagons attack with durable Shield Barriers!",
   "enemyPool": [
+    { "id": "CURVE", "weight": 2 },
+    { "id": "PENTAGON", "weight": 2 },
+    { "id": "SINE_WAVE", "weight": 2 },
     { "id": "CURVE", "weight": 1, "hp": 2 },
-    { "id": "PENTAGON", "weight": 1, "hp": 2 },
-    { "id": "SINE_WAVE", "weight": 1, "hp": 1 }
+    { "id": "PENTAGON", "weight": 1, "hp": 2 }
   ]
 }

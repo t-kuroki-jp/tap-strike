@@ -93,5 +93,6 @@ class FrogEnemy extends Enemy {
         ctx.stroke();
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }

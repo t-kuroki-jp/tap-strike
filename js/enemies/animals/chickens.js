@@ -116,5 +116,6 @@ class ChickenEnemy extends Enemy {
         ctx.fill();
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }

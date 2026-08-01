@@ -128,6 +128,7 @@ class CurveTriEnemy extends Enemy {
         ctx.fill();
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }
 
@@ -157,6 +158,7 @@ class WaveDiaEnemy extends Enemy {
         ctx.fill();
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }
 
@@ -191,6 +193,7 @@ class ReturnAngleEnemy extends Enemy {
         
         ctx.fill();
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }
 
@@ -228,6 +231,7 @@ class ShadowCrossEnemy extends Enemy {
         ctx.fill();
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }
 
@@ -258,6 +262,7 @@ class FreezeHexaEnemy extends Enemy {
         ctx.closePath();
         ctx.fill();
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }
 
@@ -324,5 +329,6 @@ class BoundPentaEnemy extends Enemy {
         ctx.closePath();
         ctx.fill();
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }

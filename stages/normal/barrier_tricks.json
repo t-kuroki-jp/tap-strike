@@ -6,8 +6,8 @@
   "description": "👾 グリッチ・テトラ ＋ 🪃 リターン・アングルに、ダブルタップバリアが重なる緊迫のテクニカルステージ！",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "enemyPool": [
-    { "id": "GLITCH", "weight": 1 },
-    { "id": "CROSS", "weight": 1 },
+    { "id": "GLITCH", "weight": 2 },
+    { "id": "CROSS", "weight": 2 },
     { "id": "GLITCH", "hp": 2, "weight": 1 }
   ]
 }

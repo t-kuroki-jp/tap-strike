@@ -245,9 +245,9 @@ class Game {
     }
 
     async debugUnlockAll() {
-        await dataLoader.loadAll();
+        await dataLoader.loadAll(true);
         dataLoader.stages.forEach(s => {
-            localStorage.setItem(`bestScore_${s.id}`, 9999);
+            localStorage.setItem(`bestScore_${s.id}`, 999999);
         });
         location.reload();
     }

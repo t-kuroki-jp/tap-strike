@@ -126,6 +126,7 @@ class FireworkEnemy extends Enemy {
         }
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 
     playLaunchWhistleSound() {

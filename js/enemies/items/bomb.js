@@ -25,6 +25,7 @@ class BombEnemy extends Enemy {
         ctx.lineTo(this.x + 6, this.y - this.size - 8);
         ctx.stroke();
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 
     playBombSound() {

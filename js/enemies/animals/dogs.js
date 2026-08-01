@@ -147,5 +147,6 @@ class DogEnemy extends Enemy {
         ctx.stroke();
 
         ctx.restore();
+        this.drawShieldLayer(ctx);
     }
 }
