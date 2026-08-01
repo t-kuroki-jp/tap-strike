@@ -13,7 +13,7 @@ class Enemy {
         this.name = config.name || 'クリムゾン・チェイサー';
         this.color = config.color || '#ff0055';
 
-        if (stage?.theme?.rainbow) {
+        if (stage?.theme?.rainbow || stage?.theme?.effects?.includes('rainbow')) {
             const randomHue = Math.floor(Math.random() * 360);
             this.color = `hsl(${randomHue}, 100%, 60%)`;
         }

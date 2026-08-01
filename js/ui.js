@@ -224,10 +224,10 @@ class UIManager {
             scoreBoard.style.textShadow = `0 0 12px ${mainColor}`;
         }
 
-        // 水泡アクアリウムエフェクトのオンオフ
-        this.toggleBubbleEffect(!!theme.bubbleEffect);
-        // 夜桜吹雪エフェクトのオンオフ
-        this.toggleSakuraEffect(!!theme.sakuraEffect);
+        // プラグインマネージャー経由で背景ビジュアルエフェクトを一括適応！
+        if (typeof effectManager !== 'undefined') {
+            effectManager.applyEffects(theme);
+        }
     }
 
     /** 背景テーマをデフォルト状態（シアン）に復元 */
@@ -247,8 +247,9 @@ class UIManager {
             scoreBoard.style.color = '#00f0ff';
             scoreBoard.style.textShadow = '0 0 10px #00f0ff';
         }
-        this.toggleBubbleEffect(false);
-        this.toggleSakuraEffect(false);
+        if (typeof effectManager !== 'undefined') {
+            effectManager.stopAll();
+        }
     }
 
     /** 深海ぷくぷく水泡エフェクトのオンオフ切り替え */
@@ -314,6 +315,17 @@ class UIManager {
             container.style.display = 'block';
         } else if (container) {
             container.style.display = 'none';
+        }
+    }
+
+    /** 七色サイバーレインボー背景エフェクトのオンオフ切り替え */
+    toggleRainbowEffect(enable) {
+        const bgElem = document.querySelector('.bg-animated');
+        if (!bgElem) return;
+        if (enable) {
+            bgElem.classList.add('rainbow-bg');
+        } else {
+            bgElem.classList.remove('rainbow-bg');
         }
     }
 

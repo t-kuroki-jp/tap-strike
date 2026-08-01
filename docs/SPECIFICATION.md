@@ -46,19 +46,18 @@
   3. 到達時間差が連打不可能な危険ゾーン (`10フレーム / 約160ms` 未満) であれば、スピードを微調整して出撃タイミングを自動シフト！
 - **効果**: 判定リング到達時刻が物理的に重ならなくなるため、プレイヤーの「連打（タタタン！）」で 100% 確実に実力通り撃破可能になります！
 
-## 4. 全ステージ構成リスト (`stages.json`)
+## 4. 単一統合マスタ & プラグイン・アーキテクチャ (Data & Plugin Architecture)
 
-### 🟢 EASY モード (全10動作・完全幾何学チュートリアル)
-1. `stages/easy/straight_circle.json` ➔ 🔴 ストレート・サークル (直進)
-2. `stages/easy/bolt_stellar.json` ➔ ⚡ ボルト・ステラ (★星型高速直進)
-3. `stages/easy/glitch_tetra.json` ➔ 👾 グリッチ・テトラ (直前減速)
-4. `stages/easy/curve_tri.json` ➔ 🌀 カーブ・トライ (旋回カーブ)
-5. `stages/easy/wave_dia.json` ➔ 🌊 ウェイブ・ダイヤ (S字サイン波)
-6. `stages/easy/return_angle.json` ➔ 🪃 リターン・アングル (Uターン引き返し)
-7. `stages/easy/shadow_cross.json` ➔ 👻 シャドウ・クロス (隠密・透明化)
-8. `stages/easy/freeze_hexa.json` ➔ ⏸️ フリーズ・ヘキサ (一瞬停止)
-9. `stages/easy/orbit_octa.json` ➔ 🔷 オービット・オクタ (大円弧公転)
-10. `stages/easy/bound_penta.json` ➔ 🦘 バウンド・ペンタ (ジグザグステップ)
+本ゲームは **データ指向 (Data-Driven)** かつ **疎結合プラグイン構造 (Plugin Architecture)** にて構築されています。
+
+### 📌 A. 単一マスター構造 (`stages/index.json`)
+全コースの登録リスト (`stages`) と、各難易度の標準デフォルト物理値 (`params`)・標準テーマカラー (`theme`) を一元管理します。個別ステージ JSON で省略された属性はマスタ規定値が全自動でフォールバックマージ（`Object.assign`）されます。
+
+### 📌 B. スポーンパターン・プラグイン (`js/patterns.js`)
+`SpawnPatternRegistry` によりノーツの出撃リズム（三三七拍子、裏打ち、ワルツ等）を管理。ゲームコア (`game.js`) は特定ステージの名前に依存せず、名前で動的にパターン判定を実行します。
+
+### 📌 C. ビジュアルエフェクト・プラグイン (`js/effects.js`)
+`VisualEffectManager` により背景演出（水泡アクアリウム、満開夜桜吹雪、七色レインボー等）を管理。JSON 側の `"effects": ["bubble"]` 配列指定により、`ui.js` のコードを変更することなく動的エフェクト駆動を行います。
 
 ---
 
@@ -104,20 +103,22 @@ onHit(game, touchX, touchY, isPerfect) {
 tap-strike/
 ├── docs/
 │   ├── SPECIFICATION.md      (本全般仕様書・システムアーキテクチャ)
-│   └── ENEMIES.md            (全エネミー & ノーツ完全カタログ)
-├── stages.json               (全モード難易度別ステージレジストリ)
+│   ├── ENEMIES.md            (全エネミー & ノーツ完全カタログ)
+│   └── STAGES.md             (全ステージ & JSON スキーマ仕様書)
+├── stages/
+│   ├── index.json            (統合難易度マスタ・全コース登録マニフェスト)
+│   ├── easy/                 (EASY ステージ JSON 群)
+│   ├── normal/               (NORMAL ステージ JSON 群)
+│   ├── hard/                 (HARD ステージ JSON 群)
+│   └── funny/                (FUNNY ステージ JSON 群)
 ├── index.html                (メインHTML)
 ├── js/
 │   ├── game.js               (メインゲームループ・スマートスポーン制御)
+│   ├── loader.js             (マスタ非同期取得・パラメータ合成管理)
+│   ├── patterns.js           (スポーンパターン・プラグインレジストリ)
+│   ├── effects.js            (ビジュアルエフェクト・プラグインマネージャー)
 │   ├── behaviors.js          (全9種類 Behavior コンポーネント & Factory)
 │   ├── audio.js              (WebAudio音響マネージャー)
-│   ├── ui.js                 (UI・図鑑カードレンダラー)
-│   └── enemies/
-│       ├── enemy.js          (敵の基底抽象クラス Enemy)
-│       ├── geometric.js      (サイバー幾何学ノーツ全10種一括集約)
-│       ├── sushi/            (回転寿司ノーツモジュール群)
-│       ├── animals/          (動物ノーツモジュール群)
-│       ├── items/            (桜・花火・回復・ギミックノーツ群)
-│       └── enemy_factory.js  (エネミー動的生成 ＆ Behavior適用工場)
-└── stages/                   (各モードの JSON ステージ定義ファイル群)
+│   ├── ui.js                 (UI・レンダラー)
+│   └── enemies/              (全ノーツオブジェクト群)
 ```

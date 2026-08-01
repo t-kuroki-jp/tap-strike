@@ -10,7 +10,7 @@
     "gridColor": "rgba(0, 240, 255, 0.3)",
     "ringColor": "#00f0ff",
     "playerColor": "#00f0ff",
-    "bubbleEffect": true
+    "effects": ["bubble"]
   },
   "enemyPool": [
     { "id": "SEA_SLUG", "weight": 1.0 }

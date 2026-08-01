@@ -14,7 +14,7 @@ class AudioEngine {
             this.audioCtx = new AudioContext();
         }
         if (this.audioCtx.state === 'suspended') {
-            this.audioCtx.resume();
+            this.audioCtx.resume().catch(() => {});
         }
     }
 

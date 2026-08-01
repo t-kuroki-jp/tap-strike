@@ -42,6 +42,20 @@ body {
     }
 }
 
+/* --- 🌈 七色サイバーレインボー背景アニメーション --- */
+.rainbow-bg {
+    animation: bgScroll var(--bg-scroll-speed, 3s) linear infinite, rainbowHue 10s linear infinite !important;
+}
+
+@keyframes rainbowHue {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
 canvas {
     display: block;
     margin: 0 auto;

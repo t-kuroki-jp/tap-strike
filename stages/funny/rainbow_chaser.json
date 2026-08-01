@@ -10,7 +10,7 @@
     "gridColor": "rgba(255, 0, 255, 0.3)",
     "ringColor": "#ff00ff",
     "playerColor": "#ff00ff",
-    "rainbow": true
+    "effects": ["rainbow"]
   },
   "enemyPool": [
     { "id": "CHASER", "weight": 1.0 }

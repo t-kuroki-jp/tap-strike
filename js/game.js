@@ -467,23 +467,6 @@ class Game {
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
 
-        if (this.currentStage?.theme?.rainbow) {
-            const hue = (Date.now() / 6) % 360;
-            const rainbowColor = `hsl(${hue}, 100%, 50%)`;
-            if (this.missPenaltyTimer <= 0 && this.ringPulse === 0) {
-                this.ringColor = rainbowColor;
-            }
-            this.player.color = rainbowColor;
-            const bgElem = document.querySelector('.bg-animated');
-            if (bgElem) {
-                bgElem.style.background = `
-                    radial-gradient(circle, hsl(${hue}, 100%, 25%) 0%, rgba(5, 7, 14, 0.9) 100%),
-                    repeating-linear-gradient(0deg, transparent, transparent 39px, hsl(${hue}, 100%, 40%) 40px),
-                    repeating-linear-gradient(90deg, transparent, transparent 39px, hsl(${hue}, 100%, 40%) 40px)
-                `;
-            }
-        }
-
         if (this.beatPulse > 0) this.beatPulse *= 0.85;
 
         if (this.missPenaltyTimer > 0) {
