@@ -296,13 +296,9 @@ class Game {
             if (this.state !== GameState.PLAYING) return;
             this.beatPulse = 5;
 
-            if (this.currentStage?.spawnPattern === 'san_san_nana') {
-                const step = this.bgmStep % 20;
-                const isSan1 = step >= 0 && step <= 2;
-                const isSan2 = step >= 4 && step <= 6;
-                const isNana = step >= 9 && step <= 15;
-
-                if (isSan1 || isSan2 || isNana) {
+            const patternName = this.currentStage?.spawnPattern;
+            if (patternName) {
+                if (patternRegistry.shouldSpawn(patternName, this.bgmStep)) {
                     this.spawnSmartEnemy();
                 }
             } else if (this.bgmStep % 2 === 0 && Math.random() > 0.3) {
