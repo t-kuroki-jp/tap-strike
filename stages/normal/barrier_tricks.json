@@ -2,7 +2,7 @@
   "id": "barrier_tricks",
   "name": "バリア・トリックス",
   "difficulty": "NORMAL",
-  "description": "👾 減速グリッチ ＋ 🪃 バックブーメランに、ダブルタップバリアが重なる緊迫のテクニカルステージ！",
+  "description": "👾 グリッチ・テトラ ＋ 🪃 リターン・アングルに、ダブルタップバリアが重なる緊迫のテクニカルステージ！",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "spawnRate": 210,
   "theme": {

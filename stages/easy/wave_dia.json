@@ -1,9 +1,9 @@
 {
-  "id": "stealth_ghost",
-  "name": "ステルス・クロス",
+  "id": "wave_dia",
+  "name": "ウェイブ・ダイヤ",
   "difficulty": "EASY",
-  "description": "🌟 ライムの4角手裏剣！途中で『ドロン』と透明に消え、判定の直前で再び姿を現す！",
-  "bgm": "bgm/Midnight_Porch_Light.mp3",
+  "description": "🌊 シアン色のひし形ノーツ！S字サイン波を描いてゆったり優雅に流れてくる！",
+  "bgm": "bgm/Petals_on_the_Controller.mp3",
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
@@ -19,6 +19,6 @@
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "GHOST", "behavior": "stealth" }
+    { "id": "SINE_WAVE", "behavior": "wave" }
   ]
 }

@@ -1,9 +1,9 @@
 {
-  "id": "boomerang_cross",
-  "name": "ブーメラン・クロス",
+  "id": "glitch_tetra",
+  "name": "グリッチ・テトラ",
   "difficulty": "EASY",
-  "description": "🪃 シックな木調ブラウンのL字ノーツ！手前で1度外へ引き返してから突撃してくる！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "👾 紫色のネオン正方形ノーツ！判定手前でフッと一瞬減速する！",
+  "bgm": "bgm/Magenta_Pulse.mp3",
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
@@ -19,6 +19,6 @@
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "CROSS", "behavior": "boomerang" }
+    { "id": "GLITCH", "behavior": "glitch" }
   ]
 }

@@ -1,8 +1,8 @@
 {
-  "id": "normal_chaser",
-  "name": "ノーマル・チェイサー",
+  "id": "straight_circle",
+  "name": "ストレート・サークル",
   "difficulty": "EASY",
-  "description": "🔴 赤色の真円ノーツ！中心へまっすぐ進む1番基本のノーツ。リズムに乗ってタップしよう！",
+  "description": "🔴 赤色のネオン正円ノーツ！画面外から判定リングへ一直線にアプローチ！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "spawnRate": 230,
   "theme": {

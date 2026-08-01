@@ -1,9 +1,9 @@
 {
-  "id": "bolt_speeder",
-  "name": "ボルト・スピーダー",
+  "id": "curve_tri",
+  "name": "カーブ・トライ",
   "difficulty": "EASY",
-  "description": "⚡ 黄色の稲妻ノーツ！まっすぐ向かってくるが、1.5倍のハイスピードで突進してくる！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "🌀 オレンジ色の正三角形ノーツ！片側に綺麗なカーブを描いて侵入してくる！",
+  "bgm": "bgm/Cyan_Square_Error.mp3",
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
@@ -19,6 +19,6 @@
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "SPEEDER", "behavior": "straight" }
+    { "id": "CURVE", "behavior": "spiral" }
   ]
 }

@@ -9,15 +9,16 @@ class EnemyFactory {
 
         let enemy;
         switch (pickedId) {
-            case 'SPEEDER': enemy = new SpeederEnemy(canvas, gameSpeed, stage); break;
-            case 'GLITCH': enemy = new GlitchEnemy(canvas, gameSpeed, stage); break;
-            case 'CURVE': enemy = new CurveEnemy(canvas, gameSpeed, stage); break;
-            case 'SINE_WAVE': enemy = new SineWaveEnemy(canvas, gameSpeed, stage); break;
-            case 'CROSS': enemy = new CrossEnemy(canvas, gameSpeed, stage); break;
-            case 'GHOST': enemy = new GhostEnemy(canvas, gameSpeed, stage); break;
-            case 'HEXAGON': enemy = new HexagonEnemy(canvas, gameSpeed, stage); break;
-            case 'RING_NOTE': enemy = new RingEnemy(canvas, gameSpeed, stage); break;
-            case 'PENTAGON': enemy = new PentagonEnemy(canvas, gameSpeed, stage); break;
+            case 'CHASER': enemy = new StraightCircleEnemy(canvas, gameSpeed, stage); break;
+            case 'SPEEDER': enemy = new BoltStellarEnemy(canvas, gameSpeed, stage); break;
+            case 'GLITCH': enemy = new GlitchTetraEnemy(canvas, gameSpeed, stage); break;
+            case 'CURVE': enemy = new CurveTriEnemy(canvas, gameSpeed, stage); break;
+            case 'SINE_WAVE': enemy = new WaveDiaEnemy(canvas, gameSpeed, stage); break;
+            case 'CROSS': enemy = new ReturnAngleEnemy(canvas, gameSpeed, stage); break;
+            case 'GHOST': enemy = new ShadowCrossEnemy(canvas, gameSpeed, stage); break;
+            case 'HEXAGON': enemy = new FreezeHexaEnemy(canvas, gameSpeed, stage); break;
+            case 'RING_NOTE': enemy = new OrbitOctaEnemy(canvas, gameSpeed, stage); break;
+            case 'PENTAGON': enemy = new BoundPentaEnemy(canvas, gameSpeed, stage); break;
             case 'HEAL': enemy = new HealEnemy(canvas, gameSpeed, stage); break;
             case 'CAT_MIKE': enemy = new MikeCatEnemy(canvas, gameSpeed, stage); break;
             case 'CAT_KIJITORA': enemy = new KijitoraCatEnemy(canvas, gameSpeed, stage); break;
@@ -70,7 +71,7 @@ class EnemyFactory {
                 enemy = new RandomSlugClass(canvas, gameSpeed, stage);
                 break;
             }
-            default: enemy = new ChaserEnemy(canvas, gameSpeed, stage); break;
+            default: enemy = new StraightCircleEnemy(canvas, gameSpeed, stage); break;
         }
 
         // ★ ステージデータ(JSON)の enemyPool で指定された behavior や hp などの属性を動的に適用！

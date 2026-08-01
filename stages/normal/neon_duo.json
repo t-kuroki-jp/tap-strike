@@ -2,7 +2,7 @@
   "id": "neon_duo",
   "name": "ネオン・デュオ",
   "difficulty": "NORMAL",
-  "description": "🔴 赤丸チェイサー ＋ ⚡ 稲妻スピーダー！基本アプローチとハイスピードが交錯する複合ステージ！",
+  "description": "🔴 ストレート・サークル ＋ ⚡ ボルト・ステラ！基本アプローチとハイスピードが交錯する複合ステージ！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "spawnRate": 210,
   "theme": {

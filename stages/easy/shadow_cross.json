@@ -1,9 +1,9 @@
 {
-  "id": "phantom_glitch",
-  "name": "ファントム・グリッチ",
+  "id": "shadow_cross",
+  "name": "シャドウ・クロス",
   "difficulty": "EASY",
-  "description": "👾 紫色の正方形！判定の手前に来ると『フッ』と一瞬減速してタイミングをずらしてくる！",
-  "bgm": "bgm/Magenta_Pulse.mp3",
+  "description": "👻 ライム色の手裏剣スターノーツ！途中で姿が消えて判定直前に姿を現す！",
+  "bgm": "bgm/Midnight_Porch_Light.mp3",
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
@@ -19,6 +19,6 @@
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "GLITCH", "behavior": "glitch" }
+    { "id": "GHOST", "behavior": "stealth" }
   ]
 }

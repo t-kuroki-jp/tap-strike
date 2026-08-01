@@ -3,11 +3,11 @@
  * 全10種類の純粋サイバーネオン幾何学ノーツの描画・ロジック一括集約
  */
 
-// 1. チェイサー (赤・ソリッド真円ノーツ / Straight)
-class ChaserEnemy extends Enemy {
+// 1. ストレート・サークル (赤・ソリッド真円ノーツ / Straight)
+class StraightCircleEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CHASER', name: 'チェイサー', color: '#ff3366', shape: 'circle', speedRatio: 1.0, size: 14, hp: 1,
+            id: 'CHASER', name: 'ストレート・サークル', color: '#ff3366', shape: 'circle', speedRatio: 1.0, size: 14, hp: 1,
             behavior: 'straight'
         });
     }
@@ -25,10 +25,12 @@ class ChaserEnemy extends Enemy {
         this.drawShieldLayer(ctx);
     }
 }
-class SpeederEnemy extends Enemy {
+
+// 2. ボルト・ステラ (黄色・★星ノーツ / Speed Straight)
+class BoltStellarEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'SPEEDER', name: 'スピーダー', color: '#ffff33', shape: 'star', speedRatio: 1.45, size: 14, hp: 1,
+            id: 'SPEEDER', name: 'ボルト・ステラ', color: '#ffff33', shape: 'star', speedRatio: 1.45, size: 14, hp: 1,
             behavior: 'straight'
         });
     }
@@ -65,11 +67,11 @@ class SpeederEnemy extends Enemy {
     }
 }
 
-// 3. ファントム・グリッチ (紫・正方形ノーツ / Glitch)
-class GlitchEnemy extends Enemy {
+// 3. グリッチ・テトラ (紫・正方形ノーツ / Glitch)
+class GlitchTetraEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'GLITCH', name: 'ファントム・グリッチ', color: '#cc00ff', shape: 'square', speedRatio: 1.0, size: 14, hp: 1,
+            id: 'GLITCH', name: 'グリッチ・テトラ', color: '#cc00ff', shape: 'square', speedRatio: 1.0, size: 14, hp: 1,
             behavior: 'glitch', behaviorConfig: { slowDownMax: 95, slowDownMin: 35, slowDownRatio: 0.55 }
         });
     }
@@ -86,11 +88,11 @@ class GlitchEnemy extends Enemy {
     }
 }
 
-// 4. スピナー (オレンジ・三角形ノーツ / Spiral)
-class CurveEnemy extends Enemy {
+// 4. カーブ・トライ (オレンジ・正三角形ノーツ / Spiral)
+class CurveTriEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CURVE', name: 'スピナー', color: '#ff9900', shape: 'triangle', speedRatio: 0.95, size: 14, hp: 1,
+            id: 'CURVE', name: 'カーブ・トライ', color: '#ff9900', shape: 'triangle', speedRatio: 0.95, size: 14, hp: 1,
             behavior: 'spiral'
         });
     }
@@ -116,11 +118,11 @@ class CurveEnemy extends Enemy {
     }
 }
 
-// 5. サイン・ウェイバー (シアン・ひし形ノーツ / Wave)
-class SineWaveEnemy extends Enemy {
+// 5. ウェイブ・ダイヤ (シアン・ひし形ノーツ / Wave)
+class WaveDiaEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'SINE_WAVE', name: 'サイン・ウェイバー', color: '#00ffcc', shape: 'diamond', speedRatio: 1.0, size: 14, hp: 1,
+            id: 'SINE_WAVE', name: 'ウェイブ・ダイヤ', color: '#00ffcc', shape: 'diamond', speedRatio: 1.0, size: 14, hp: 1,
             behavior: 'wave', behaviorConfig: { frequency: 0.035, amplitude: 4.5 }
         });
     }
@@ -144,11 +146,11 @@ class SineWaveEnemy extends Enemy {
     }
 }
 
-// 6. ブーメラン・クロス (シックな木調ブラウン・L字幾何学ノーツ / Boomerang)
-class CrossEnemy extends Enemy {
+// 6. リターン・アングル (シックな木調ブラウン・L字幾何学ノーツ / Boomerang)
+class ReturnAngleEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'CROSS', name: 'ブーメラン・クロス', color: '#d2691e', shape: 'boomerang', speedRatio: 0.95, size: 14, hp: 1,
+            id: 'CROSS', name: 'リターン・アングル', color: '#d2691e', shape: 'boomerang', speedRatio: 0.95, size: 14, hp: 1,
             behavior: 'boomerang'
         });
     }
@@ -177,11 +179,11 @@ class CrossEnemy extends Enemy {
     }
 }
 
-// 7. ステルス・クロス (ライム・4角手裏剣スターノーツ / Stealth)
-class GhostEnemy extends Enemy {
+// 7. シャドウ・クロス (ライム・4角手裏剣スターノーツ / Stealth)
+class ShadowCrossEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
-            id: 'GHOST', name: 'ステルス・クロス', color: '#aaff66', shape: 'shuriken', speedRatio: 1.0, size: 14, hp: 1,
+            id: 'GHOST', name: 'シャドウ・クロス', color: '#aaff66', shape: 'shuriken', speedRatio: 1.0, size: 14, hp: 1,
             behavior: 'stealth'
         });
     }
@@ -214,7 +216,7 @@ class GhostEnemy extends Enemy {
 }
 
 // 8. フリーズ・ヘキサ (水色・正六角形ノーツ / Freeze)
-class HexagonEnemy extends Enemy {
+class FreezeHexaEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'HEXAGON', name: 'フリーズ・ヘキサ', color: '#00ccff', shape: 'hexagon', speedRatio: 0.95, size: 14, hp: 1,
@@ -243,7 +245,7 @@ class HexagonEnemy extends Enemy {
 }
 
 // 9. オービット・オクタ (ディープインディゴ・正八角形幾何学ノーツ / Orbit)
-class RingEnemy extends Enemy {
+class OrbitOctaEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'RING_NOTE', name: 'オービット・オクタ', color: '#3355ff', shape: 'octagon', speedRatio: 0.9, size: 14, hp: 1,
@@ -278,7 +280,7 @@ class RingEnemy extends Enemy {
 }
 
 // 10. バウンド・ペンタ (グリーン・正五角形ノーツ / Bound)
-class PentagonEnemy extends Enemy {
+class BoundPentaEnemy extends Enemy {
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'PENTAGON', name: 'バウンド・ペンタ', color: '#00ff66', shape: 'pentagon', speedRatio: 0.9, size: 14, hp: 1,

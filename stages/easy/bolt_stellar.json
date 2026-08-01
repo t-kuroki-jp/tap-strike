@@ -1,9 +1,9 @@
 {
-  "id": "sine_wave",
-  "name": "サイン・ウェイバー",
+  "id": "bolt_stellar",
+  "name": "ボルト・ステラ",
   "difficulty": "EASY",
-  "description": "🔷 シアンのひし形！ゆったりとS字の波（サイン波）を描きながら流れるように迫ってくる！",
-  "bgm": "bgm/Petals_on_the_Controller.mp3",
+  "description": "⚡ 黄色のネオン★星型ノーツ！1.5倍のハイスピードで突進してくる！",
+  "bgm": "bgm/Under_The_Hammer.mp3",
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(0, 255, 136, 0.25)",
@@ -19,6 +19,6 @@
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "SINE_WAVE", "behavior": "wave" }
+    { "id": "SPEEDER", "behavior": "straight" }
   ]
 }
