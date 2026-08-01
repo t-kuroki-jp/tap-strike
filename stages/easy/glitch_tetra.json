@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "👾 紫色のネオン正方形ノーツ！判定手前でフッと一瞬減速する！",
   "bgm": "bgm/Magenta_Pulse.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "GLITCH", "behavior": "glitch" }
   ]

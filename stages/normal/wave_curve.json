@@ -4,7 +4,6 @@
   "difficulty": "NORMAL",
   "description": "📐 カーブ・トライ (片曲がり) ＋ 🔷 ウェイブ・ダイヤ (S字波)！2種類の美しく流れる曲線軌道が左右から入り乱れる！",
   "bgm": "bgm/Cyan_Square_Error.mp3",
-  "spawnRate": 210,
   "enemyPool": [
     { "id": "CURVE", "behavior": "spiral", "weight": 1 },
     { "id": "SINE_WAVE", "behavior": "wave", "weight": 1 }

@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "🌀 オレンジ色の正三角形ノーツ！片側に綺麗なカーブを描いて侵入してくる！",
   "bgm": "bgm/Cyan_Square_Error.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "CURVE", "behavior": "spiral" }
   ]

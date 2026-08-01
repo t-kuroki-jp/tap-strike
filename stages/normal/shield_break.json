@@ -4,7 +4,6 @@
   "difficulty": "NORMAL",
   "description": "🛡️ 初のダブルタップバリアノーツ登場！1回叩いてバリアを砕き、2回目で仕留めろ！",
   "bgm": "bgm/Under_The_Hammer.mp3",
-  "spawnRate": 210,
   "enemyPool": [
     { "id": "CHASER", "weight": 2 },
     { "id": "CHASER", "hp": 2, "weight": 1 }

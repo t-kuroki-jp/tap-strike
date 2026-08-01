@@ -4,7 +4,6 @@
   "difficulty": "NORMAL",
   "description": "🌟 NORMALモードの総決算！10大幾何学ノーツと耐久バリアがテンポ良く迫るオールスター！",
   "bgm": "bgm/Under_The_Lanterns.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "CHASER", "weight": 3 },
     { "id": "SPEEDER", "weight": 1 },

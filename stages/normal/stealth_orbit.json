@@ -4,7 +4,6 @@
   "difficulty": "NORMAL",
   "description": "🔷 オービット・オクタの公転 ＋ 👻 姿を消すシャドウ・クロスに、耐久バリアが加わる高難易度連携！",
   "bgm": "bgm/Midnight_Porch_Light.mp3",
-  "spawnRate": 210,
   "enemyPool": [
     { "id": "RING_NOTE", "behavior": "orbit", "weight": 1 },
     { "id": "GHOST", "behavior": "stealth", "weight": 1 },

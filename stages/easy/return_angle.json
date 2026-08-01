@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "🪃 木調ブラウンのL字ノーツ！一度外へ引き返してから急速アプローチしてくる！",
   "bgm": "bgm/Under_The_Hammer.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "CROSS", "behavior": "boomerang" }
   ]

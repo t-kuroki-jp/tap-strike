@@ -290,7 +290,7 @@ class Game {
         }
 
         this.bgmStep = 0;
-        const spawnRate = this.currentStage?.spawnRate || CONFIG.GAME.DEFAULT_SPAWN_RATE_MS;
+        const spawnRate = this.currentStage?.spawnRate || this.params?.spawnRate || CONFIG.GAME.DEFAULT_SPAWN_RATE_MS;
 
         this.bgmInterval = setInterval(() => {
             if (this.state !== GameState.PLAYING) return;

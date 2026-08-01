@@ -87,6 +87,7 @@ class DataLoader {
     getDefaultParams() {
         return {
             gameSpeed: 0.85,
+            spawnRate: CONFIG.GAME.DEFAULT_SPAWN_RATE_MS,
             targetRadius: CONFIG.PLAYER.DEFAULT_TARGET_RADIUS,
             maxHp: CONFIG.PLAYER.DEFAULT_MAX_HP,
             baseScore: CONFIG.GAME.DEFAULT_BASE_SCORE,

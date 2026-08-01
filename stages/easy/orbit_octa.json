@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "🔷 インディゴブルーの正八角形ノーツ！画面外から大きな円弧を描いて優雅に旋回しながら吸い込まれてくる！",
   "bgm": "bgm/Cyan_Square_Error.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "RING_NOTE", "behavior": "orbit" }
   ]

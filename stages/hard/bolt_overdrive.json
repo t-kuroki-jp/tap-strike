@@ -4,7 +4,6 @@
   "difficulty": "HARD",
   "description": "⚡ 高速敵と2回タップの重装甲シールド敵が容赦なく襲いかかるスリリングな激ムズハードステージ！",
   "bgm": "bgm/Magenta_Pulse.mp3",
-  "spawnRate": 160,
   "enemyPool": [
     { "id": "CHASER", "weight": 0.5 },
     { "id": "SPEEDER", "weight": 0.3 },

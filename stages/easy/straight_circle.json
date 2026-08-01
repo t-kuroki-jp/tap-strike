@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "🔴 赤色のネオン正円ノーツ！画面外から判定リングへ一直線にアプローチ！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "CHASER", "behavior": "straight" }
   ]

@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "👻 ライム色の手裏剣スターノーツ！途中で姿が消えて判定直前に姿を現す！",
   "bgm": "bgm/Midnight_Porch_Light.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "GHOST", "behavior": "stealth" }
   ]

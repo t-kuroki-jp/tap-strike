@@ -4,7 +4,6 @@
   "difficulty": "EASY",
   "description": "⚡ 黄色のネオン★星型ノーツ！1.5倍のハイスピードで突進してくる！",
   "bgm": "bgm/Under_The_Hammer.mp3",
-  "spawnRate": 230,
   "enemyPool": [
     { "id": "SPEEDER", "behavior": "straight" }
   ]

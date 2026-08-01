@@ -4,7 +4,6 @@
   "difficulty": "NORMAL",
   "description": "🔴 ストレート・サークル ＋ ⚡ ボルト・ステラ！基本アプローチとハイスピードが交錯する複合ステージ！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
-  "spawnRate": 210,
   "enemyPool": [
     { "id": "CHASER", "weight": 2 },
     { "id": "SPEEDER", "weight": 1 }
