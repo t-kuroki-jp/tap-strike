@@ -165,11 +165,8 @@ class FireworkEnemy extends Enemy {
     }
 
     onHit(game, touchX, touchY, isPerfect) {
+        super.onHit(game, touchX, touchY, isPerfect);
         this.playLaunchWhistleSound();
-        this.hp = 0;
-        game.combo++;
-        game.score += game.params.baseScore * game.combo * (this.fireworkTheme.isRainbow ? 2 : 1);
-        game.gameSpeed += game.params.speedIncrement;
 
         const launchX = this.x;
         const startY = this.y;

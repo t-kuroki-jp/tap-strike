@@ -110,17 +110,8 @@ class SakuraPetalEnemy extends Enemy {
     }
 
     onHit(game, touchX, touchY, isPerfect) {
+        super.onHit(game, touchX, touchY, isPerfect);
         this.playSakuraSound();
-        this.hp = 0;
-
-        if (isPerfect && typeof audioEngine !== 'undefined') {
-            audioEngine.playPerfectSound();
-        } else if (typeof audioEngine !== 'undefined') {
-            audioEngine.playHitSound();
-        }
-
-        // タップ地点で可憐な桜の花びらが舞い散る
-        game.createParticles(this.x, this.y, '#ffb7c5', isPerfect);
 
         // ★ 1回のヒットで画面下部のランダム 3〜4 箇所に一気に満開の桜が咲き乱れる！(通常: 3個, PERFECT: 4個!)
         const bloomCount = isPerfect ? 4 : 3;
@@ -129,12 +120,6 @@ class SakuraPetalEnemy extends Enemy {
             const bloomY = game.canvas.height * 0.65 + Math.random() * (game.canvas.height * 0.25);
             game.particles.push(new RealSakuraBloom(bloomX, bloomY));
         }
-
-        game.ringPulse = 24;
-        game.ringColor = '#ff6699';
-        game.combo++;
-        game.score += game.params.baseScore * game.combo;
-        game.gameSpeed += game.params.speedIncrement;
         return true;
     }
 }

@@ -70,22 +70,18 @@ class SushiEnemy extends Enemy {
     }
 
     playSushiSound() {
-        if (window.audioEngine) {
-            audioEngine.playTone({ type: 'square', startFreq: 440, endFreq: 880, duration: 0.12, volume: 0.3 });
+        if (typeof audioEngine !== 'undefined') {
+            audioEngine.playTone({ type: 'sine', startFreq: 520, endFreq: 1040, duration: 0.15, volume: 0.35 });
         }
     }
 
     onHit(game, touchX, touchY, isPerfect) {
+        // 1. 親クラス(Enemy)の共通HIT・PERFECT音・スコア・ショックウェーブ処理をすべてそのまま利用！
+        super.onHit(game, touchX, touchY, isPerfect);
+
+        // 2. 寿司固有の「和風ポンッ♪効果音」と「白いお皿の破片粒子」のみを追加！
         this.playSushiSound();
-        game.createParticles(this.x, this.y, this.color);
-        game.createParticles(this.x, this.y, '#ffffff');
-        game.ringPulse = 16;
-        game.ringColor = this.color;
-        this.hp = 0;
-        game.combo++;
-        game.score += game.params.baseScore * game.combo;
-        game.gameSpeed += game.params.speedIncrement;
-        game.shockwaves.push(new Shockwave(touchX, touchY, this.color));
+        game.createParticles(this.x, this.y, '#ffffff', isPerfect);
         return true;
     }
 }

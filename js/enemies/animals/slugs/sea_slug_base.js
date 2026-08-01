@@ -176,33 +176,8 @@ class SeaSlugEnemy extends Enemy {
     }
 
     onHit(game, touchX, touchY, isPerfect) {
+        super.onHit(game, touchX, touchY, isPerfect);
         this.playSlugSound();
-
-        const hadShield = this.hp > 1;
-        if (isPerfect && typeof audioEngine !== 'undefined') {
-            audioEngine.playPerfectSound();
-            game.createParticles(this.x, this.y, '#ffcc00', true);
-            game.createParticles(this.x, this.y, '#ffffff', true);
-            game.shockwaves.push(new Shockwave(this.x, this.y, '#ffcc00'));
-            game.shockwaves.push(new Shockwave(this.x, this.y, '#ffffff'));
-            game.ringPulse = 28;
-            game.ringColor = '#ffcc00';
-        } else if (typeof audioEngine !== 'undefined') {
-            audioEngine.playHitSound();
-            game.createParticles(this.x, this.y, hadShield ? '#00bbff' : this.color, false);
-            game.createParticles(this.x, this.y, '#ffffff', false);
-            game.ringPulse = 18;
-            game.ringColor = this.color;
-        }
-
-        this.hp--;
-        if (this.hp <= 0) {
-            game.combo++;
-            game.score += game.params.baseScore * game.combo;
-            game.gameSpeed += game.params.speedIncrement;
-            game.shockwaves.push(new Shockwave(touchX, touchY, this.color));
-        }
-
         return true;
     }
 }
