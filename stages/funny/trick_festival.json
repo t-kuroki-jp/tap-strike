@@ -2,20 +2,27 @@
   "id": "trick_festival",
   "name": "トリッキー・フェスティバル！",
   "difficulty": "FUNNY",
-  "description": "何でもありのカオスお祭り！引き返すヒヨコ、立ち止まるネコ、目の前に現れる隠密寿司の理不尽トリッキー空間！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
-  "targetScore": 600,
+  "description": "🎪 ドントタップ・バリア・減速・公転が入り乱れるカオストリッキーフェスティバル！",
+  "bgm": "bgm/Magenta_Pulse.mp3",
+  "spawnRate": 210,
+  "theme": {
+    "bgGlow": "rgba(255, 0, 255, 0.25)",
+    "gridColor": "rgba(255, 0, 255, 0.3)",
+    "ringColor": "#ff00ff",
+    "playerColor": "#ff00ff"
+  },
   "params": {
     "gameSpeed": 0.9,
-    "spawnInterval": 1500,
-    "speedIncrement": 0.01,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
     "baseScore": 10
   },
   "enemyPool": [
-    { "id": "CHICKEN", "behavior": "boomerang" },
-    { "id": "CAT", "behavior": "freeze" },
-    { "id": "SUSHI", "behavior": "stealth" },
-    { "id": "SPEEDER", "behavior": "bound" },
-    { "id": "CHASER", "behavior": "orbit" }
+    { "id": "CHASER", "weight": 2 },
+    { "id": "SPEEDER", "weight": 1 },
+    { "id": "GLITCH", "weight": 1 },
+    { "id": "CROSS", "weight": 1 },
+    { "id": "CHASER", "hp": 2, "weight": 1 }
   ]
 }

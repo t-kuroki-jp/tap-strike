@@ -148,11 +148,7 @@ class UIManager {
             return;
         }
 
-        if (diff === 'FUNNY') {
-            // FUNNYモード: 最新順(日付降順)で並べ替え
-            items.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
-        }
-        // EASY / NORMAL / HARD: stages.json での定義順(コース順 1, 2, 3...)を維持！
+        // 全モード: stages.json に書かれた配列の並び順通りにストレート表示！
 
         items.forEach((s, index) => {
             const card = document.createElement('div');
@@ -161,7 +157,7 @@ class UIManager {
 
             let badgeHtml = '';
             if (diff === 'FUNNY') {
-                // 最新3件に NEW! バッジを表示 (ゴールド/イエローカラー)
+                // stages.json の上(先頭 3件)に金色の NEW! バッジを表示！
                 if (index < 3) {
                     badgeHtml = `<span class="badge-new badge-${diff}">NEW!</span>`;
                 }

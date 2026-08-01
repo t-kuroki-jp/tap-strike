@@ -2,18 +2,23 @@
   "id": "chicken_panic",
   "name": "ヒヨコ・パニック",
   "difficulty": "FUNNY",
-  "description": "ぴよぴよ跳ねる可愛いヒヨコが迫ってくるシュールなおバカステージ！ピヨッ！",
+  "description": "🐥 羽をはためかせてトコトコ進む可愛い黄色いヒヨコが大襲来！",
   "bgm": "bgm/Petals_on_the_Controller.mp3",
-  "createdAt": "2026-07-26",
-  "updatedAt": "2026-07-26",
+  "spawnRate": 220,
   "theme": {
     "bgGlow": "rgba(255, 230, 0, 0.25)",
     "gridColor": "rgba(255, 230, 0, 0.3)",
     "ringColor": "#ffe600",
     "playerColor": "#ffe600"
   },
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
+  },
   "enemyPool": [
     { "id": "CHICKEN", "weight": 1.0 }
-  ],
-  "spawnRate": 220
+  ]
 }

@@ -2,15 +2,21 @@
   "id": "dangerous_survival",
   "name": "デンジャラス・サバイバル",
   "difficulty": "FUNNY",
-  "description": "メガボムや打上花火が乱れ飛ぶカオスな戦場！命綱の回復ポッドを見逃すな！",
+  "description": "💣 爆弾や打ち上げ花火が乱れ飛ぶカオスなサバイバル戦場！命綱の回復ハートを見逃すな！",
   "bgm": "bgm/Under_The_Lanterns.mp3",
-  "createdAt": "2026-07-28",
-  "updatedAt": "2026-07-28",
+  "spawnRate": 190,
   "theme": {
     "bgGlow": "rgba(255, 34, 0, 0.3)",
     "gridColor": "rgba(255, 100, 0, 0.35)",
     "ringColor": "#ff2200",
     "playerColor": "#ff2200"
+  },
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
   },
   "enemyPool": [
     {
@@ -30,9 +36,8 @@
       "weight": 0.1
     },
     {
-      "id": "SUSHI",
+      "id": "CHASER",
       "weight": 0.1
     }
-  ],
-  "spawnRate": 160
+  ]
 }

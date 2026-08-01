@@ -36,7 +36,8 @@ class DataLoader {
     async loadStages() {
         try {
             const listRes = await fetch(`stages.json?t=${Date.now()}`);
-            const filePaths = await listRes.json();
+            const data = await listRes.json();
+            const filePaths = Array.isArray(data) ? data : Object.values(data).flat();
 
             const stagePromises = filePaths.map(async (path) => {
                 try {

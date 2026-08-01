@@ -2,10 +2,9 @@
   "id": "sea_slug_paradise",
   "name": "海の宝石ウミウシパラダイス",
   "difficulty": "FUNNY",
-  "description": "グラマラスで美しいウミウシたちがうねうね大集合！ぷくぷく水泡がゆらめく幻想的アクアリウムステージ！",
+  "description": "🐚 アオウミノウシ・イチゴ・ピカチュウ等全8種大集合！ぷくぷく水泡がゆらめく幻想的アクアリウム！",
   "bgm": "bgm/Petals_on_the_Controller.mp3",
-  "createdAt": "2026-07-28",
-  "updatedAt": "2026-07-28",
+  "spawnRate": 220,
   "theme": {
     "bgColor": "#011627",
     "bgGlow": "rgba(0, 200, 255, 0.5)",
@@ -14,11 +13,14 @@
     "playerColor": "#00f0ff",
     "bubbleEffect": true
   },
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
+  },
   "enemyPool": [
-    {
-      "id": "SEA_SLUG",
-      "weight": 1.0
-    }
-  ],
-  "spawnRate": 220
+    { "id": "SEA_SLUG", "weight": 1.0 }
+  ]
 }

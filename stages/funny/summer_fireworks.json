@@ -2,18 +2,23 @@
   "id": "summer_fireworks",
   "name": "たまや〜！夏の大輪花火",
   "difficulty": "FUNNY",
-  "description": "画面の下からシュルシュル上昇してくる花火玉をタイミングよくタップ！夜空に満開の大輪花火を咲かせよう！",
-  "bgm": "bgm/Matsuri_High.mp3",
-  "createdAt": "2026-07-26",
-  "updatedAt": "2026-07-26",
+  "description": "🎆 画面下部から昇る花火玉をタップ！夜空にドカンと大輪の花火が咲き乱れる！",
+  "bgm": "bgm/Blood_and_Bamboo.mp3",
+  "spawnRate": 280,
   "theme": {
     "bgGlow": "rgba(255, 230, 0, 0.2)",
     "gridColor": "rgba(255, 200, 0, 0.25)",
     "ringColor": "#ffe600",
     "playerColor": "#ffe600"
   },
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
+  },
   "enemyPool": [
     { "id": "FIREWORK", "weight": 1.0 }
-  ],
-  "spawnRate": 280
+  ]
 }

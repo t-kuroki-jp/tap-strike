@@ -1,32 +1,40 @@
-[
-  "stages/easy/straight_circle.json",
-  "stages/easy/bolt_stellar.json",
-  "stages/easy/glitch_tetra.json",
-  "stages/easy/curve_tri.json",
-  "stages/easy/wave_dia.json",
-  "stages/easy/return_angle.json",
-  "stages/easy/shadow_cross.json",
-  "stages/easy/freeze_hexa.json",
-  "stages/easy/orbit_octa.json",
-  "stages/easy/bound_penta.json",
-  "stages/normal/neon_duo.json",
-  "stages/normal/wave_curve.json",
-  "stages/normal/shield_break.json",
-  "stages/normal/barrier_tricks.json",
-  "stages/normal/stealth_orbit.json",
-  "stages/normal/allstar_normal.json",
-  "stages/hard/bolt_overdrive.json",
-  "stages/funny/dog_march.json",
-  "stages/funny/animal_parade.json",
-  "stages/funny/chicken_panic.json",
-  "stages/funny/rainbow_chaser.json",
-  "stages/funny/san_san_nana.json",
-  "stages/funny/cat_festival.json",
-  "stages/funny/real_cats.json",
-  "stages/funny/rotating_sushi.json",
-  "stages/funny/summer_fireworks.json",
-  "stages/funny/trick_festival.json",
-  "stages/funny/dangerous_survival.json",
-  "stages/funny/sea_slug_paradise.json",
-  "stages/funny/sakura_blossom.json"
-]
+{
+  "easy": [
+    "stages/easy/straight_circle.json",
+    "stages/easy/bolt_stellar.json",
+    "stages/easy/glitch_tetra.json",
+    "stages/easy/curve_tri.json",
+    "stages/easy/wave_dia.json",
+    "stages/easy/return_angle.json",
+    "stages/easy/shadow_cross.json",
+    "stages/easy/freeze_hexa.json",
+    "stages/easy/orbit_octa.json",
+    "stages/easy/bound_penta.json"
+  ],
+  "normal": [
+    "stages/normal/neon_duo.json",
+    "stages/normal/wave_curve.json",
+    "stages/normal/shield_break.json",
+    "stages/normal/barrier_tricks.json",
+    "stages/normal/stealth_orbit.json",
+    "stages/normal/allstar_normal.json"
+  ],
+  "hard": [
+    "stages/hard/bolt_overdrive.json"
+  ],
+  "funny": [
+    "stages/funny/dangerous_survival.json",
+    "stages/funny/sea_slug_paradise.json",
+    "stages/funny/sakura_blossom.json",
+    "stages/funny/rotating_sushi.json",
+    "stages/funny/trick_festival.json",
+    "stages/funny/summer_fireworks.json",
+    "stages/funny/dog_march.json",
+    "stages/funny/cat_festival.json",
+    "stages/funny/chicken_panic.json",
+    "stages/funny/animal_parade.json",
+    "stages/funny/rainbow_chaser.json",
+    "stages/funny/san_san_nana.json",
+    "stages/funny/real_cats.json"
+  ]
+}

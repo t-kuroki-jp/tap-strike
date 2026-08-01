@@ -1,19 +1,24 @@
 {
   "id": "rotating_sushi",
-  "name": "回転すし！",
+  "name": "天下無敵の回転寿司",
   "difficulty": "FUNNY",
-  "description": "判定リングの周りをクルクル回りながら吸い込まれてくる極上マグロ寿司！へいらっしゃい！",
+  "description": "🍣 マグロ・サーモン・エビ・たまご！自転しながら吸い込まれてくる極上回転寿司！へいらっしゃい！",
   "bgm": "bgm/Under_The_Hammer.mp3",
-  "createdAt": "2026-07-26",
-  "updatedAt": "2026-07-26",
+  "spawnRate": 220,
   "theme": {
     "bgGlow": "rgba(255, 68, 51, 0.25)",
     "gridColor": "rgba(255, 68, 51, 0.3)",
     "ringColor": "#ff4433",
     "playerColor": "#ff4433"
   },
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
+  },
   "enemyPool": [
     { "id": "SUSHI", "weight": 1.0 }
-  ],
-  "spawnRate": 220
+  ]
 }

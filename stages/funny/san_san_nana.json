@@ -2,19 +2,24 @@
   "id": "san_san_nana",
   "name": "三・三・七拍子",
   "difficulty": "FUNNY",
-  "description": "タン・タン・タン！タン・タン・タン！タンタンタンタンタンタンタン！手拍子のリズムで遊ぶリズムステージ！",
+  "description": "👏 タン・タン・タン！タン・タン・タン！タンタンタンタンタンタンタン！和風手拍子リズムステージ！",
   "bgm": "bgm/Blood_and_Bamboo.mp3",
-  "createdAt": "2026-07-26",
-  "updatedAt": "2026-07-26",
+  "spawnPattern": "san_san_nana",
+  "spawnRate": 280,
   "theme": {
     "bgGlow": "rgba(255, 170, 0, 0.25)",
     "gridColor": "rgba(255, 170, 0, 0.3)",
     "ringColor": "#ffaa00",
     "playerColor": "#ffaa00"
   },
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
+  },
   "enemyPool": [
     { "id": "CHASER", "weight": 1.0 }
-  ],
-  "spawnPattern": "san_san_nana",
-  "spawnRate": 280
+  ]
 }

@@ -2,10 +2,9 @@
   "id": "sakura_blossom",
   "name": "満開の夜桜乱舞",
   "difficulty": "FUNNY",
-  "description": "ひらひら舞い落ちる桜の花びらをタップ！画面下でパッと満開の桜が咲き誇る幻想ステージ！",
+  "description": "🌸 ひらひら舞い落ちる桜の花びらをタップ！画面下部でパッとリアルな桜が満開に咲き乱れる！",
   "bgm": "bgm/Petals_on_the_Controller.mp3",
-  "createdAt": "2026-07-28",
-  "updatedAt": "2026-07-28",
+  "spawnRate": 320,
   "theme": {
     "bgColor": "#1c0b1e",
     "bgGlow": "rgba(255, 102, 153, 0.45)",
@@ -14,11 +13,14 @@
     "playerColor": "#ff6699",
     "sakuraEffect": true
   },
+  "params": {
+    "gameSpeed": 0.85,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
+    "baseScore": 10
+  },
   "enemyPool": [
-    {
-      "id": "SAKURA_PETAL",
-      "weight": 1.0
-    }
-  ],
-  "spawnRate": 320
+    { "id": "SAKURA_PETAL", "weight": 1.0 }
+  ]
 }

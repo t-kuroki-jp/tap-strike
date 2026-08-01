@@ -12,7 +12,9 @@
 - 🔴 **HARD モード**: 幾何学ノーツ ✕ 複雑な複合 Behavior の高難易度オーバードライブコース。
 - 🤪 **FUNNY モード**: ひよこ、ネコファミリー、回転寿司、柴犬、満開夜桜、花火などの賑やかなキャラクターやテーマ別のお楽しみお祭りコース。
 
-> 💡 **エネミー詳細カタログ**: 全エネミーの各種パラメータ、色、クラス構造は分離された [全エネミー & ノーツ完全カタログ (docs/ENEMIES.md)](file:///c:/Users/g35cz/dev/tap-strike/docs/ENEMIES.md) を参照してください。
+> 💡 **カタログ仕様書リンク**:
+> - 全エネミーの各種パラメータ、色、クラス構造 ➔ [全エネミー & ノーツ完全カタログ (docs/ENEMIES.md)](file:///c:/Users/g35cz/dev/tap-strike/docs/ENEMIES.md)
+> - 全 24 ステージ詳細カタログ ＆ JSON スキーマ規格 ➔ [全ステージ & JSON スキーマ仕様書 (docs/STAGES.md)](file:///c:/Users/g35cz/dev/tap-strike/docs/STAGES.md)
 
 ---
 

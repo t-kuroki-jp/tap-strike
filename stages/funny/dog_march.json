@@ -2,13 +2,20 @@
   "id": "dog_march",
   "name": "わんわん大行進！",
   "difficulty": "FUNNY",
-  "description": "麻呂眉がキュートな柴犬わんこが登場！尻尾を振り振り元気に走ってくるわんこをタップしよう！",
+  "description": "🐕 麻呂眉がキュートな柴犬わんこが登場！尻尾を振り振り元気に走ってくるわんこをタップしよう！",
   "bgm": "bgm/Under_The_Hammer.mp3",
-  "targetScore": 500,
+  "spawnRate": 230,
+  "theme": {
+    "bgGlow": "rgba(255, 170, 51, 0.25)",
+    "gridColor": "rgba(255, 170, 51, 0.3)",
+    "ringColor": "#ffaa33",
+    "playerColor": "#ffaa33"
+  },
   "params": {
     "gameSpeed": 0.9,
-    "spawnInterval": 1500,
-    "speedIncrement": 0.008,
+    "targetRadius": 60,
+    "maxHp": 3,
+    "tapCooldown": 50,
     "baseScore": 10
   },
   "enemyPool": [
