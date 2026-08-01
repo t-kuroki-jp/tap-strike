@@ -2,6 +2,7 @@
  * 柴犬わんこ (DogEnemy / くるりん尾っぽ ＆ 麻呂眉 ＆ つぶらな黒目)
  */
 class DogEnemy extends Enemy {
+    static metadata = { id: 'DOG', name: '柴犬わんこ', tag: '直進ダッシュ', desc: 'くるりん尾っぽを振って元気いっぱいに駆けてくる柴犬！', color: '#ffaa33' };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'DOG', name: '柴犬わんこ', color: '#ffaa33', shape: 'dog', speedRatio: 1.05, size: 14.5, hp: 1,

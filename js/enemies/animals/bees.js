@@ -2,6 +2,7 @@
  * みつばち (Bee / 旋回アプローチ / つぶらな黒目 ＋ ハイライト)
  */
 class BeeEnemy extends Enemy {
+    static metadata = { id: 'BEE', name: 'みつばち', tag: '旋回飛翔', desc: '羽をパタパタさせながら大きな円を描いて飛んでくる！', color: '#ffcc00' };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'BEE', name: 'みつばち', color: '#ffcc00', shape: 'bee', speedRatio: 0.9, size: 15, hp: 1,

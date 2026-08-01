@@ -2,6 +2,7 @@
  * カエル (Frog / つぶらな黒目 ＋ ハイライト ＋ ゲコッと鳴き袋 ＆ 跳躍)
  */
 class FrogEnemy extends Enemy {
+    static metadata = { id: 'FROG', name: 'かえるさん', tag: '一瞬停止', desc: '手前でピタッと1秒止まって「だるまさんが転んだ」！', color: '#00ff66' };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'FROG', name: 'かえるさん', color: '#00ff66', shape: 'frog', speedRatio: 0.95, size: 13.5, hp: 1,

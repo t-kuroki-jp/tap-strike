@@ -2,6 +2,7 @@
  * メガボム (画面大爆発・自律爆発SE)
  */
 class BombEnemy extends Enemy {
+    static metadata = { id: 'BOMB', name: '危険爆弾', tag: 'トラップ', desc: '叩くと爆発してライフダメージ！スルーするのが正解！', color: '#ff2200' };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'BOMB', name: 'メガ・ボム', color: '#ff2200', shape: 'bomb', speedRatio: 1.0, size: 14, hp: 1

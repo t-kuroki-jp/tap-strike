@@ -3,6 +3,7 @@
  * 上部からひらひら舞い降りてきて、ヒットすると画面下部でパッと満開の桜が咲き誇る！
  */
 class SakuraPetalEnemy extends Enemy {
+    static metadata = { id: 'SAKURA_PETAL', name: '桜の花びら', tag: 'ひらひら舞い降り', desc: '上から舞い落ちる花びら。タップすると下に満開の桜が咲き誇る！', color: '#ffb7c5' };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'SAKURA_PETAL',

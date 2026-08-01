@@ -2,6 +2,7 @@
  * ぴよぴよヒヨコ (ChickenEnemy / トコトコ歩行 / つぶらな黒目 ＋ ハイライト ＋ パタパタ羽)
  */
 class ChickenEnemy extends Enemy {
+    static metadata = { id: 'CHICKEN', name: 'ぴよぴよヒヨコ', tag: 'チョコチョコ歩行', desc: '羽をはためかせてトコトコ進む可愛い黄色いヒヨコ！', color: '#ffee33' };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'CHICKEN', name: 'ぴよぴよヒヨコ', color: '#ffee33', shape: 'chicken', speedRatio: 0.95, size: 14.5, hp: 1,

@@ -2,6 +2,7 @@
  * ライフ・ポッド (回復ボーナス)
  */
 class HealEnemy extends Enemy {
+    static metadata = { id: 'HEAL', name: '回復ハート', tag: 'HP回復', desc: '叩くとプレイヤーのライフ（ハート）が1回復！', color: '#00ff88' };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'HEAL', name: 'ライフ・ポッド', color: '#00ff88', shape: 'diamond', speedRatio: 0.9, size: 11, hp: 1

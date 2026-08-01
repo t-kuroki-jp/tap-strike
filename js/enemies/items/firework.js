@@ -2,6 +2,7 @@
  * 打ち上げ花火玉 (玉の色と夜空の大輪花火が完全連動！レア・七色レインボー花火搭載！全7カラーアソート)
  */
 class FireworkEnemy extends Enemy {
+    static metadata = { id: 'FIREWORK', name: '打上花火', tag: '大輪演出', desc: 'タップすると夜空へ大輪の花火が打ち上がる！', color: '#ff00aa' };
     constructor(canvas, gameSpeed, stage) {
         // レインボーを含む全7色の花火カラーバリエーション
         const palette = [

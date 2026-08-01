@@ -3,23 +3,48 @@
  */
 class EnemyFactory {
     static registry = {};
+    static metadataList = [];
     static initialized = false;
 
     /**
      * 新しいエネミーノーツの生成クラス/生成関数を動的登録するプラグイン API
      * @param {string} id - エネミーID (例: 'CHASER', 'CAT')
-     * @param {Function|Class} target - 生成関数 (canvas, gameSpeed, stage) => Enemy または Enemyの基底クラス
+     * @param {Function|Class} target - 生成関数または Enemy の基底クラス
+     * @param {Object} [customMeta] - 図鑑表示用の特別メタデータ（省略時はクラスの static metadata を自動採用）
      */
-    static register(id, target) {
+    static register(id, target, customMeta = null) {
         if (!id) return;
+
+        let meta = customMeta;
+
         if (typeof target === 'function') {
-            // クラス構造体かアロー関数かを自動識別
             if (target.prototype && target.prototype.draw) {
                 this.registry[id] = (canvas, gameSpeed, stage) => new target(canvas, gameSpeed, stage);
+                if (!meta && target.metadata) {
+                    meta = target.metadata;
+                }
             } else {
                 this.registry[id] = target;
             }
         }
+
+        if (meta) {
+            // 図鑑リストの重複登録防止
+            const existingIdx = this.metadataList.findIndex(m => m.id === id);
+            if (existingIdx >= 0) {
+                this.metadataList[existingIdx] = meta;
+            } else {
+                this.metadataList.push(meta);
+            }
+        }
+    }
+
+    /**
+     * 登録された全エネミーの図鑑メタデータを取得（図鑑画面の動的自動生成用）
+     */
+    static getAllMetadata() {
+        this.initDefaults();
+        return this.metadataList;
     }
 
     /**
@@ -55,6 +80,8 @@ class EnemyFactory {
             const catClasses = [MikeCatEnemy, KijitoraCatEnemy, HachiwareCatEnemy];
             const RandomCatClass = catClasses[Math.floor(Math.random() * catClasses.length)];
             return new RandomCatClass(canvas, gameSpeed, stage);
+        }, {
+            id: 'CAT', name: 'にゃんこファミリー', tag: 'トコトコ歩行', desc: '白猫・茶トラ・ハチワレ。しっぽを振って気まぐれ散歩！', color: '#ffccaa'
         });
 
         // 4. どうぶつ仲間たち (柴犬, ヒヨコ, 蜂, 蛙)
@@ -79,6 +106,8 @@ class EnemyFactory {
             ];
             const RandomSushiClass = sushiClasses[Math.floor(Math.random() * sushiClasses.length)];
             return new RandomSushiClass(canvas, gameSpeed, stage);
+        }, {
+            id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633'
         });
 
         // 6. ウミウシパラダイス全8種群
@@ -98,6 +127,8 @@ class EnemyFactory {
             ];
             const RandomSlugClass = slugClasses[Math.floor(Math.random() * slugClasses.length)];
             return new RandomSlugClass(canvas, gameSpeed, stage);
+        }, {
+            id: 'SEA_SLUG', name: '海の宝石ウミウシ', tag: '波打つ水蒸泳', desc: 'アオウミウシ・ゴマちゃん・ピカチュウ！うねうね波打つ海の宝石！', color: '#00ccff'
         });
     }
 

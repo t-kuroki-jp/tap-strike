@@ -62,27 +62,8 @@ class UIManager {
         if (!container) return;
         container.innerHTML = '';
 
-        const characterData = [
-            { id: 'CHASER', name: 'ストレート・サークル', tag: '直進', desc: '赤色のネオン正円ノーツ。中心へ一直線にアプローチ！', color: '#ff3366' },
-            { id: 'SPEEDER', name: 'ボルト・ステラ', tag: '高速直進', desc: '黄色のネオン★星型ノーツ。1.5倍のハイスピードで突進！', color: '#ffff33' },
-            { id: 'GLITCH', name: 'グリッチ・テトラ', tag: '直前減速', desc: '紫色のネオン正方形。判定手前でフッと一瞬減速する！', color: '#cc00ff' },
-            { id: 'CURVE', name: 'カーブ・トライ', tag: '片曲がりカーブ', desc: 'オレンジ色の正三角形。片側に綺麗なカーブ（変化球）を描いて侵入！', color: '#ff9900' },
-            { id: 'SINE_WAVE', name: 'ウェイブ・ダイヤ', tag: '大波S字運動', desc: 'シアン色のひし形ノーツ。S字サイン波でゆったり優雅に流れる！', color: '#00ffcc' },
-            { id: 'CROSS', name: 'リターン・アングル', tag: '引き返し・Uターン', desc: '木調ブラウンのL字ノーツ。一度外へ引き返してから急速アプローチ！', color: '#d2691e' },
-            { id: 'GHOST', name: 'シャドウ・クロス', tag: '隠密・透明化', desc: 'ライム色の手裏剣ノーツ。途中で消えて判定直前に現れる！', color: '#aaff66' },
-            { id: 'HEXAGON', name: 'フリーズ・ヘキサ', tag: '一瞬停止', desc: '水色の正六角形。手前でピタッと1秒停止後ダッシュ！', color: '#00ccff' },
-            { id: 'RING_NOTE', name: 'オービット・オクタ', tag: '大円弧公転', desc: 'インディゴブルーの正八角形ノーツ。画面外から大きな円弧を描いて接近！', color: '#3355ff' },
-            { id: 'PENTAGON', name: 'バウンド・ペンタ', tag: 'ジグザグステップ', desc: '緑色の正五角形。カクッカクッと左右にステップを踏みながら進行！', color: '#00ff66' },
-            { id: 'CAT', name: 'にゃんこファミリー', tag: 'トコトコ歩行', desc: '白猫・茶トラ・ハチワレ。しっぽを振って気まぐれ散歩！', color: '#ffccaa' },
-            { id: 'CHICKEN', name: 'ぴよぴよヒヨコ', tag: 'チョコチョコ歩行', desc: '羽をはためかせてトコトコ進む可愛い黄色いヒヨコ！', color: '#ffee33' },
-            { id: 'DOG', name: '柴犬わんこ', tag: '直進ダッシュ', desc: 'くるりん尾っぽを振って元気いっぱいに駆けてくる柴犬！', color: '#ffaa33' },
-            { id: 'BEE', name: 'みつばち', tag: '旋回飛翔', desc: '羽をパタパタさせながら大きな円を描いて飛んでくる！', color: '#ffcc00' },
-            { id: 'FROG', name: 'かえるさん', tag: '一瞬停止', desc: '手前でピタッと1秒止まって「だるまさんが転んだ」！', color: '#00ff66' },
-            { id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633' },
-            { id: 'SEA_SLUG', name: '海の宝石ウミウシ', tag: '波打つ水蒸泳', desc: 'アオウミウシ・ゴマちゃん・ピカチュウ！うねうね波打つ海の宝石！', color: '#00ccff' },
-            { id: 'FIREWORK', name: '打上花火', tag: '大輪演出', desc: 'タップすると夜空へ大輪の花火が打ち上がる！', color: '#ff00aa' },
-            { id: 'SAKURA_PETAL', name: '桜の花びら', tag: 'ひらひら舞い降り', desc: '上から舞い落ちる花びら。タップすると下に満開の桜が咲き誇る！', color: '#ffb7c5' }
-        ];
+        // 各エネミーノーツクラスが保持する static metadata を全自動集約！(ハードコード完全消去)
+        const characterData = typeof EnemyFactory !== 'undefined' ? EnemyFactory.getAllMetadata() : [];
 
         const dummyCanvas = document.createElement('canvas');
 
