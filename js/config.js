@@ -25,7 +25,6 @@ const CONFIG = Object.freeze({
         DEFAULT_SPEED_INCREMENT: 0.01,
         DEFAULT_PARTICLE_COUNT: 18,
         DEFAULT_SPAWN_RATE_MS: 187,
-        DEFAULT_BG_SCROLL_SPEED: '3s',
         CANVAS_MAX_WIDTH: 500
     }
 });

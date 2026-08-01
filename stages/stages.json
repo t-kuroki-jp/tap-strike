@@ -23,11 +23,11 @@
     "stages/hard/bolt_overdrive.json"
   ],
   "funny": [
+    "stages/funny/rotating_sushi.json",
+    "stages/funny/trick_festival.json",
     "stages/funny/dangerous_survival.json",
     "stages/funny/sea_slug_paradise.json",
     "stages/funny/sakura_blossom.json",
-    "stages/funny/rotating_sushi.json",
-    "stages/funny/trick_festival.json",
     "stages/funny/summer_fireworks.json",
     "stages/funny/dog_march.json",
     "stages/funny/cat_festival.json",

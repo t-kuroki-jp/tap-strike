@@ -1,6 +1,5 @@
 {
   "EASY": {
-    "name": "かんたん",
     "player": {
       "maxHp": 3,
       "missPenaltyDuration": 10
@@ -13,12 +12,10 @@
       "baseScore": 100
     },
     "visuals": {
-      "particleCount": 20,
-      "bgScrollSpeed": "4s"
+      "particleCount": 20
     }
   },
   "NORMAL": {
-    "name": "ふつう",
     "player": {
       "maxHp": 3,
       "missPenaltyDuration": 12
@@ -31,12 +28,10 @@
       "baseScore": 150
     },
     "visuals": {
-      "particleCount": 18,
-      "bgScrollSpeed": "2.5s"
+      "particleCount": 18
     }
   },
   "HARD": {
-    "name": "むずかしい",
     "player": {
       "maxHp": 3,
       "missPenaltyDuration": 15
@@ -49,8 +44,7 @@
       "baseScore": 200
     },
     "visuals": {
-      "particleCount": 24,
-      "bgScrollSpeed": "1.8s"
+      "particleCount": 24
     }
   }
 }

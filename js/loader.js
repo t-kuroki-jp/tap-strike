@@ -26,16 +26,16 @@ class DataLoader {
 
     async loadDifficulties() {
         try {
-            const res = await fetch(`difficulties.json?t=${Date.now()}`);
+            const res = await fetch(`stages/difficulties.json?t=${Date.now()}`);
             this.difficultiesMaster = await res.json();
         } catch (e) {
-            console.error('Failed to load difficulties.json', e);
+            console.error('Failed to load stages/difficulties.json', e);
         }
     }
 
     async loadStages() {
         try {
-            const listRes = await fetch(`stages.json?t=${Date.now()}`);
+            const listRes = await fetch(`stages/stages.json?t=${Date.now()}`);
             const data = await listRes.json();
             const filePaths = Array.isArray(data) ? data : Object.values(data).flat();
 
@@ -71,8 +71,7 @@ class DataLoader {
             hitWindow: stage.hitWindow ?? g.hitWindow ?? CONFIG.HIT.DEFAULT_HIT_WINDOW_PX,
             missPenaltyDuration: stage.missPenaltyDuration ?? p.missPenaltyDuration ?? CONFIG.HIT.DEFAULT_MISS_PENALTY_TICKS,
             particleCount: stage.particleCount ?? v.particleCount ?? CONFIG.GAME.DEFAULT_PARTICLE_COUNT,
-            tapCooldown: stage.tapCooldown ?? g.tapCooldown ?? CONFIG.HIT.DEFAULT_TAP_COOLDOWN_MS,
-            bgScrollSpeed: stage.bgScrollSpeed ?? v.bgScrollSpeed ?? CONFIG.GAME.DEFAULT_BG_SCROLL_SPEED
+            tapCooldown: stage.tapCooldown ?? g.tapCooldown ?? CONFIG.HIT.DEFAULT_TAP_COOLDOWN_MS
         };
     }
 
@@ -91,8 +90,7 @@ class DataLoader {
             hitWindow: CONFIG.HIT.DEFAULT_HIT_WINDOW_PX,
             missPenaltyDuration: CONFIG.HIT.DEFAULT_MISS_PENALTY_TICKS,
             particleCount: CONFIG.GAME.DEFAULT_PARTICLE_COUNT,
-            tapCooldown: CONFIG.HIT.DEFAULT_TAP_COOLDOWN_MS,
-            bgScrollSpeed: CONFIG.GAME.DEFAULT_BG_SCROLL_SPEED
+            tapCooldown: CONFIG.HIT.DEFAULT_TAP_COOLDOWN_MS
         };
     }
 }
