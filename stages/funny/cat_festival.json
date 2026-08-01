@@ -11,13 +11,6 @@
     "ringColor": "#ff99bb",
     "playerColor": "#ff99bb"
   },
-  "params": {
-    "gameSpeed": 0.85,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
-  },
   "enemyPool": [
     { "id": "CAT", "weight": 1.0 }
   ]

@@ -6,19 +6,11 @@
   "bgm": "bgm/Petals_on_the_Controller.mp3",
   "spawnRate": 220,
   "theme": {
-    "bgColor": "#011627",
-    "bgGlow": "rgba(0, 200, 255, 0.5)",
-    "gridColor": "rgba(0, 150, 214, 0.4)",
+    "bgGlow": "rgba(0, 240, 255, 0.25)",
+    "gridColor": "rgba(0, 240, 255, 0.3)",
     "ringColor": "#00f0ff",
     "playerColor": "#00f0ff",
     "bubbleEffect": true
-  },
-  "params": {
-    "gameSpeed": 0.85,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
   },
   "enemyPool": [
     { "id": "SEA_SLUG", "weight": 1.0 }

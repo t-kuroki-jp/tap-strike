@@ -6,19 +6,11 @@
   "bgm": "bgm/Petals_on_the_Controller.mp3",
   "spawnRate": 320,
   "theme": {
-    "bgColor": "#1c0b1e",
-    "bgGlow": "rgba(255, 102, 153, 0.45)",
-    "gridColor": "rgba(255, 183, 197, 0.35)",
+    "bgGlow": "rgba(255, 102, 153, 0.25)",
+    "gridColor": "rgba(255, 102, 153, 0.3)",
     "ringColor": "#ff6699",
     "playerColor": "#ff6699",
     "sakuraEffect": true
-  },
-  "params": {
-    "gameSpeed": 0.85,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
   },
   "enemyPool": [
     { "id": "SAKURA_PETAL", "weight": 1.0 }

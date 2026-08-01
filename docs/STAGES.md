@@ -137,25 +137,24 @@
 
 ---
 
-## 7. 🤪 FUNNY モード ステージ全 13 種カタログ
+## 7. 🤪 FUNNY モード ステージ全 12 種カタログ
 
 賑やかで可愛い動物、回転寿司、満開夜桜、花火、お祭りテーマが目白押しのバラエティコースです。
 
 | # | ID | ステージ名 | 出現エネミー Pool | テーマ・お楽しみ要素 | テーマカラー | BGM |
 | :---: | :--- | :--- | :--- | :--- | :---: | :--- |
-| 1 | `rotating_sushi` | **天下無敵の回転寿司** | `SUSHI` | マグロ・サーモン・エビ・たまご回転寿司 🍣 | 朱赤 | `Under_The_Hammer.mp3` |
-| 2 | `trick_festival` | **トリッキー・フェスティバル！**| `CHASER`, `SPEEDER`, `GLITCH`, `CROSS`, `CHASER(hp:2)`| ドントタップ・バリア・減速・公転カオス 🎪| 紫 | `Magenta_Pulse.mp3` |
-| 3 | `dangerous_survival`| **デンジャラス・サバイバル**| `HEAL`, `BOMB`, `FIREWORK`, `CAT`, `CHASER`| 爆弾 ✕ 回復ハート ✕ 花火サバイバル 💣 | 危険赤 | `Under_The_Lanterns.mp3` |
-| 4 | `sea_slug_paradise`| **海の宝石ウミウシパラダイス**| `SEA_SLUG` | ウミウシ全8種 ✕ 水泡アクアリウム 🐚 | 深海ブルー | `Petals_on_the_Controller.mp3` |
-| 5 | `sakura_blossom` | **満開の夜桜乱舞** | `SAKURA_PETAL` | 画面下部で本物の桜が満開に咲き乱れる 🌸 | 夜桜紫 | `Petals_on_the_Controller.mp3` |
-| 6 | `summer_fireworks`| **たまや〜！夏の大輪花火**| `FIREWORK` | 夜空にドカンと大輪の花火が咲き誇る 🎆 | 黄金 | `Blood_and_Bamboo.mp3` |
-| 7 | `dog_march` | **わんわん大行進！** | `DOG` | 尻尾フリフリ元気な柴犬大行進 🐕 | 橙 | `Under_The_Hammer.mp3` |
+| 1 | `sea_slug_paradise`| **海の宝石ウミウシパラダイス**| `SEA_SLUG` | ウミウシ全8種 ✕ 水泡アクアリウム 🐚 | 深海ブルー | `Petals_on_the_Controller.mp3` |
+| 2 | `sakura_blossom` | **満開の夜桜乱舞** | `SAKURA_PETAL` | 画面下部で本物の桜が満開に咲き乱れる 🌸 | 夜桜紫 | `Petals_on_the_Controller.mp3` |
+| 3 | `summer_fireworks`| **たまや〜！夏の大輪花火**| `FIREWORK` | 夜空にドカンと大輪の花火が咲き誇る 🎆 | 黄金 | `Sharp_Suits_on_the_Avenue.mp3` |
+| 4 | `rotating_sushi` | **天下無敵の回転寿司** | `SUSHI` | マグロ・サーモン・エビ・たまご回転寿司 🍣 | 朱赤 | `Under_The_Hammer.mp3` |
+| 5 | `trick_festival` | **トリッキー・フェスティバル！**| `GLITCH`, `CURVE`, `SINE_WAVE`, `GHOST`| ドントタップ・バリア・減速・公転カオス 🎪| 紫 | `Magenta_Pulse.mp3` |
+| 6 | `dangerous_survival`| **デンジャラス・サバイバル**| `CHASER`, `BOMB`| 爆弾 ✕ サバイバル 💣 | 危険赤 | `Under_The_Hammer.mp3` |
+| 7 | `dog_march` | **わんわん大行進！** | `DOG` | 尻尾フリフリ元気な柴犬大行進 🐕 | 橙 | `Sharp_Suits_on_the_Avenue.mp3` |
 | 8 | `cat_festival` | **ネコ・フェスティバル** | `CAT` | ニャーとトコトコ歩くねこ大集合 🐱 | 桃 | `Petals_on_the_Controller.mp3` |
 | 9 | `chicken_panic` | **ヒヨコ・パニック** | `CHICKEN` | チョコチョコ歩くぴよぴよヒヨコ 🐥 | 黄 | `Petals_on_the_Controller.mp3` |
 | 10 | `animal_parade` | **どうぶつ大行進♪** | `CAT`, `CHICKEN`, `DOG`, `BEE`, `FROG`| ねこ・ヒヨコ・柴犬・蜂・蛙が全員集合 🐾| 橙 | `Under_The_Hammer.mp3` |
 | 11 | `rainbow_chaser` | **レインボー・チェイサー**| `CHASER` | 画面背景全域が七色に変色 🌈 | 紫(レインボー) | `Cyan_Square_Error.mp3` |
 | 12 | `san_san_nana` | **三・三・七拍子** | `CHASER` | 和風手拍子リズムスポーン 👏 (`san_san_nana`)| 橙 | `Blood_and_Bamboo.mp3` |
-| 13 | `real_cats` | **リアルねこ集会** | `CAT` | リアルな茶トラ ＆ ハチワレねこ 🐾 | ブラウン | `Under_The_Lanterns.mp3` |
 
 ---
 

@@ -2,7 +2,7 @@
   "id": "chicken_panic",
   "name": "ヒヨコ・パニック",
   "difficulty": "FUNNY",
-  "description": "🐥 羽をはためかせてトコトコ進む可愛い黄色いヒヨコが大襲来！",
+  "description": "🐥 羽をパタたかせてトコトコ進む可愛い黄色いヒヨコが大襲来！",
   "bgm": "bgm/Petals_on_the_Controller.mp3",
   "spawnRate": 220,
   "theme": {
@@ -10,13 +10,6 @@
     "gridColor": "rgba(255, 230, 0, 0.3)",
     "ringColor": "#ffe600",
     "playerColor": "#ffe600"
-  },
-  "params": {
-    "gameSpeed": 0.85,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
   },
   "enemyPool": [
     { "id": "CHICKEN", "weight": 1.0 }

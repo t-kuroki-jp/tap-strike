@@ -1,9 +1,9 @@
 {
   "id": "dog_march",
-  "name": "わんわん大行進！",
+  "name": "しばいぬ・行進曲",
   "difficulty": "FUNNY",
-  "description": "🐕 麻呂眉がキュートな柴犬わんこが登場！尻尾を振り振り元気に走ってくるわんこをタップしよう！",
-  "bgm": "bgm/Under_The_Hammer.mp3",
+  "description": "🐕 「ワンワン！」と元気に吠えながらトコトコ歩いてくる可愛い柴犬ノーツ！",
+  "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "spawnRate": 230,
   "theme": {
     "bgGlow": "rgba(255, 170, 51, 0.25)",
@@ -12,11 +12,7 @@
     "playerColor": "#ffaa33"
   },
   "params": {
-    "gameSpeed": 0.9,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
+    "gameSpeed": 0.9
   },
   "enemyPool": [
     { "id": "DOG", "weight": 1.0 }
