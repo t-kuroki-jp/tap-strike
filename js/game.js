@@ -302,14 +302,52 @@ class Game {
                 const isNana = step >= 9 && step <= 15;
 
                 if (isSan1 || isSan2 || isNana) {
-                    this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage));
+                    this.spawnSmartEnemy();
                 }
             } else if (this.bgmStep % 2 === 0 && Math.random() > 0.3) {
-                this.enemies.push(EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage));
+                this.spawnSmartEnemy();
             }
 
             this.bgmStep++;
         }, spawnInterval);
+    }
+
+    /**
+     * 理不尽な同時判定重なりを防止するスマート・スポーン制御
+     */
+    spawnSmartEnemy() {
+        const candidate = EnemyFactory.create(this.canvas, this.gameSpeed, this.currentStage);
+        if (!candidate) return;
+
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const targetR = this.player.targetRadius || 60;
+
+        // 候補ノーツの判定リング到達予定時刻 (フレーム数単位)
+        const candDist = Math.hypot(centerX - candidate.x, centerY - candidate.y) - targetR;
+        const candETA = candDist / (candidate.speed || 1);
+
+        // 既存ノーツとの到達時間差チェック (最低10フレーム/約160msの安全連打マージンを保証)
+        const MIN_SAFE_FRAME_MARGIN = 10;
+        let conflictFound = false;
+
+        for (let enemy of this.enemies) {
+            const exDist = Math.hypot(centerX - enemy.x, centerY - enemy.y) - targetR;
+            const exETA = exDist / (enemy.speed || 1);
+
+            // もし既存ノーツの到達時刻と危険なレベルで重複しそうなら...
+            if (exETA > 0 && Math.abs(candETA - exETA) < MIN_SAFE_FRAME_MARGIN) {
+                conflictFound = true;
+                break;
+            }
+        }
+
+        // 重複が見つかった場合、速度を少し調整して確実に連打可能な安全間隔へシフト！
+        if (conflictFound) {
+            candidate.speed *= 0.85; // わずかに速度をずらして到達タイミングを安全化
+        }
+
+        this.enemies.push(candidate);
     }
 
     stopBGM() {
