@@ -87,13 +87,8 @@ class UIManager {
 
             const tagElem = document.createElement('div');
             tagElem.className = 'char-behavior-tag';
-            tagElem.innerText = `⚙️ ${(isEn && item.tag_en) ? item.tag_en : item.tag}`;
+            tagElem.innerText = (isEn && item.tag_en) ? item.tag_en : item.tag;
             card.appendChild(tagElem);
-
-            const descElem = document.createElement('div');
-            descElem.className = 'char-desc';
-            descElem.innerText = (isEn && item.desc_en) ? item.desc_en : item.desc;
-            card.appendChild(descElem);
 
             container.appendChild(card);
 

@@ -30,6 +30,7 @@ const I18N_DICTIONARY = {
 
         // キャラクター図鑑
         encyclopedia_title: "📖 キャラクター図鑑",
+        encyclopedia_subtitle: "登場する全エネミーとノーツのコレクション",
         btn_close: "閉じる"
     },
     en: {
@@ -58,7 +59,8 @@ const I18N_DICTIONARY = {
         high_score_label: "★ NEW HIGH SCORE! ★",
 
         // Character Book
-        encyclopedia_title: "📖 Character Book",
+        encyclopedia_title: "📖 Character Collection",
+        encyclopedia_subtitle: "Collection of all Notes & Enemies",
         btn_close: "Close"
     }
 };
