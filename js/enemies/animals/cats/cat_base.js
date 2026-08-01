@@ -3,6 +3,13 @@
  * 猫共通の気まぐれゆらゆら歩行・しっぽスイング・リアル曲線耳・顔パーツなどの共通処理を一元管理
  */
 class CatEnemy extends Enemy {
+    static metadata = { id: 'CAT', name: 'にゃんこファミリー', tag: 'トコトコ歩行', desc: '白猫・茶トラ・ハチワレ。しっぽを振って気まぐれ散歩！', color: '#ffccaa' };
+
+    static createRandom(canvas, gameSpeed, stage) {
+        const catClasses = [MikeCatEnemy, KijitoraCatEnemy, HachiwareCatEnemy];
+        const RandomCatClass = catClasses[Math.floor(Math.random() * catClasses.length)];
+        return new RandomCatClass(canvas, gameSpeed, stage);
+    }
     constructor(canvas, gameSpeed, stage, config = {}) {
         super(canvas, gameSpeed, stage, {
             id: config.id || 'CAT',

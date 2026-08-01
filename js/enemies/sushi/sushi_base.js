@@ -3,6 +3,16 @@
  * お皿描画・回転運動・ヒット演出・サウンド処理などの共通ロジックを一元管理
  */
 class SushiEnemy extends Enemy {
+    static metadata = { id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633' };
+
+    static createRandom(canvas, gameSpeed, stage) {
+        const sushiClasses = [
+            TunaSushiEnemy, SalmonSushiEnemy, ShrimpSushiEnemy, EggSushiEnemy,
+            MackerelSushiEnemy, OctopusSushiEnemy, SquidSushiEnemy, KappaRollSushiEnemy
+        ];
+        const RandomSushiClass = sushiClasses[Math.floor(Math.random() * sushiClasses.length)];
+        return new RandomSushiClass(canvas, gameSpeed, stage);
+    }
     constructor(canvas, gameSpeed, stage, config = {}) {
         const color = config.color || '#ff2a3b';
         super(canvas, gameSpeed, stage, {

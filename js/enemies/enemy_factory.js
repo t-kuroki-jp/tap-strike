@@ -8,7 +8,7 @@ class EnemyFactory {
 
     /**
      * 新しいエネミーノーツの生成クラス/生成関数を動的登録するプラグイン API
-     * @param {string} id - エネミーID (例: 'CHASER', 'CAT')
+     * @param {string} id - エネミーID (例: 'CHASER', 'CAT', 'SUSHI')
      * @param {Function|Class} target - 生成関数または Enemy の基底クラス
      * @param {Object} [customMeta] - 図鑑表示用の特別メタデータ（省略時はクラスの static metadata を自動採用）
      */
@@ -18,9 +18,17 @@ class EnemyFactory {
         let meta = customMeta;
 
         if (typeof target === 'function') {
-            if (target.prototype && target.prototype.draw) {
+            // クラス自身が静的 createRandom を持つ場合 (例: CatEnemy, SushiEnemy, SeaSlugEnemy)
+            if (typeof target.createRandom === 'function') {
+                this.registry[id] = (canvas, gameSpeed, stage) => target.createRandom(canvas, gameSpeed, stage);
+                if (!meta && Object.prototype.hasOwnProperty.call(target, 'metadata')) {
+                    meta = target.metadata;
+                }
+            }
+            // 通常の Enemy 継承クラス
+            else if (target.prototype && target.prototype.draw) {
                 this.registry[id] = (canvas, gameSpeed, stage) => new target(canvas, gameSpeed, stage);
-                if (!meta && target.metadata) {
+                if (!meta && Object.prototype.hasOwnProperty.call(target, 'metadata')) {
                     meta = target.metadata;
                 }
             } else {
@@ -76,13 +84,7 @@ class EnemyFactory {
         this.register('CAT_MIKE', MikeCatEnemy);
         this.register('CAT_KIJITORA', KijitoraCatEnemy);
         this.register('CAT_HACHIWARE', HachiwareCatEnemy);
-        this.register('CAT', (canvas, gameSpeed, stage) => {
-            const catClasses = [MikeCatEnemy, KijitoraCatEnemy, HachiwareCatEnemy];
-            const RandomCatClass = catClasses[Math.floor(Math.random() * catClasses.length)];
-            return new RandomCatClass(canvas, gameSpeed, stage);
-        }, {
-            id: 'CAT', name: 'にゃんこファミリー', tag: 'トコトコ歩行', desc: '白猫・茶トラ・ハチワレ。しっぽを振って気まぐれ散歩！', color: '#ffccaa'
-        });
+        this.register('CAT', CatEnemy);
 
         // 4. どうぶつ仲間たち (柴犬, ヒヨコ, 蜂, 蛙)
         this.register('CHICKEN', ChickenEnemy);
@@ -99,16 +101,7 @@ class EnemyFactory {
         this.register('SUSHI_OCTOPUS', OctopusSushiEnemy);
         this.register('SUSHI_SQUID', SquidSushiEnemy);
         this.register('SUSHI_KAPPA', KappaRollSushiEnemy);
-        this.register('SUSHI', (canvas, gameSpeed, stage) => {
-            const sushiClasses = [
-                TunaSushiEnemy, SalmonSushiEnemy, ShrimpSushiEnemy, EggSushiEnemy,
-                MackerelSushiEnemy, OctopusSushiEnemy, SquidSushiEnemy, KappaRollSushiEnemy
-            ];
-            const RandomSushiClass = sushiClasses[Math.floor(Math.random() * sushiClasses.length)];
-            return new RandomSushiClass(canvas, gameSpeed, stage);
-        }, {
-            id: 'SUSHI', name: '回転寿司全8種', tag: '自転回転', desc: 'マグロ・サーモン・エビ・たまご等。自転しながら突進！', color: '#ff6633'
-        });
+        this.register('SUSHI', SushiEnemy);
 
         // 6. ウミウシパラダイス全8種群
         this.register('SEA_SLUG_BLUE', BlueSeaSlugEnemy);
@@ -119,17 +112,7 @@ class EnemyFactory {
         this.register('SEA_SLUG_GLAUCUS', GlaucusSeaSlugEnemy);
         this.register('SEA_SLUG_MIZORE', MizoreSeaSlugEnemy);
         this.register('SEA_SLUG_KOMPEITO', KompeitoSeaSlugEnemy);
-        this.register('SEA_SLUG', (canvas, gameSpeed, stage) => {
-            const slugClasses = [
-                BlueSeaSlugEnemy, JorunnaSeaSlugEnemy, PikachuSeaSlugEnemy,
-                StrawberrySeaSlugEnemy, CinderellaSeaSlugEnemy, GlaucusSeaSlugEnemy,
-                MizoreSeaSlugEnemy, KompeitoSeaSlugEnemy
-            ];
-            const RandomSlugClass = slugClasses[Math.floor(Math.random() * slugClasses.length)];
-            return new RandomSlugClass(canvas, gameSpeed, stage);
-        }, {
-            id: 'SEA_SLUG', name: '海の宝石ウミウシ', tag: '波打つ水蒸泳', desc: 'アオウミウシ・ゴマちゃん・ピカチュウ！うねうね波打つ海の宝石！', color: '#00ccff'
-        });
+        this.register('SEA_SLUG', SeaSlugEnemy);
     }
 
     /**

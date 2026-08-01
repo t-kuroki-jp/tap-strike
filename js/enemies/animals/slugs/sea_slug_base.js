@@ -3,6 +3,17 @@
  * ウミウシ特有の「うねうね波打つ体幹アニメーション」、頭部ツノ触角(Rhinophores)、背中・お尻のフサフサ二次鰓(Gill Plume)を共通管理
  */
 class SeaSlugEnemy extends Enemy {
+    static metadata = { id: 'SEA_SLUG', name: '海の宝石ウミウシ', tag: '波打つ水蒸泳', desc: 'アオウミウシ・ゴマちゃん・ピカチュウ！うねうね波打つ海の宝石！', color: '#00ccff' };
+
+    static createRandom(canvas, gameSpeed, stage) {
+        const slugClasses = [
+            BlueSeaSlugEnemy, JorunnaSeaSlugEnemy, PikachuSeaSlugEnemy,
+            StrawberrySeaSlugEnemy, CinderellaSeaSlugEnemy, GlaucusSeaSlugEnemy,
+            MizoreSeaSlugEnemy, KompeitoSeaSlugEnemy
+        ];
+        const RandomSlugClass = slugClasses[Math.floor(Math.random() * slugClasses.length)];
+        return new RandomSlugClass(canvas, gameSpeed, stage);
+    }
     constructor(canvas, gameSpeed, stage, config = {}) {
         const color = config.color || '#0066cc';
         super(canvas, gameSpeed, stage, {
