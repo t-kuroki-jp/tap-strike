@@ -1,6 +1,7 @@
 {
   "id": "shield_break",
   "name": "シールド・ブレイク",
+  "targetScore": 50000,
   "difficulty": "NORMAL",
   "description": "🛡️ 初のダブルタップバリアノーツ登場！1回叩いてバリアを砕き、2回目で仕留めろ！",
   "bgm": "bgm/Under_The_Hammer.mp3",

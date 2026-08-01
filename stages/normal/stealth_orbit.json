@@ -1,6 +1,7 @@
 {
   "id": "stealth_orbit",
   "name": "シャドウ・オービット",
+  "targetScore": 100000,
   "difficulty": "NORMAL",
   "description": "🔷 オービット・オクタの公転 ＋ 👻 姿を消すシャドウ・クロスに、耐久バリアが加わる高難易度連携！",
   "bgm": "bgm/Midnight_Porch_Light.mp3",

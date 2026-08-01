@@ -2,6 +2,7 @@
   "id": "freeze_penta",
   "difficulty": "NORMAL",
   "name": "フリーズ ＆ ペンタ",
+  "targetScore": 50000,
   "bgm": "bgm/Magenta_Pulse.mp3",
   "name_en": "Freeze & Penta",
   "description": "手前で1秒停止する六角形とカクカク折れ曲がる五角形のステップコンビ！",

@@ -2,6 +2,7 @@
   "id": "cross_tetra",
   "difficulty": "NORMAL",
   "name": "クロス ＆ テトラ",
+  "targetScore": 35000,
   "bgm": "bgm/Cyan_Square_Error.mp3",
   "name_en": "Cross & Tetra",
   "description": "L字Uターンノーツと手前減速正方形ノーツの変則サイバーコンビ！",

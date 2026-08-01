@@ -41,6 +41,7 @@
       "tapCooldown": 50,
       "speedIncrement": 0.008,
       "baseScore": 100,
+      "targetScore": 20000,
       "missPenaltyDuration": 10,
       "particleCount": 18
     },
@@ -73,6 +74,7 @@
       "tapCooldown": 50,
       "speedIncrement": 0.008,
       "baseScore": 100,
+      "targetScore": 150000,
       "missPenaltyDuration": 10,
       "particleCount": 18
     },

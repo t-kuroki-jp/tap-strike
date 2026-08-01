@@ -12,7 +12,11 @@
     <link rel="stylesheet" href="css/style.css?v=32.0.0">
 </head>
 
-<body>
+    <!-- デバッグ用: 画面左上 赤丸(リセット) ＆ 緑丸(全アンロック) ボタン -->
+    <button class="btn-debug-circle btn-debug-reset" onclick="window.game.debugResetScores()" title="Debug: Reset Scores">
+    </button>
+    <button class="btn-debug-circle btn-debug-unlock" onclick="window.game.debugUnlockAll()" title="Debug: Unlock All Stages">
+    </button>
 
     <div class="bg-animated"></div>
 

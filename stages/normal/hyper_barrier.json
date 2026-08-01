@@ -2,6 +2,7 @@
   "id": "hyper_barrier",
   "difficulty": "NORMAL",
   "name": "ハイパー・バリア",
+  "targetScore": 150000,
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "name_en": "Hyper Barrier",
   "description": "曲がり軌道の三角ノーツや五角形ノーツに耐久シールドバリアがついて襲いかかる！",

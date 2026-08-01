@@ -1,6 +1,7 @@
 {
   "id": "barrier_tricks",
-  "name": "バリア・トリックス",
+  "name": "バリア ＆ トリック",
+  "targetScore": 75000,
   "difficulty": "NORMAL",
   "description": "👾 グリッチ・テトラ ＋ 🪃 リターン・アングルに、ダブルタップバリアが重なる緊迫のテクニカルステージ！",
   "bgm": "bgm/Magenta_Pulse.mp3",

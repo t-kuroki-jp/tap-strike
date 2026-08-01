@@ -130,32 +130,73 @@ class UIManager {
 
         items.forEach((s, index) => {
             const card = document.createElement('div');
-            card.className = 'stage-card';
-            const best = localStorage.getItem(`bestScore_${s.id}`) || 0;
+            const best = Number(localStorage.getItem(`bestScore_${s.id}`) || 0);
 
-            let badgeHtml = '';
-            if (diff === 'FUNNY') {
-                // stages.json の上(先頭 3件)に金色の NEW バッジを表示！
-                if (index < 3) {
-                    badgeHtml = `<span class="badge-new badge-${diff}">NEW</span>`;
+            // アンロック判定 (EASY, FUNNY は全開放、NORMAL, HARD は STAGE 01 から順次アンロック)
+            let isUnlocked = true;
+            let reqTargetScore = 1000;
+
+            if (diff === 'NORMAL' || diff === 'HARD') {
+                if (index > 0) {
+                    const prevStage = items[index - 1];
+                    const prevBest = Number(localStorage.getItem(`bestScore_${prevStage.id}`) || 0);
+                    reqTargetScore = prevStage.targetScore || 1000;
+                    isUnlocked = prevBest >= reqTargetScore;
                 }
-            } else {
-                // コース順の STAGE 01, STAGE 02 ... (モードカラー連動)
-                const stageNum = String(index + 1).padStart(2, '0');
-                badgeHtml = `<span class="badge-stage-num badge-${diff}">STAGE ${stageNum}</span>`;
             }
 
-            card.innerHTML = `
-                <div class="stage-card-header">
-                    ${badgeHtml}
-                    <div class="stage-name">${s.name}</div>
-                </div>
-                <div class="stage-desc">${s.description || ''}</div>
-                <div class="stage-stats">
-                    <span class="stage-score">🏆 BEST: ${Number(best).toLocaleString()}</span>
-                </div>
-            `;
-            card.onclick = () => onSelectStage(s);
+            if (!isUnlocked) {
+                card.className = 'stage-card stage-card-locked';
+                const stageNum = String(index + 1).padStart(2, '0');
+                const isEn = typeof i18n !== 'undefined' && i18n.lang === 'en';
+
+                card.innerHTML = `
+                    <div class="stage-card-header">
+                        <span class="badge-locked">🔒 LOCKED</span>
+                        <div class="stage-name" style="opacity: 0.6;">STAGE ${stageNum}</div>
+                    </div>
+                    <div class="stage-desc" style="color: #ff5577;">
+                        ${isEn ? `Reach ${reqTargetScore.toLocaleString()} pts in Stage ${String(index).padStart(2, '0')} to Unlock!` : `STAGE ${String(index).padStart(2, '0')} で ${reqTargetScore.toLocaleString()} pts 獲得で解放！`}
+                    </div>
+                    <div class="stage-stats">
+                        <span class="stage-score" style="color: #888;">🔒 CLEAR REQ: ${reqTargetScore.toLocaleString()} pts</span>
+                    </div>
+                `;
+                card.onclick = () => {
+                    const isEn = typeof i18n !== 'undefined' && i18n.lang === 'en';
+                    alert(isEn 
+                        ? `Stage Locked! Clear STAGE ${String(index).padStart(2, '0')} with ${reqTargetScore.toLocaleString()} pts first!` 
+                        : `ロックされています！先に STAGE ${String(index).padStart(2, '0')} で ${reqTargetScore.toLocaleString()} pts 以上を獲得してください！`
+                    );
+                };
+            } else {
+                card.className = 'stage-card';
+                let badgeHtml = '';
+                if (diff === 'FUNNY') {
+                    if (index < 3) {
+                        badgeHtml = `<span class="badge-new badge-${diff}">NEW</span>`;
+                    }
+                } else {
+                    const stageNum = String(index + 1).padStart(2, '0');
+                    badgeHtml = `<span class="badge-stage-num badge-${diff}">STAGE ${stageNum}</span>`;
+                }
+
+                const stageName = (typeof i18n !== 'undefined' && i18n.lang === 'en' && s.name_en) ? s.name_en : s.name;
+                const stageDesc = (typeof i18n !== 'undefined' && i18n.lang === 'en' && s.description_en) ? s.description_en : (s.description || '');
+
+                card.innerHTML = `
+                    <div class="stage-card-header">
+                        ${badgeHtml}
+                        <div class="stage-name">${stageName}</div>
+                    </div>
+                    <div class="stage-desc">${stageDesc}</div>
+                    <div class="stage-stats">
+                        <span class="stage-score">🏆 BEST: ${best.toLocaleString()}</span>
+                    </div>
+                `;
+                card.onclick = () => onSelectStage(s);
+            }
+
             container.appendChild(card);
         });
     }

@@ -239,6 +239,19 @@ class Game {
         uiManager.resetThemeToDefault();
     }
 
+    debugResetScores() {
+        Object.keys(localStorage).filter(k => k.startsWith('bestScore_')).forEach(k => localStorage.removeItem(k));
+        location.reload();
+    }
+
+    async debugUnlockAll() {
+        await dataLoader.loadAll();
+        dataLoader.stages.forEach(s => {
+            localStorage.setItem(`bestScore_${s.id}`, 9999);
+        });
+        location.reload();
+    }
+
     applyTheme(theme) {
         if (!theme) return;
         uiManager.applyTheme(theme);

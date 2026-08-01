@@ -426,14 +426,31 @@ p.subtitle {
     text-shadow: 0 0 6px rgba(255, 204, 0, 0.4);
 }
 
-.badge-new {
-    font-weight: 900;
-    animation: pulseNew 1.5s infinite alternate;
+.badge-locked {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    background: rgba(255, 85, 119, 0.15);
+    color: #ff5577;
+    border: 1px solid rgba(255, 85, 119, 0.4);
+    text-shadow: 0 0 6px rgba(255, 85, 119, 0.4);
 }
 
-@keyframes pulseNew {
-    0% { box-shadow: 0 0 4px rgba(255, 204, 0, 0.4); }
-    100% { box-shadow: 0 0 10px rgba(255, 204, 0, 0.9); }
+.stage-card-locked {
+    opacity: 0.65;
+    background: rgba(15, 20, 32, 0.7);
+    border-color: rgba(255, 85, 119, 0.3);
+    cursor: not-allowed;
+    filter: grayscale(0.2);
+}
+
+.stage-card-locked:hover {
+    transform: none;
+    border-color: rgba(255, 85, 119, 0.6);
+    box-shadow: 0 0 10px rgba(255, 85, 119, 0.2);
 }
 
 .btn-action {
@@ -771,5 +788,46 @@ p.subtitle {
 
 .lang-switch input:checked + .lang-slider .lang-txt-en {
     color: #ffffff;
+}
+
+/* 画面左上 デバッグ用丸ボタン (🔴 赤丸: リセット / 🟢 緑丸: 全アンロック) */
+.btn-debug-circle {
+    position: fixed;
+    top: 14px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+/* 🔴 赤丸 (スコアリセット) */
+.btn-debug-reset {
+    left: 14px;
+    background: rgba(255, 0, 85, 0.25);
+    border: 1.5px solid #ff0055;
+    box-shadow: 0 0 8px rgba(255, 0, 85, 0.5);
+}
+
+.btn-debug-reset:hover {
+    transform: scale(1.25);
+    background: #ff0055;
+    box-shadow: 0 0 14px rgba(255, 0, 85, 0.9);
+}
+
+/* 🟢 緑丸 (全アンロック) */
+.btn-debug-unlock {
+    left: 44px;
+    background: rgba(0, 255, 136, 0.25);
+    border: 1.5px solid #00ff88;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+.btn-debug-unlock:hover {
+    transform: scale(1.25);
+    background: #00ff88;
+    box-shadow: 0 0 14px rgba(0, 255, 136, 0.9);
 }
 
