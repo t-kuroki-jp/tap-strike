@@ -1,0 +1,14 @@
+{
+  "id": "freeze_penta",
+  "difficulty": "NORMAL",
+  "name": "フリーズ ＆ ペンタ",
+  "bgm": "bgm/Magenta_Pulse.mp3",
+  "name_en": "Freeze & Penta",
+  "description": "手前で1秒停止する六角形とカクカク折れ曲がる五角形のステップコンビ！",
+  "description_en": "Step duo of Hexagon notes stopping for 1s and zigzag Pentagon notes!",
+  "enemyPool": [
+    { "id": "HEXAGON", "weight": 1 },
+    { "id": "PENTAGON", "weight": 1 }
+  ],
+  "spawnPattern": "san_san_nana"
+}

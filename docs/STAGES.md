@@ -128,18 +128,22 @@
 
 ---
 
-## 5. 🔵 NORMAL モード ステージ全 6 種カタログ
+## 5. 🔵 NORMAL モード ステージ全 10 種カタログ
 
-複合軌道、シールド（HP2）、ボス（HP5連打）、ドントタップなどの実戦ギミックに挑む標準コースです。
+複合軌道、シールド（HP2）などの実戦幾何学複合ギミックに挑む標準コースです。
 
 | # | ID | ステージ名 | 出現エネミー Pool | 主な難易度要素・テーマ | テーマカラー | BGM |
 | :---: | :--- | :--- | :--- | :--- | :---: | :--- |
 | 1 | `neon_duo` | **ネオン・デュオ** | `CHASER`, `SPEEDER` | 直進 ✕ 高速★星型の交錯 | シアン | `Sharp_Suits_on_the_Avenue.mp3` |
 | 2 | `wave_curve` | **ウェイブ & カーブ** | `CURVE`, `SINE_WAVE` | 旋回 ✕ S字波状のダブル曲線 | シアン | `Cyan_Square_Error.mp3` |
-| 3 | `shield_break` | **シールド・ブレイク** | `CHASER`, `CHASER(hp:2)` | 初登場！HP2耐久バリアシールド | シアン | `Under_The_Hammer.mp3` |
-| 4 | `barrier_tricks` | **バリア・トリックス** | `GLITCH`, `CROSS`, `CHASER(hp:2)`| 減速 ✕ Uターン ✕ 耐久シールド | 紫 | `Magenta_Pulse.mp3` |
-| 5 | `stealth_orbit` | **シャドウ・オービット**| `RING_NOTE`, `GHOST`, `CHASER(hp:2)`| 公転 ✕ 透明化 ✕ 耐久シールド | 紺 | `Midnight_Porch_Light.mp3` |
-| 6 | `allstar_normal` | **オールスター・ノーマル**| 全幾何学10種 ✕ シールド | NORMALモード総決算オールスター | シアン | `Under_The_Lanterns.mp3` |
+| 3 | `cross_tetra` | **クロス ＆ テトラ** | `CROSS`, `GLITCH` | L字Uターン ✕ 正方形手前減速 | シアン | `Cyan_Square_Error.mp3` |
+| 4 | `shield_break` | **シールド・ブレイク** | `CHASER`, `CHASER(hp:2)` | 初登場！HP2耐久バリアシールド | シアン | `Under_The_Hammer.mp3` |
+| 5 | `freeze_penta` | **フリーズ ＆ ペンタ** | `HEXAGON`, `PENTAGON` | 六角形1秒停止 ✕ 五角形ジグザグ | シアン | `Magenta_Pulse.mp3` |
+| 6 | `barrier_tricks` | **バリア・トリックス** | `GLITCH`, `CROSS`, `CHASER(hp:2)`| 減速 ✕ Uターン ✕ 耐久シールド | 紫 | `Magenta_Pulse.mp3` |
+| 7 | `stealth_orbit` | **シャドウ・オービット**| `RING_NOTE`, `GHOST`, `CHASER(hp:2)`| 公転 ✕ 透明化 ✕ 耐久シールド | 紺 | `Midnight_Porch_Light.mp3` |
+| 8 | `quantum_shift` | **クオンタム・シフト** | `SPEEDER`, `CROSS`, `GHOST` | 高速★星 ✕ Uターン ✕ 透明手裏剣 | シアン | `Under_The_Hammer.mp3` |
+| 9 | `hyper_barrier` | **ハイパー・バリア** | `CURVE(hp:2)`, `PENTAGON(hp:2)`, `SINE_WAVE` | 耐久シールド付きカーブ＆ステップ | シアン | `Magenta_Pulse.mp3` |
+| 10 | `allstar_normal` | **オールスター・ノーマル**| 全幾何学10種 ✕ シールド | NORMALモード総決算オールスター | シアン | `Under_The_Lanterns.mp3` |
 
 ---
 

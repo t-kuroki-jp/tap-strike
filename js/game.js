@@ -210,12 +210,8 @@ class Game {
             titleElem.className = `diff-title diff-${diff}`;
         }
 
-        if (!dataLoader.isLoaded || dataLoader.stages.length === 0) {
-            document.getElementById('stage-list').innerHTML = '<div class="loading-text">ステージ読込中...</div>';
-            await dataLoader.loadAll();
-        }
-
-        uiManager.renderStageMenu(dataLoader.stages, diff, (s) => this.startGameWithStage(s));
+        await dataLoader.loadAll(true);
+        uiManager.renderStageMenu(dataLoader.stages, diff, (stage) => this.startGameWithStage(stage));
         uiManager.showModal('modal-stage-select');
     }
 

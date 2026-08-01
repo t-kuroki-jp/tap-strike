@@ -9,13 +9,14 @@ class DataLoader {
         this.loadingPromise = null;
     }
 
-    async loadAll() {
-        if (this.isLoaded) return;
-        if (this.loadingPromise) return this.loadingPromise;
+    async loadAll(forceReload = false) {
+        if (this.isLoaded && !forceReload) return;
+        if (this.loadingPromise && !forceReload) return this.loadingPromise;
 
         this.loadingPromise = (async () => {
             await this.loadMasterAndStages();
             this.isLoaded = true;
+            this.loadingPromise = null;
         })();
 
         return this.loadingPromise;
@@ -26,17 +27,23 @@ class DataLoader {
             const res = await fetch(`stages/index.json?t=${Date.now()}`);
             this.master = await res.json();
 
-            const filePaths = [];
-            Object.values(this.master).forEach(diff => {
+            const fileEntries = [];
+            Object.entries(this.master).forEach(([diffKey, diff]) => {
                 if (Array.isArray(diff.stages)) {
-                    filePaths.push(...diff.stages);
+                    diff.stages.forEach(path => {
+                        fileEntries.push({ path, defaultDiff: diffKey });
+                    });
                 }
             });
 
-            const stagePromises = filePaths.map(async (path) => {
+            const stagePromises = fileEntries.map(async ({ path, defaultDiff }) => {
                 try {
                     const stageRes = await fetch(`${path}?t=${Date.now()}`);
-                    return await stageRes.json();
+                    const stageData = await stageRes.json();
+                    if (stageData && !stageData.difficulty) {
+                        stageData.difficulty = defaultDiff;
+                    }
+                    return stageData;
                 } catch (e) {
                     console.error(`Failed to load stage at ${path}`, e);
                     return null;

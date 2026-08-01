@@ -1,0 +1,14 @@
+{
+  "id": "quantum_shift",
+  "difficulty": "NORMAL",
+  "name": "クオンタム・シフト",
+  "bgm": "bgm/Under_The_Hammer.mp3",
+  "name_en": "Quantum Shift",
+  "description": "高速星型・L字引き返し・透明手裏剣が錯綜するハイスピード変則トリオ！",
+  "description_en": "High-speed irregular trio of Speed Stars, U-Turns, and Stealth Shurikens!",
+  "enemyPool": [
+    { "id": "SPEEDER", "weight": 1 },
+    { "id": "CROSS", "weight": 1 },
+    { "id": "GHOST", "weight": 1 }
+  ]
+}

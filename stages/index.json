@@ -53,9 +53,13 @@
     "stages": [
       "stages/normal/neon_duo.json",
       "stages/normal/wave_curve.json",
+      "stages/normal/cross_tetra.json",
       "stages/normal/shield_break.json",
+      "stages/normal/freeze_penta.json",
       "stages/normal/barrier_tricks.json",
       "stages/normal/stealth_orbit.json",
+      "stages/normal/quantum_shift.json",
+      "stages/normal/hyper_barrier.json",
       "stages/normal/allstar_normal.json"
     ]
   },

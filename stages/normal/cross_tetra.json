@@ -1,0 +1,14 @@
+{
+  "id": "cross_tetra",
+  "difficulty": "NORMAL",
+  "name": "クロス ＆ テトラ",
+  "bgm": "bgm/Cyan_Square_Error.mp3",
+  "name_en": "Cross & Tetra",
+  "description": "L字Uターンノーツと手前減速正方形ノーツの変則サイバーコンビ！",
+  "description_en": "Irregular cyber duo of U-Turn L-notes and decelerating Square notes!",
+  "enemyPool": [
+    { "id": "CROSS", "weight": 1 },
+    { "id": "GLITCH", "weight": 1 }
+  ],
+  "spawnPattern": "backbeat"
+}
