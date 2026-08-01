@@ -5,12 +5,6 @@
   "description": "🔴 赤色のネオン正円ノーツ！画面外から判定リングへ一直線にアプローチ！",
   "bgm": "bgm/Sharp_Suits_on_the_Avenue.mp3",
   "spawnRate": 230,
-  "theme": {
-    "bgGlow": "rgba(255, 51, 102, 0.25)",
-    "gridColor": "rgba(255, 51, 102, 0.3)",
-    "ringColor": "#ff3366",
-    "playerColor": "#ff3366"
-  },
   "enemyPool": [
     { "id": "CHASER", "behavior": "straight" }
   ]

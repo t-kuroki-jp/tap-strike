@@ -5,12 +5,6 @@
   "description": "🪃 木調ブラウンのL字ノーツ！一度外へ引き返してから急速アプローチしてくる！",
   "bgm": "bgm/Under_The_Hammer.mp3",
   "spawnRate": 230,
-  "theme": {
-    "bgGlow": "rgba(210, 105, 30, 0.25)",
-    "gridColor": "rgba(210, 105, 30, 0.3)",
-    "ringColor": "#d2691e",
-    "playerColor": "#d2691e"
-  },
   "enemyPool": [
     { "id": "CROSS", "behavior": "boomerang" }
   ]

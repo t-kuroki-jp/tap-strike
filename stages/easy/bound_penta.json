@@ -5,12 +5,6 @@
   "description": "⬠ 緑色の正五角形！『カクッ、カクッ』と左右にジグザグステップを踏みながら迫ってくる！",
   "bgm": "bgm/Magenta_Pulse.mp3",
   "spawnRate": 230,
-  "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
-  },
   "enemyPool": [
     { "id": "PENTAGON", "behavior": "bound" }
   ]

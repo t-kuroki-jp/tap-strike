@@ -5,12 +5,6 @@
   "description": "🌊 シアン色のひし形ノーツ！S字サイン波を描いてゆったり優雅に流れてくる！",
   "bgm": "bgm/Petals_on_the_Controller.mp3",
   "spawnRate": 230,
-  "theme": {
-    "bgGlow": "rgba(0, 255, 204, 0.25)",
-    "gridColor": "rgba(0, 255, 204, 0.3)",
-    "ringColor": "#00ffcc",
-    "playerColor": "#00ffcc"
-  },
   "enemyPool": [
     { "id": "SINE_WAVE", "behavior": "wave" }
   ]

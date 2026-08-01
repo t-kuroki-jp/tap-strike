@@ -5,12 +5,6 @@
   "description": "⬢ 水色の正六角形！判定の手前に来るとピタッと1秒停止！『だるまさんが転んだ』ノーツ！",
   "bgm": "bgm/Under_The_Lanterns.mp3",
   "spawnRate": 230,
-  "theme": {
-    "bgGlow": "rgba(0, 204, 255, 0.25)",
-    "gridColor": "rgba(0, 204, 255, 0.3)",
-    "ringColor": "#00ccff",
-    "playerColor": "#00ccff"
-  },
   "enemyPool": [
     { "id": "HEXAGON", "behavior": "freeze" }
   ]
