@@ -6,17 +6,10 @@
   "bgm": "bgm/Magenta_Pulse.mp3",
   "spawnRate": 230,
   "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
-  },
-  "params": {
-    "gameSpeed": 0.85,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
+    "bgGlow": "rgba(204, 0, 255, 0.25)",
+    "gridColor": "rgba(204, 0, 255, 0.3)",
+    "ringColor": "#cc00ff",
+    "playerColor": "#cc00ff"
   },
   "enemyPool": [
     { "id": "GLITCH", "behavior": "glitch" }

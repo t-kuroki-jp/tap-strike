@@ -6,17 +6,10 @@
   "bgm": "bgm/Under_The_Hammer.mp3",
   "spawnRate": 230,
   "theme": {
-    "bgGlow": "rgba(0, 255, 136, 0.25)",
-    "gridColor": "rgba(0, 255, 136, 0.3)",
-    "ringColor": "#00ff88",
-    "playerColor": "#00ff88"
-  },
-  "params": {
-    "gameSpeed": 0.85,
-    "targetRadius": 60,
-    "maxHp": 3,
-    "tapCooldown": 50,
-    "baseScore": 10
+    "bgGlow": "rgba(255, 255, 51, 0.25)",
+    "gridColor": "rgba(255, 255, 51, 0.3)",
+    "ringColor": "#ffff33",
+    "playerColor": "#ffff33"
   },
   "enemyPool": [
     { "id": "SPEEDER", "behavior": "straight" }
