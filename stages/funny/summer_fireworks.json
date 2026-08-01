@@ -6,10 +6,11 @@
   "bgm": "bgm/Blood_and_Bamboo.mp3",
   "spawnRate": 280,
   "theme": {
-    "bgGlow": "rgba(255, 230, 0, 0.25)",
-    "gridColor": "rgba(255, 230, 0, 0.3)",
-    "ringColor": "#ffe600",
-    "playerColor": "#ffe600"
+    "bgColor": "#030610",
+    "bgGlow": "rgba(30, 45, 80, 0.4)",
+    "gridColor": "rgba(80, 110, 160, 0.2)",
+    "ringColor": "#ffb703",
+    "playerColor": "#ffb703"
   },
   "enemyPool": [
     { "id": "FIREWORK", "weight": 1.0 }
