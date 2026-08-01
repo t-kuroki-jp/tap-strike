@@ -78,19 +78,21 @@ class UIManager {
 
             card.appendChild(canvas);
 
+            const isEn = typeof i18n !== 'undefined' && i18n.lang === 'en';
+
             const nameElem = document.createElement('div');
             nameElem.className = 'char-name';
-            nameElem.innerText = item.name;
+            nameElem.innerText = (isEn && item.name_en) ? item.name_en : item.name;
             card.appendChild(nameElem);
 
             const tagElem = document.createElement('div');
             tagElem.className = 'char-behavior-tag';
-            tagElem.innerText = `⚙️ ${item.tag}`;
+            tagElem.innerText = `⚙️ ${(isEn && item.tag_en) ? item.tag_en : item.tag}`;
             card.appendChild(tagElem);
 
             const descElem = document.createElement('div');
             descElem.className = 'char-desc';
-            descElem.innerText = item.desc;
+            descElem.innerText = (isEn && item.desc_en) ? item.desc_en : item.desc;
             card.appendChild(descElem);
 
             container.appendChild(card);

@@ -5,7 +5,16 @@
 
 // 1. ストレート・サークル (赤・ソリッド真円ノーツ / Straight)
 class StraightCircleEnemy extends Enemy {
-    static metadata = { id: 'CHASER', name: 'ストレート・サークル', tag: '直進', desc: '赤色のネオン正円ノーツ。中心へ一直線にアプローチ！', color: '#ff3366' };
+    static metadata = {
+        id: 'CHASER',
+        name: 'ストレート・サークル',
+        name_en: 'Straight Circle',
+        tag: '直進',
+        tag_en: 'Straight',
+        desc: '赤色のネオン正円ノーツ。中心へ一直線にアプローチ！',
+        desc_en: 'Red neon circle note. Straight approach to the target ring!',
+        color: '#ff3366'
+    };
     constructor(canvas, gameSpeed, stage) {
         super(canvas, gameSpeed, stage, {
             id: 'CHASER', name: 'ストレート・サークル', color: '#ff3366', shape: 'circle', speedRatio: 1.0, size: 14, hp: 1,

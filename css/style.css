@@ -629,3 +629,142 @@ p.subtitle {
         opacity: 0;
     }
 }
+
+/* ボトムアクション行 (言語スライドスイッチ ＋ 図鑑ボタンの横並び配置) */
+.menu-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* キャラクター図鑑ボタン (トグルスイッチのサイバーガラス輪郭・背景と完全統一！) */
+.menu-action-row .btn-encylopedia {
+    flex: 1;
+    height: 44px;
+    margin-top: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.85);
+    border: 2px solid rgba(0, 240, 255, 0.4);
+    border-radius: 22px;
+    color: #00f0ff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 240, 255, 0.2);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.menu-action-row .btn-encylopedia:hover {
+    border-color: #00f0ff;
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.6), inset 0 0 12px rgba(0, 240, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+/* サイバーネオン トグルスイッチ (JP 🌐 EN) */
+.lang-switch-wrapper {
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+}
+
+.lang-switch {
+    position: relative;
+    display: inline-block;
+    width: 86px;
+    height: 44px;
+}
+
+.lang-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.lang-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.85);
+    border: 2px solid rgba(0, 240, 255, 0.4);
+    border-radius: 22px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    box-sizing: border-box;
+}
+
+/* つまみ (円形ノブ) - 直径 36px で完璧な正円 */
+.lang-slider::before {
+    position: absolute;
+    content: "";
+    height: 36px;
+    width: 36px;
+    left: 2px;
+    top: 2px;
+    background: linear-gradient(135deg, #ff0077, #ff5500);
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(255, 0, 119, 0.6);
+    z-index: 2;
+}
+
+/* テキストラベル (JP / EN) - ノブの中心と絶対座標でピッタリ 100% 一致！ */
+.lang-txt-ja, .lang-txt-en {
+    position: absolute;
+    top: 2px;
+    width: 36px;
+    height: 36px;
+    z-index: 3;
+    user-select: none;
+    transition: color 0.3s ease;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.lang-txt-ja {
+    left: 2px;
+    color: #ffffff;
+}
+
+.lang-txt-en {
+    right: 2px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* チェック状態 (EN 選択時) */
+.lang-switch input:checked + .lang-slider {
+    border-color: #00f0ff;
+}
+
+/* 左右対称にスライド: left: 2px + 42px = 44px (右端から 2px で完璧な中央整列) */
+.lang-switch input:checked + .lang-slider::before {
+    transform: translateX(42px);
+    background: linear-gradient(135deg, #00f0ff, #0077ff);
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.8);
+}
+
+.lang-switch input:checked + .lang-slider .lang-txt-ja {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.lang-switch input:checked + .lang-slider .lang-txt-en {
+    color: #ffffff;
+}
+
