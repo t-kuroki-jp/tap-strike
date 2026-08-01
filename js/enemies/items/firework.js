@@ -128,8 +128,8 @@ class FireworkEnemy extends Enemy {
     }
 
     playLaunchWhistleSound() {
-        if (!audioEngine || !audioEngine.audioCtx) return;
-        const ctx = audioEngine.audioCtx;
+        const ctx = this.getAudioContext();
+        if (!ctx) return;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sine';
@@ -146,8 +146,8 @@ class FireworkEnemy extends Enemy {
     }
 
     playExplosionSound() {
-        if (!audioEngine || !audioEngine.audioCtx) return;
-        const ctx = audioEngine.audioCtx;
+        const ctx = this.getAudioContext();
+        if (!ctx) return;
 
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();

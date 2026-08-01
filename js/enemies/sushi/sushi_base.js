@@ -70,9 +70,7 @@ class SushiEnemy extends Enemy {
     }
 
     playSushiSound() {
-        if (typeof audioEngine !== 'undefined') {
-            audioEngine.playTone({ type: 'sine', startFreq: 520, endFreq: 1040, duration: 0.15, volume: 0.35 });
-        }
+        this.playTone({ type: 'sine', startFreq: 520, endFreq: 1040, duration: 0.15, volume: 0.35 });
     }
 
     onHit(game, touchX, touchY, isPerfect) {

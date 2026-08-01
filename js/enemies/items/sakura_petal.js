@@ -104,9 +104,7 @@ class SakuraPetalEnemy extends Enemy {
     }
 
     playSakuraSound() {
-        if (typeof audioEngine !== 'undefined' && audioEngine.audioCtx) {
-            audioEngine.playTone({ type: 'sine', startFreq: 880, endFreq: 1760, duration: 0.25, volume: 0.35 });
-        }
+        this.playTone({ type: 'sine', startFreq: 880, endFreq: 1760, duration: 0.25, volume: 0.35 });
     }
 
     onHit(game, touchX, touchY, isPerfect) {

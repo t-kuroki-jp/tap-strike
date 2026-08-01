@@ -88,7 +88,7 @@ class Enemy {
         const hadShield = this.hp > 1;
 
         if (isPerfect) {
-            audioEngine.playPerfectSound();
+            if (typeof audioEngine !== 'undefined') audioEngine.playPerfectSound();
             game.createParticles(this.x, this.y, '#ffcc00', true); // 🌟 黄金の星花火エフェクト！
             game.createParticles(this.x, this.y, '#ffffff', true);
             game.shockwaves.push(new Shockwave(this.x, this.y, '#ffcc00'));
@@ -96,7 +96,7 @@ class Enemy {
             game.ringPulse = 28;
             game.ringColor = '#ffcc00';
         } else {
-            audioEngine.playHitSound();
+            if (typeof audioEngine !== 'undefined') audioEngine.playHitSound();
             game.createParticles(this.x, this.y, hadShield ? '#00bbff' : this.color, false);
             game.ringPulse = 14;
             game.ringColor = game.currentStage?.theme?.ringColor || '#00f0ff';
@@ -128,10 +128,29 @@ class Enemy {
         game.createParticles(this.x, this.y, this.color);
         game.player.hp--;
         game.updateUI();
-        audioEngine.playMissSound();
+        if (typeof audioEngine !== 'undefined') audioEngine.playMissSound();
 
         if (game.player.hp <= 0) {
             game.gameOver();
         }
+    }
+
+    /**
+     * サウンドエンジンの抽象化カプセル化メソッド (子クラスからの安全再生用)
+     */
+    playTone(config) {
+        if (typeof audioEngine !== 'undefined') {
+            audioEngine.playTone(config);
+        }
+    }
+
+    /**
+     * WebAudio API Context の安全取得
+     */
+    getAudioContext() {
+        if (typeof audioEngine !== 'undefined' && audioEngine.audioCtx) {
+            return audioEngine.audioCtx;
+        }
+        return null;
     }
 }

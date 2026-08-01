@@ -169,10 +169,8 @@ class SeaSlugEnemy extends Enemy {
     }
 
     playSlugSound() {
-        if (typeof audioEngine !== 'undefined' && audioEngine.audioCtx) {
-            // 水中「ぷにっ♪」高音かわいらしいプルプル効果音
-            audioEngine.playTone({ type: 'sine', startFreq: 520, endFreq: 950, duration: 0.14, volume: 0.35 });
-        }
+        // 水中「ぷにっ♪」高音かわいらしいプルプル効果音
+        this.playTone({ type: 'sine', startFreq: 520, endFreq: 950, duration: 0.14, volume: 0.35 });
     }
 
     onHit(game, touchX, touchY, isPerfect) {
