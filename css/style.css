@@ -555,18 +555,6 @@ p.subtitle {
     text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
     white-space: nowrap;
 }
-    color: #00f0ff;
-    border: 1px solid rgba(0, 240, 255, 0.4);
-    border-radius: 10px;
-    padding: 2px 6px;
-    margin-bottom: 6px;
-}
-
-.char-desc {
-    font-size: 10px;
-    color: #aaa;
-    line-height: 1.3;
-}
 
 /* 深海アクアリウム ぷくぷく水泡アニメーション (Bubbles Container) */
 .bubble-container {
@@ -722,7 +710,7 @@ p.subtitle {
     box-sizing: border-box;
 }
 
-/* つまみ (円形ノブ) - 直径 36px で完璧な正円 */
+/* つまみ (円形ノブ) - 直径 36px で完璧な正円 (JP/EN統一ネオンブルー) */
 .lang-slider::before {
     position: absolute;
     content: "";
@@ -730,10 +718,10 @@ p.subtitle {
     width: 36px;
     left: 2px;
     top: 2px;
-    background: linear-gradient(135deg, #ff0077, #ff5500);
+    background: linear-gradient(135deg, #00f0ff, #0077ff);
     border-radius: 50%;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 12px rgba(255, 0, 119, 0.6);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.8);
     z-index: 2;
 }
 
